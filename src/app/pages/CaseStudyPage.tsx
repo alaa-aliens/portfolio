@@ -4,6 +4,8 @@ import { motion, useScroll, useSpring } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { useContactForm } from "../components/ContactFormContext";
 import { BeforeAfter } from "../components/BeforeAfter";
+import { BeforeChat } from "../components/BeforeChat";
+import { PhoneFan, PhoneRow } from "../components/Phone";
 import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline, SectionTitle } from "../components/motion/Doodles";
 import { categories, getNextReady, getProject, renderFolder, type Project } from "../data/projects";
 import { usePageMeta } from "../usePageMeta";
@@ -89,9 +91,14 @@ function Steps({ steps }: { steps: NonNullable<NonNullable<Project["caseStudy"]>
             <h3 className="font-['Playfair_Display'] font-bold text-black text-[22px] md:text-[30px] leading-tight">
               {s.title}
             </h3>
-            <p className="font-['IBM_Plex_Serif'] text-black/85 text-[16px] md:text-[19px] leading-[1.65] max-w-[720px]">
+            <p className="font-['IBM_Plex_Serif'] text-black/85 text-[16px] md:text-[19px] leading-[1.65] max-w-[680px]">
               {s.body}
             </p>
+            {s.phones && s.phones.length > 0 && (
+              <div className="mt-5">
+                <PhoneRow shots={s.phones} />
+              </div>
+            )}
             {s.image && (
               <PenWipe className="mt-4">
                 <img
@@ -212,6 +219,12 @@ export function CaseStudyPage() {
         )}
       </header>
 
+      {cs.showcase && cs.showcase.length > 0 && (
+        <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-10 md:mt-14">
+          <PhoneFan shots={cs.showcase} color={cat.color} />
+        </div>
+      )}
+
       <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 flex flex-col gap-20 md:gap-28 mt-16 md:mt-24">
         {/* ── Problem ── */}
         {cs.problem && cs.problem.length > 0 && (
@@ -223,6 +236,25 @@ export function CaseStudyPage() {
                   <p className="font-['IBM_Plex_Serif'] text-black text-[17px] md:text-[21px] leading-[1.7]">{p}</p>
                 </Reveal>
               ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Before / after as a chat ── */}
+        {cs.beforeChat && (
+          <section>
+            <SectionTitle color={cat.color}>{isProfessional ? "Before & After" : "The Glow-Up"}</SectionTitle>
+            <div className="mt-10">
+              <BeforeChat
+                lines={cs.beforeChat.lines}
+                after={cs.beforeChat.after}
+                afterAlt={cs.beforeChat.afterAlt}
+                labels={{
+                  before: isProfessional ? "Before: iMessage" : "Before: chaos",
+                  after: isProfessional ? "After: Siba" : "After: an actual app",
+                  note: cs.beforeChat.note,
+                }}
+              />
             </div>
           </section>
         )}
