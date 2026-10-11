@@ -8,6 +8,7 @@ import { motion, useReducedMotion } from "motion/react";
 import Matter from "matter-js";
 import { useMode } from "../ModeContext";
 import { SectionTitle } from "../motion/Doodles";
+import { DeskThings } from "./DeskThings";
 
 const PRO = [
   "UX Research", "UI Design", "Design Systems", "Arabic & RTL", "Prototyping", "UX Audits",
@@ -16,7 +17,7 @@ const PRO = [
 const FUN_EXTRA = ["Strong opinions", "Coffee", "2am energy", "Border-radius debates"];
 const COLORS = ["#fffaf1", "#FFE1D9", "#E6E0FF", "#D6F4F7", "#FFE9C7", "#DDF3DF"];
 
-export function SkillsTable() {
+export function SkillsTable({ embedded = false }: { embedded?: boolean }) {
   const { isProfessional, mode } = useMode();
   const reduce = useReducedMotion();
   const skills = isProfessional ? PRO : [...PRO.slice(0, 9), ...FUN_EXTRA];
@@ -25,6 +26,13 @@ export function SkillsTable() {
   const bodiesRef = useRef<Matter.Body[]>([]);
   const [started, setStarted] = useState(false);
   const [touch] = useState(() => typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches);
+  const [deskPctNow, setDeskPct] = useState(62);
+  useEffect(() => {
+    const upd = () => setDeskPct(window.innerWidth < 640 ? 92 : 62);
+    upd();
+    window.addEventListener("resize", upd);
+    return () => window.removeEventListener("resize", upd);
+  }, []);
 
   // Start dropping when the desk scrolls into view.
   useEffect(() => {
@@ -44,9 +52,15 @@ export function SkillsTable() {
     const engine = Engine.create({ gravity: { x: 0, y: 1.1 } });
 
     // Desk top (matches the drawing), floor and walls.
-    const deskW = W < 640 ? W * 0.9 : Math.min(W * 0.62, 620);
+    const deskW = W < 640 ? W * 0.92 : W * 0.62;
     const deskY = H * 0.5;
     const opts = { isStatic: true, friction: 0.8, render: { visible: false } };
+    const stageRect = stage.getBoundingClientRect();
+    const solids = [...stage.querySelectorAll<HTMLElement>("[data-desk-solid]")].map((el) => {
+      const r = el.getBoundingClientRect();
+      return Bodies.rectangle(r.left - stageRect.left + r.width / 2, r.top - stageRect.top + r.height / 2 + 6, r.width * 0.8, r.height * 0.8, opts);
+    });
+    Composite.add(engine.world, solids);
     Composite.add(engine.world, [
       Bodies.rectangle(W / 2, deskY + 6, deskW, 12, opts),
       Bodies.rectangle(W / 2, H + 30, W * 2, 60, opts),
@@ -122,16 +136,18 @@ export function SkillsTable() {
 
   return (
     <section id="skills" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-8">
-      <SectionTitle className="mb-2">
-        {isProfessional ? "What I bring to the table" : "What I bring to the table (besides snacks)"}
-      </SectionTitle>
+      {!embedded && (
+        <SectionTitle className="mb-2">
+          {isProfessional ? "What I bring to the table" : "What I bring to the table (besides snacks)"}
+        </SectionTitle>
+      )}
       <p className="font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] text-black/50 mb-2">
-        {touch ? "tap a skill to make it jump" : "grab a skill and throw it around"}
+        {touch ? "tap a skill to make it jump · tap a thing on the desk" : "grab a skill and throw it · hover the things on the desk"}
       </p>
 
       <div
         ref={stageRef}
-        className="relative w-full h-[440px] md:h-[460px] overflow-hidden select-none [--desk-w:90%] sm:[--desk-w:min(62%,620px)]"
+        className="relative w-full h-[520px] md:h-[560px] overflow-hidden select-none [--desk-w:92%] sm:[--desk-w:62%]"
         style={{ cursor: touch || reduce ? "default" : "grab", touchAction: "pan-y" }}
       >
         {/* The desk, hand-drawn */}
@@ -142,17 +158,8 @@ export function SkillsTable() {
           <path d="M574 14 C 577 100, 571 160, 575 226" stroke="#1d1a17" strokeWidth="5" strokeLinecap="round" />
           <path d="M46 70 C 200 76, 420 66, 574 72" stroke="#1d1a17" strokeWidth="2.5" strokeLinecap="round" opacity="0.35" />
         </svg>
-        {/* A mug and a plant on the desk, because of course */}
-        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 46px)", left: "calc(50% + var(--desk-w) * 0.38)" }} width="44" height="46" viewBox="0 0 44 46" fill="none">
-          <path d="M6 14h24l-2 26c-.2 2-1.8 3.5-3.8 3.5H11.8c-2 0-3.6-1.5-3.8-3.5z" fill="#fffaf1" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" />
-          <path d="M30 18c6-1 8 3 6 7-1.5 3-4.5 4-7 4" stroke="#1d1a17" strokeWidth="2.4" strokeLinecap="round" />
-          <path d="M13 3c-2 3 2 5 0 8M20 2c-2 3 2 5 0 8" stroke="#ff614c" strokeWidth="2.2" strokeLinecap="round" />
-        </svg>
-        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 58px)", left: "calc(50% - var(--desk-w) * 0.45)" }} width="40" height="58" viewBox="0 0 40 58" fill="none">
-          <path d="M20 30C19 20 12 14 5 14c1 8 7 13 15 16zM20 26c1-11 8-18 16-18-1 9-8 15-16 18z" fill="#53B858" stroke="#1d1a17" strokeWidth="2" strokeLinejoin="round" />
-          <path d="M20 30v8" stroke="#1d1a17" strokeWidth="2" />
-          <path d="M9 37h22l-3 19H12z" fill="#ff614c" stroke="#1d1a17" strokeWidth="2.2" strokeLinejoin="round" />
-        </svg>
+        {/* Ala'a's actual desk */}
+        <DeskThings deskPct={deskPctNow} deskTop="50%" />
 
         {/* Chips (positioned by the physics loop; stacked neatly when motion is reduced) */}
         <div className={reduce ? "absolute left-1/2 -translate-x-1/2 bottom-[52%] w-[var(--desk-w)] flex flex-wrap gap-2 justify-center" : ""}>

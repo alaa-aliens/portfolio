@@ -214,7 +214,7 @@ function TimelineItem({ entry, isLast, accentColor, index = 0 }: { entry: Timeli
   );
 }
 
-export function WorkExperienceSection() {
+export function WorkExperienceSection({ embedded = false }: { embedded?: boolean }) {
   const { isProfessional, mode } = useMode();
   const [activeTab, setActiveTab] = useState<TabKey>("main");
   const timelines = isProfessional ? professionalTimelines : funTimelines;
@@ -224,14 +224,14 @@ export function WorkExperienceSection() {
   const accentColor = tabAccentColors[activeTab];
 
   return (
-    <section id="experience" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-12">
+    <section id="experience" className={embedded ? "w-full" : "w-full max-w-[1200px] mx-auto px-6 md:px-12 py-12"}>
       <motion.div
         key={mode}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <SectionTitle className="mb-[40px] md:mb-[54px]">{isProfessional ? "Work Experience" : "How I Got Here"}</SectionTitle>
+        {!embedded && <SectionTitle className="mb-[40px] md:mb-[54px]">{isProfessional ? "Work Experience" : "How I Got Here"}</SectionTitle>}
 
         {/* Tabs */}
         <div className="flex gap-6 md:gap-[50px] mb-8 md:mb-[54px] overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0">

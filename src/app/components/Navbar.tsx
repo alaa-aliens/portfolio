@@ -2,7 +2,6 @@ import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png"
 import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
 import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
-import { useContactForm } from "./ContactFormContext";
 import { StickerArt } from "./play/Stickers";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "motion/react";
@@ -54,10 +53,11 @@ function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMod
 type Item = { label: [string, string]; to: string; hash?: string };
 const ITEMS: Item[] = [
   { label: ["Work", "Stuff"], to: "/work" },
-  { label: ["About", "Me"], to: "/", hash: "about" },
-  { label: ["Skills", "Table"], to: "/", hash: "skills" },
-  { label: ["Experience", "Lore"], to: "/", hash: "experience" },
-  { label: ["Contact", "Say hi"], to: "/", hash: "contact" },
+  { label: ["About", "Me"], to: "/about" },
+  { label: ["Skills", "Table"], to: "/skills" },
+  { label: ["Experience", "Lore"], to: "/experience" },
+  { label: ["Play", "Game"], to: "/play" },
+  { label: ["Contact", "Say hi"], to: "/contact" },
 ];
 
 /** Ala'a's doodle head: rolls as you scroll, and spins faster the faster you scroll. */
@@ -76,7 +76,6 @@ function RollingHead({ size }: { size: number }) {
 
 export function Navbar() {
   const { mode, setMode, lang, setLang, isArabic, isProfessional } = useMode();
-  const { openContact } = useContactForm();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoverItem, setHoverItem] = useState<number | null>(null);
@@ -99,13 +98,9 @@ export function Navbar() {
 
   const go = (it: Item) => {
     setMenuOpen(false);
-    if (it.hash === "contact") {
-      openContact();
-      return;
-    }
     navigate(it.hash ? `${it.to}#${it.hash}` : it.to);
   };
-  const activeIndex = pathname.startsWith("/work") ? 0 : -1;
+  const activeIndex = ITEMS.findIndex((it) => pathname === it.to || (it.to !== "/" && pathname.startsWith(it.to)));
   const arrowAt = hoverItem ?? (activeIndex >= 0 ? activeIndex : null);
   const compact = scrolled;
 

@@ -25,7 +25,12 @@ import { usePageMeta } from "./usePageMeta";
 import { Stickers } from "./components/play/Stickers";
 import { InkCursor } from "./components/play/InkCursor";
 import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
-import { TourGuide } from "./components/play/TourGuide";
+import { AskAlaa } from "./components/play/AskAlaa";
+import { AboutPage } from "./pages/AboutPage";
+import { SkillsPage } from "./pages/SkillsPage";
+import { ExperiencePage } from "./pages/ExperiencePage";
+import { ContactPage } from "./pages/ContactPage";
+import { PlayPage } from "./pages/PlayPage";
 import { SkillsTable } from "./components/play/SkillsTable";
 
 function ScrollManager() {
@@ -68,7 +73,7 @@ function AppContent() {
       <InkCursor />
       <ModeSwitchFX />
       {!isArabic && <Stickers />}
-      {!isArabic && <TourGuide />}
+      {!isArabic && <AskAlaa />}
       <Navbar />
       <ScrollManager />
       {isArabic ? (
@@ -89,6 +94,11 @@ function AppContent() {
               <Route path="/" element={<HomePage />} />
               <Route path="/work" element={<WorkPage />} />
               <Route path="/work/:slug" element={<CaseStudyPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/skills" element={<SkillsPage />} />
+              <Route path="/experience" element={<ExperiencePage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/play" element={<PlayPage />} />
               <Route path="*" element={<CaseStudyPage />} />
             </Routes>
           </motion.div>

@@ -6,7 +6,7 @@ import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
 import { PenWipe, SectionTitle } from "./motion/Doodles";
 
-interface ServiceCard {
+export interface ServiceCard {
   title: string;
   description: string;
   image: string;
@@ -113,7 +113,7 @@ function Image39() {
   );
 }
 
-const professionalCards: ServiceCard[] = [
+export const professionalCards: ServiceCard[] = [
   {
     title: "UX/UI Design & Strategy",
     description:
@@ -144,7 +144,7 @@ const professionalCards: ServiceCard[] = [
   },
 ];
 
-const funCards: ServiceCard[] = [
+export const funCards: ServiceCard[] = [
   {
     title: "Make Things Pretty (and Usable)",
     description:
