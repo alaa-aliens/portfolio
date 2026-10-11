@@ -1,3 +1,8 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Unlayered on purpose: some hosts (like the Claude preview) inject `img { max-width: 100% }`,
+   which beats Tailwind's layered utilities and squeezes the cropped illustrations. */
+img.max-w-none { max-width: none !important; }
+body { font-size: 16px; line-height: 1.5; }
