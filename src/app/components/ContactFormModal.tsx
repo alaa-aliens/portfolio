@@ -1,3 +1,4 @@
+import { addScore } from "./play/Score";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useMode } from "./ModeContext";
@@ -54,6 +55,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
       await new Promise((resolve) => setTimeout(resolve, 400));
 
       window.open(mailtoLink, "_blank");
+      addScore(100, "you actually wrote. bonus!", "contact:sent", true);
       setStatus("sent");
       setFormData({ from_name: "", from_email: "", message: "" });
     } catch {

@@ -2,7 +2,7 @@
  * The site's design language, in one file. Every page builds from these.
  *
  *  Paper      #fdecd0 page · #fffaf1 card · ink #1d1a17 · coral #ff614c
- *  Type       display: Playfair Display bold, coral (big moments) · headings: Playfair Display
+ *  Type       display: Gochi Hand (big moments, lowercase, coral or ink) · headings: Playfair Display
  *             body: IBM Plex Serif · UI: Work Sans · handwriting: Shantell Sans
  *  Edges      1px ink line · radius 18–20 (cards) / full (pills) · small hard offset shadow (3,3) in ink
  *  Motion     springs (stiffness 200–400, damping 14–24), things tilt ±2° at rest and straighten on hover

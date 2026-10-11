@@ -4,7 +4,8 @@ import imgImage38 from "figma:asset/7d1c70ce8d978daa5db3cd98761c352b121d3ad8.png
 import imgImage39 from "figma:asset/252ea155a12647263e0584fcfb49c846a8ff727f.png";
 import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
-import { PenWipe, SectionTitle } from "./motion/Doodles";
+import { PenWipe } from "./motion/Doodles";
+import { DoodleTitle } from "./play/DoodleTitle";
 
 export interface ServiceCard {
   title: string;
@@ -187,7 +188,7 @@ export function WhatIDoSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <SectionTitle className="mb-8">{isProfessional ? "What I Do" : "What I Actually Do"}</SectionTitle>
+        <DoodleTitle text={isProfessional ? "what i {hand} do" : "what i {hand} actually do"} className="text-[44px] md:text-[72px] mb-10" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {cards.map((card, i) => (
             <motion.div

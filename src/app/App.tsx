@@ -1,3 +1,4 @@
+import { ScoreTracker } from "./components/play/Score";
 import { ModeProvider } from "./components/ModeContext";
 import { ContactFormProvider } from "./components/ContactFormContext";
 import { ContactFormModal } from "./components/ContactFormModal";
@@ -50,6 +51,7 @@ function AppContent() {
       <InkCursor />
       <ModeSwitchFX />
       {!isArabic && <Stickers />}
+      <ScoreTracker />
       {!isArabic && <AskAlaa />}
       <Navbar />
       <ScrollManager />

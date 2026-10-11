@@ -51,7 +51,7 @@ export function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
       return (
         <svg width={size * 1.4} height={size} viewBox="0 0 68 48">
           <path d="M6 10c18-8 40-8 56 0 4 10 4 20 0 28-18 7-38 7-56 0-4-9-4-19 0-28z" fill="#ff614c" {...sw} />
-          <text x="34" y="31" textAnchor="middle" fontFamily="'Bagel Fat One', sans-serif" fontSize="19" fill="#fff">wow</text>
+          <text x="34" y="31" textAnchor="middle" fontFamily="'Gochi Hand', cursive" fontSize="19" fill="#fff">wow</text>
         </svg>
       );
     case "coffee":

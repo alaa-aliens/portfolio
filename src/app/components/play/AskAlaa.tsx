@@ -1,3 +1,4 @@
+import { addScore } from "./Score";
 /*
  * "Ask Ala'a": his doodle head in the corner, now a tiny chat.
  * It greets you on each section, you can pick a question or type one,
@@ -113,6 +114,7 @@ export function AskAlaa() {
   };
 
   const ask = (q: string) => {
+    addScore(5, "asked me something", "ask:first");
     const text = q.trim();
     if (!text) return;
     setLog((l) => [...l, { who: "you", text }]);

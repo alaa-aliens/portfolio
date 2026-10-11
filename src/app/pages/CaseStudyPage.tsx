@@ -1,3 +1,4 @@
+import { loseLife } from "../components/play/Score";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import { motion, useScroll, useSpring } from "motion/react";
@@ -46,6 +47,9 @@ function NotReady({ project }: { project?: Project }) {
   const { isProfessional } = useMode();
   const { openContact } = useContactForm();
   usePageMeta({ title: project ? `${project.name} — Ala'a Ali` : "Not found — Ala'a Ali" });
+  useEffect(() => {
+    loseLife(project ? "not written yet" : "that page doesn't exist");
+  }, [project]);
   return (
     <section className="w-full max-w-[900px] mx-auto px-6 md:px-12 pt-[130px] md:pt-[180px] pb-24 relative">
       <Doodle kind="sparkle" className="right-6 top-[120px]" />

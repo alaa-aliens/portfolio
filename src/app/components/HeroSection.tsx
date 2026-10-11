@@ -1,3 +1,4 @@
+import { addScore } from "./play/Score";
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
@@ -91,13 +92,14 @@ export function HeroSection() {
   const { isProfessional, mode } = useMode();
   const { openContact } = useContactForm();
   const tilt = useCursorTilt();
-  const headline = isProfessional ? "hello, i'm ala'a ali" : "yooo, i'm ala'a ali";
+  const headline = isProfessional ? "hey, my name is ala'a ali" : "yooo, it's me, ala'a ali";
   const boxRef = useRef<HTMLDivElement>(null);
   const [pokes, setPokes] = useState(0);
   const [surprised, setSurprised] = useState(false);
   const lines = POKES[isProfessional ? "pro" : "fun"];
   const poke = () => {
     setPokes((n) => n + 1);
+    addScore(1, "poked me", undefined);
     setSurprised(true);
     window.setTimeout(() => setSurprised(false), 450);
   };

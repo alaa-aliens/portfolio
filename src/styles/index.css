@@ -8,7 +8,7 @@ img.max-w-none { max-width: none !important; }
 body { font-size: 16px; line-height: 1.5; }
 
 /* ── Hand-lettered display face (matches the brush lettering in the OG design) ── */
-.font-display { font-family: "Playfair Display", Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
+.font-display { font-family: "Gochi Hand", "Shantell Sans", cursive; font-weight: 400; letter-spacing: 0.01em; }
 
 /* ── Googly eyes in the hero headline ── */
 .eye { width: 0.62em; height: 0.62em; margin: 0 0.02em; transform-origin: center; vertical-align: -0.02em; }
@@ -43,3 +43,10 @@ body.sticker-armed, body.sticker-armed * { cursor: none !important; }
 html.ink-cursor, html.ink-cursor * { cursor: none !important; }
 .ink-pen.pen-down svg { transform: translate(-2px, -29px) rotate(-6deg); }
 .ink-pen svg { transition: transform 120ms ease; }
+
+/* Hand-drawn cursors (mouse only). The pencil cursor from the sticker tray overrides these. */
+@media (pointer: fine) {
+  html:not(.ink-cursor) body:not(.sticker-armed) { cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E   %3Cpath d=%22M4.5 3.2 C 5.4 9.6, 6.3 16.4, 7.4 23.6 C 9.6 21.6, 11.4 19.9, 13.3 18.2 C 14.9 21.3, 16.4 24.2, 18.1 27.3 C 19.4 26.6, 20.5 26, 21.7 25.3 C 20.1 22.3, 18.6 19.5, 17 16.6 C 19.9 16.1, 22.6 15.7, 25.6 15.2 C 18.9 11.3, 12 7.3, 4.5 3.2 Z%22 fill=%22%23fffaf1%22 stroke=%22%231d1a17%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E   %3Cpath d=%22M7.2 7.4 C 8 11.2, 8.6 14.8, 9.3 18.6%22 stroke=%22%23ff614c%22 stroke-width=%221.4%22 stroke-linecap=%22round%22 fill=%22none%22 opacity=%22.9%22/%3E %3C/svg%3E ") 4 3, auto; }
+  html:not(.ink-cursor) body:not(.sticker-armed) :is(a, button, [role="button"], [role="tab"], [role="radio"], label, summary, select) { cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E   %3Cpath d=%22M11.2 3.4 C 12.6 3.1, 13.6 4.1, 13.7 5.3 L 13.9 13.6 C 15 13.3, 16.4 13.3, 17.6 13.9 C 18.6 13, 20.4 13.2, 21.3 14.3 C 22.5 13.8, 24.2 14.4, 24.6 15.8 C 25.6 15.7, 26.8 16.5, 26.9 17.9 L 26.4 24.2 C 26.1 27, 23.4 29.4, 20.3 29.4 L 15.5 29.3 C 13.5 29.3, 11.9 28.4, 10.8 26.9 L 5.4 19.6 C 4.4 18.3, 4.9 16.8, 6 16.2 C 7 15.7, 8.3 16, 9 17 L 11 19.3 L 10.1 5.4 C 10 4.4, 10.4 3.6, 11.2 3.4 Z%22 fill=%22%23fffaf1%22 stroke=%22%231d1a17%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E   %3Cpath d=%22M13.9 14 L 14 19.6 M17.6 14 L 17.7 19.6 M21.3 14.5 L 21.4 19.6%22 stroke=%22%231d1a17%22 stroke-width=%221.3%22 stroke-linecap=%22round%22/%3E   %3Cpath d=%22M9.4 5.6 C 9.6 8.8, 9.8 12, 10 15.2%22 stroke=%22%23ff614c%22 stroke-width=%221.3%22 stroke-linecap=%22round%22 opacity=%22.9%22/%3E %3C/svg%3E ") 11 4, pointer; }
+  html:not(.ink-cursor) body:not(.sticker-armed) :is(input:not([type="button"]):not([type="submit"]), textarea) { cursor: text; }
+}

@@ -1,3 +1,4 @@
+import { addScore } from "../components/play/Score";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
@@ -28,6 +29,7 @@ export function ContactPage() {
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL);
+      addScore(50, "copied my email. bonus!", "contact:copy", true);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {

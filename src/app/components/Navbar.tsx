@@ -1,4 +1,5 @@
 import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
+import { ScoreHUD } from "./play/Score";
 import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
 import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
@@ -58,6 +59,32 @@ const ITEMS: Item[] = [
   { label: ["Experience", "Lore"], to: "/experience" },
   { label: ["Contact", "Say hi"], to: "/contact" },
 ];
+
+/** Hand-drawn menu button: three wobbly lines that turn into a face on hover. */
+function MenuButton({ open, onClick }: { open: boolean; onClick: () => void }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      aria-expanded={open}
+      aria-label="Open menu"
+      className="relative w-12 h-12 md:w-[52px] md:h-[52px] rounded-full border border-black bg-[#ff614c] shadow-[3px_3px_0_0_#1d1a17] flex items-center justify-center"
+      whileHover={{ rotate: -8, scale: 1.06 }}
+      whileTap={{ scale: 0.94, rotate: 8 }}
+      transition={{ type: "spring", stiffness: 420, damping: 16 }}
+    >
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#1d1a17" strokeWidth="2.2" strokeLinecap="round" aria-hidden>
+        {/* top line → eyes */}
+        <motion.path animate={{ d: hover ? "M9 10.5 C 9.3 10.2, 9.7 10.2, 10 10.5" : "M6 9.5 C 11 8.8, 18 9.9, 24 9.2" }} transition={{ duration: 0.25 }} />
+        <motion.path animate={{ d: hover ? "M19.5 10.5 C 19.8 10.2, 20.2 10.2, 20.5 10.5" : "M7 15.4 C 13 15.9, 17 14.6, 23 15.3", opacity: 1 }} transition={{ duration: 0.25 }} />
+        {/* bottom line → smile */}
+        <motion.path animate={{ d: hover ? "M9 17.5 C 11.5 22.5, 18.5 22.5, 21 17.5" : "M8 21 C 12 20.3, 19 21.6, 22 20.8" }} transition={{ duration: 0.3 }} />
+      </svg>
+    </motion.button>
+  );
+}
 
 /** Ala'a's doodle head: rolls as you scroll, and spins faster the faster you scroll. */
 function RollingHead({ size }: { size: number }) {
@@ -124,12 +151,12 @@ export function Navbar() {
           >
             <RollingHead size={compact ? 36 : 44} />
             <motion.span
-              className="font-['Playfair_Display'] font-bold text-[20px] md:text-[24px] text-black whitespace-nowrap overflow-hidden leading-none"
+              className="font-display text-[24px] md:text-[30px] text-black lowercase whitespace-nowrap overflow-hidden leading-none"
               initial={false}
               animate={{ width: compact ? 0 : "auto", opacity: compact ? 0 : 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 30 }}
             >
-              Ala'a Ali
+              ala'a ali
             </motion.span>
           </Link>
 
@@ -140,9 +167,10 @@ export function Navbar() {
           <ModeToggle mode={mode} setMode={setMode} id="desktop" />
         </div>
 
-        {/* Language + menu button */}
-        <div className="relative flex items-center gap-3 md:gap-4 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px]">
-          <div className="flex items-center gap-1.5">
+        {/* Score + language + menu button */}
+        <div className="relative flex items-center gap-3 md:gap-5 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px]">
+          <ScoreHUD compact={compact} />
+          <div className="hidden sm:flex items-center gap-1.5">
             <button
               onClick={() => {
                 setLang("en");
@@ -163,27 +191,7 @@ export function Navbar() {
               Ar
             </button>
           </div>
-          <AnimatePresence initial={false}>
-            {(compact || true) && (
-              <motion.button
-                key="menu"
-                onClick={() => setMenuOpen(true)}
-                aria-expanded={menuOpen}
-                aria-label="Open menu"
-                className="flex items-center gap-2 bg-black text-white rounded-full pl-3.5 pr-3 py-1.5 font-['Work_Sans'] font-semibold text-[13px] uppercase tracking-[0.1em]"
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.6 }}
-                whileHover={{ rotate: -4, scale: 1.05 }}
-              >
-                Menu
-                <span className="flex flex-col gap-[3px]" aria-hidden>
-                  <span className="block w-3.5 h-[2px] bg-white rounded" />
-                  <span className="block w-2.5 h-[2px] bg-white rounded" />
-                </span>
-              </motion.button>
-            )}
-          </AnimatePresence>
+          <MenuButton open={menuOpen} onClick={() => setMenuOpen(true)} />
         </div>
       </motion.nav>
 
@@ -230,10 +238,10 @@ export function Navbar() {
                   >
                     <button onClick={() => go(it)} className="group flex items-baseline gap-4 md:gap-6 text-left">
                       <span className="font-['Work_Sans'] text-[13px] md:text-[15px] tabular-nums opacity-60">0{i + 1}</span>
-                      <span className="font-['Playfair_Display'] font-bold text-[48px] md:text-[96px] leading-[1] transition-transform duration-300 group-hover:translate-x-3 group-hover:-rotate-2 group-hover:text-black">
+                      <span className="font-display lowercase text-[56px] md:text-[110px] leading-[0.95] transition-transform duration-300 group-hover:translate-x-3 group-hover:-rotate-2 group-hover:text-black">
                         {it.label[isProfessional ? 0 : 1]}
                       </span>
-                      <span className="font-['Playfair_Display'] text-[36px] md:text-[64px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-black">→</span>
+                      <span className="font-display text-[36px] md:text-[64px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-black">→</span>
                     </button>
                   </motion.li>
                 ))}

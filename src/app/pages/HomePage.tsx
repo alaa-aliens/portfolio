@@ -1,124 +1,111 @@
 /*
- * The front door. Short on purpose: the hero, the latest work,
- * and one teaser per page, each with its own little interaction.
+ * The front door. One long, hand-drawn scroll:
+ * hero → numbers → what I do (his illustrations) → work film strip →
+ * about (comic strip) → sketchbook you can mess with → the road so far → footer.
  */
 import { Link } from "react-router";
 import { motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { HeroSection } from "../components/HeroSection";
 import { StatsSection } from "../components/StatsSection";
-import { ProjectCard } from "../components/ProjectCard";
-import { ComingSoonPopup } from "../components/ComingSoonPopup";
+import { WhatIDoSection } from "../components/WhatIDoSection";
+import { WorkStrip } from "../components/home/WorkStrip";
+import { Sketchbook } from "../components/home/Sketchbook";
+import { ComicStrip } from "../components/story/ComicStrip";
+import { Journey } from "../components/story/Journey";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { Reveal } from "../components/motion/Doodles";
-import { Button, Eyebrow, PaperCard, Scribble } from "../components/ui/Kit";
-import { StickerArt, type Kind } from "../components/play/Stickers";
-import { Thing } from "../components/play/DeskThings";
-import { projects } from "../data/projects";
+import { Button, Prose, Scribble } from "../components/ui/Kit";
 import { usePageMeta } from "../usePageMeta";
-import { useState } from "react";
-import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
+import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
 
-function Teaser({
-  to, eyebrow, title, blurb, cta, tilt, children, tone = "card",
-}: { to: string; eyebrow: string; title: string; blurb: string; cta: string; tilt: number; children: React.ReactNode; tone?: "card" | "ink" | "coral" }) {
-  return (
-    <Link to={to} className="block group">
-      <PaperCard tilt={tilt} tone={tone} className="p-6 md:p-7 h-full flex flex-col gap-4 overflow-hidden">
-        <div className="relative h-[150px] md:h-[170px] rounded-[14px] overflow-hidden" style={{ background: tone === "card" ? "#FFE9C7" : "rgba(255,250,241,.12)" }}>
-          {children}
-        </div>
-        <div>
-          <Eyebrow className={`mb-1 ${tone !== "card" ? "!text-[#fffaf1]/60" : ""}`}>{eyebrow}</Eyebrow>
-          <h3 className="font-['Playfair_Display'] font-bold text-[24px] md:text-[28px] leading-tight">{title}</h3>
-          <p className={`font-['Work_Sans'] text-[14.5px] md:text-[15.5px] leading-snug mt-2 ${tone === "card" ? "text-black/70" : "text-[#fffaf1]/80"}`}>{blurb}</p>
-        </div>
-        <span className={`mt-auto font-['DM_Serif_Display'] text-[17px] inline-flex items-center gap-2 ${tone === "card" ? "text-[#ff614c]" : "text-[#fffaf1]"}`}>
-          {cta}<span className="transition-transform group-hover:translate-x-1.5">→</span>
-        </span>
-      </PaperCard>
-    </Link>
-  );
-}
+const ROAD = {
+  pro: [
+    { date: "2007", title: "Upholsterer & gamer", body: "Stitching couches in Irbid by day, PlayStation by night. Both taught me patience with things that don't fit." },
+    { date: "2010", title: "Graphic design, with honours", body: "Irbid National University. The first time someone paid me to draw." },
+    { date: "2012", title: "300+ children's book illustrations", body: "Square Design. My hand still remembers every one." },
+    { date: "2018", title: "Al Jazeera, then TRT Arabi", body: "Motion and visual design for news reaching millions, in Doha and Istanbul." },
+    { date: "2021", title: "Lead UI/UX at Syntax", body: "All the digital products, the interaction models, the arguments about border radius." },
+    { date: "2025", title: "Director of UX, and solo", body: "Sitech/Azm by day, my own consultancy the rest of the time: gov, fintech, edtech, games." },
+    { date: "now", title: "Building my own things", body: "Siba and Siba List for my daughters, teaching at 42 Amman, and this website." },
+  ],
+  fun: [
+    { date: "2007", title: "The origin story", body: "Couches by day, PlayStation by night. Peak multitasking." },
+    { date: "2010", title: "The degree", body: "Honours. Mom was proud. Dad asked when I'd get a real job." },
+    { date: "2012", title: "Drawing for a living", body: "300+ kids' book illustrations. My hand still hurts." },
+    { date: "2018", title: "The news years", body: "Al Jazeera, then TRT. Learned to design while everything is breaking." },
+    { date: "2021", title: "The lead designer arc", body: "Led a team. Debated border-radius like it was a life decision." },
+    { date: "2025", title: "The director era", body: "Fancy title. Still googled flexbox." },
+    { date: "now", title: "Dad apps", body: "Built two apps for my kids without writing code. They still want to use iPad." },
+  ],
+};
 
 export function HomePage() {
   const { isProfessional } = useMode();
-  const [soon, setSoon] = useState(false);
   usePageMeta();
-  const lead = projects.find((p) => p.slug === "siba") ?? projects.find((p) => p.status === "ready");
-  // ready case studies first, then the featured clients
-  const featured = [...projects.filter((p) => p.status === "ready"), ...projects.filter((p) => p.featured && p.status !== "ready")]
-    .filter((p) => p.slug !== lead?.slug)
-    .slice(0, 3);
 
   return (
     <main className="flex flex-col">
       <HeroSection />
       <StatsSection />
 
-      {/* Latest work */}
-      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-16 md:pt-24">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
-          <DoodleTitle text={isProfessional ? "Latest {pencil} work" : "Fresh {pencil} damage"} className="text-[38px] md:text-[60px]" />
-          <Button to="/work" className="self-start md:self-auto md:mb-5">{isProfessional ? `All ${projects.length} projects` : "The full damage"} →</Button>
+      {/* What I do: his four illustrations */}
+      <WhatIDoSection />
+
+      {/* Work: the film strip */}
+      <WorkStrip />
+
+      {/* About: a short hello + the comic strip */}
+      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-24 md:pt-36">
+        <div className="grid md:grid-cols-[1fr_200px] gap-8 items-end">
+          <div>
+            <DoodleTitle text={isProfessional ? "a bit about {coffee} me" : "the {coffee} lore"} className="text-[44px] md:text-[72px]" />
+            <Reveal delay={0.1}>
+              <Prose lead className="mt-5 max-w-[680px]">
+                {isProfessional
+                  ? "I'm Ala'a, a UX/UI designer, illustrator and workshop facilitator in Amman. I started out stitching couches. Now I stitch pixels. Both jobs are about making something people can sit with comfortably."
+                  : "I used to stitch couches for a living. Plot twist: now I stitch pixels. If it has a screen and someone saying \"can we make it pop\", I've been there."}
+              </Prose>
+            </Reveal>
+            <Scribble className="mt-3">{isProfessional ? "six panels, then the rest on the about page" : "six panels. drag them. they like it."}</Scribble>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 40, rotate: 8 }}
+            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 120, damping: 14 }}
+            className="hidden md:block w-[200px] h-[340px] relative shrink-0"
+          >
+            <div className="absolute inset-0 overflow-hidden">
+              <img alt="" className="absolute h-[168%] left-[-96%] top-[-48%] w-[222%] max-w-none" src={imgImage14} />
+            </div>
+          </motion.div>
         </div>
-        {lead && <div className="mb-6 md:mb-8"><ProjectCard project={lead} big onSoon={() => setSoon(true)} /></div>}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-7">
-          {featured.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i + 1} onSoon={() => setSoon(true)} />
-          ))}
+        <div className="mt-10 md:mt-14">
+          <ComicStrip />
         </div>
-        <ComingSoonPopup isOpen={soon} onClose={() => setSoon(false)} />
-      </section>
-
-      {/* One line about me */}
-      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-24 md:pt-32">
-        <Reveal>
-          <blockquote className="font-['IBM_Plex_Serif'] italic font-light text-[22px] md:text-[34px] leading-[1.35] max-w-[900px] [text-wrap:balance]">
-            {isProfessional
-              ? "I design apps, platforms and dashboards that people don't need a manual to use. That's the whole job, really."
-              : "I draw stuff, break layouts, and fix them again. Somehow people pay me for this."}
-          </blockquote>
-          <Scribble className="mt-4">— {isProfessional ? "Ala'a, Amman" : "me, at 2am, probably"}</Scribble>
-        </Reveal>
-      </section>
-
-      {/* Teasers */}
-      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-14 md:pt-20">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          <Teaser to="/about" tilt={-2} eyebrow={isProfessional ? "About" : "The lore"} title={isProfessional ? "From couches to pixels" : "Couch guy to pixel guy"} blurb={isProfessional ? "The story in six comic panels, plus what I actually do." : "A comic strip. Flip cards. Random facts. The cat."} cta={isProfessional ? "Read the story" : "Get the lore"}>
-            <motion.span className="absolute left-4 bottom-0 w-[110px] h-[130px] overflow-hidden" animate={{ rotate: [-4, 4, -4] }} transition={{ duration: 3, repeat: Infinity }}>
-              <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
-            </motion.span>
-            <span className="absolute right-4 top-4 rotate-6"><StickerArt kind="wow" size={44} /></span>
-            <span className="absolute right-8 bottom-5 -rotate-12"><StickerArt kind="coffee" size={36} /></span>
-          </Teaser>
-
-          <Teaser to="/skills" tilt={2} eyebrow={isProfessional ? "Skills" : "The table"} title={isProfessional ? "What I bring to the table" : "Throw my skills around"} blurb={isProfessional ? "My desk, my tools, and how I work. You can throw things." : "My actual desk. Physics included. Poke the cat."} cta={isProfessional ? "See the desk" : "Make a mess"}>
-            <span className="absolute left-3 bottom-2"><Thing id="cat" size={0.9} /></span>
-            <span className="absolute left-1/2 -translate-x-1/2 bottom-1"><Thing id="mac" size={0.78} /></span>
-            <span className="absolute right-3 bottom-3"><Thing id="mug" size={0.9} /></span>
-            {["UX", "RTL", "Figma"].map((s, i) => (
-              <motion.span key={s} className="absolute rounded-full border border-black bg-white px-2.5 py-1 font-['Work_Sans'] font-semibold text-[11px] shadow-[2px_2px_0_0_black]" style={{ left: `${18 + i * 26}%`, top: 10 + (i % 2) * 14 }} animate={{ y: [0, -6, 0], rotate: [i * 4 - 4, -i * 3, i * 4 - 4] }} transition={{ duration: 2 + i * 0.3, repeat: Infinity }}>{s}</motion.span>
-            ))}
-          </Teaser>
-
-          <Teaser to="/experience" tilt={-1.5} eyebrow={isProfessional ? "Experience" : "The timeline"} title={isProfessional ? "Where I've been" : "How I got here"} blurb={isProfessional ? "Al Jazeera, TRT, Syntax, Sitech, teaching, a top-10 podcast." : "Four timelines. The PlayStation years count."} cta={isProfessional ? "See the timeline" : "Read the lore"}>
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 170" fill="none" aria-hidden>
-              <motion.path d="M20 140 C 80 120, 90 60, 150 70 S 230 30, 280 20" stroke="#ff614c" strokeWidth="4" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.4 }} />
-              {[[20, 140, "2007"], [95, 84, "2012"], [150, 70, "2018"], [220, 44, "2021"], [280, 20, "now"]].map(([x, y, l], i) => (
-                <g key={l as string}>
-                  <motion.circle cx={x as number} cy={y as number} r="7" fill="#fffaf1" stroke="#1d1a17" strokeWidth="2.5" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.2, type: "spring" }} />
-                  <text x={x as number} y={(y as number) + 24} textAnchor="middle" fontFamily="Work Sans" fontSize="11" fontWeight="600" fill="#1d1a17">{l}</text>
-                </g>
-              ))}
-            </svg>
-          </Teaser>
-
+        <div className="mt-8 flex flex-wrap gap-4 items-center">
+          <Button to="/about">{isProfessional ? "the whole story" : "more lore"} →</Button>
+          <Link to="/skills" className="font-['Shantell_Sans',cursive] text-[15px] text-black/60 hover:text-[#ff614c]">{isProfessional ? "or see my desk and tools" : "or go throw my skills around"} →</Link>
         </div>
       </section>
 
-      <div className="h-8 md:h-12" />
+      {/* Sketchbook */}
+      <Sketchbook />
+
+      {/* The road so far */}
+      <section className="w-full max-w-[1000px] mx-auto px-5 md:px-12 pt-24 md:pt-36">
+        <div className="mb-10 md:mb-14">
+          <DoodleTitle text={isProfessional ? "the road {star} so far" : "how i got {star} here"} className="text-[44px] md:text-[72px]" />
+          <Scribble className="mt-1">{isProfessional ? "scroll and it draws itself" : "it's a road. it draws. you scroll."}</Scribble>
+        </div>
+        <Journey stops={isProfessional ? ROAD.pro : ROAD.fun} color="#ff614c" />
+        <div className="mt-10">
+          <Button to="/experience">{isProfessional ? "full experience, four timelines" : "all four timelines"} →</Button>
+        </div>
+      </section>
+
+      <div className="h-16 md:h-24" />
     </main>
   );
 }

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { loseLife } from "./play/Score";
 import { motion, AnimatePresence } from "motion/react";
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
@@ -6,6 +8,9 @@ import imgImage54 from "figma:asset/2a859171033dd07ade1eb5527484f0697aadb6e3.png
 
 /* Shown when someone opens a project whose case study isn't written yet. */
 export function ComingSoonPopup({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (isOpen) loseLife("that one isn't written yet");
+  }, [isOpen]);
   const { isProfessional } = useMode();
   const { openContact } = useContactForm();
 

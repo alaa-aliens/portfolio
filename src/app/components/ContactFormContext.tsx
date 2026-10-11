@@ -1,3 +1,4 @@
+import { addScore } from "./play/Score";
 import React, { createContext, useContext, useState } from "react";
 
 interface ContactFormContextType {
@@ -18,7 +19,10 @@ export function ContactFormProvider({ children }: { children: React.ReactNode })
     <ContactFormContext.Provider
       value={{
         isContactOpen,
-        openContact: () => setIsContactOpen(true),
+        openContact: () => {
+          setIsContactOpen(true);
+          addScore(25, "opened the contact form", "contact:open", true);
+        },
         closeContact: () => setIsContactOpen(false),
       }}
     >
