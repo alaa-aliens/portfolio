@@ -4,12 +4,6 @@ import { ContactFormModal } from "./components/ContactFormModal";
 import { useContactForm } from "./components/ContactFormContext";
 import { useMode } from "./components/ModeContext";
 import { Navbar } from "./components/Navbar";
-import { HeroSection } from "./components/HeroSection";
-import { StatsSection } from "./components/StatsSection";
-import { AboutSection } from "./components/AboutSection";
-import { WhatIDoSection } from "./components/WhatIDoSection";
-import { ProjectsSection } from "./components/ProjectsSection";
-import { WorkExperienceSection } from "./components/WorkExperienceSection";
 import { FooterSection } from "./components/FooterSection";
 import { ArabicPlaceholderPage } from "./components/ArabicPlaceholderPage";
 import { useEffect } from "react";
@@ -21,17 +15,16 @@ import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { WorkPage } from "./pages/WorkPage";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { ScrollProgress } from "./components/ScrollProgress";
-import { usePageMeta } from "./usePageMeta";
 import { Stickers } from "./components/play/Stickers";
 import { InkCursor } from "./components/play/InkCursor";
 import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
 import { AskAlaa } from "./components/play/AskAlaa";
+import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { SkillsPage } from "./pages/SkillsPage";
 import { ExperiencePage } from "./pages/ExperiencePage";
 import { ContactPage } from "./pages/ContactPage";
 import { PlayPage } from "./pages/PlayPage";
-import { SkillsTable } from "./components/play/SkillsTable";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -45,21 +38,6 @@ function ScrollManager() {
     window.scrollTo(0, 0);
   }, [pathname, hash]);
   return null;
-}
-
-function HomePage() {
-  usePageMeta();
-  return (
-    <main className="flex flex-col gap-16 md:gap-24">
-      <HeroSection />
-      <StatsSection />
-      <AboutSection />
-      <WhatIDoSection />
-      <SkillsTable />
-      <ProjectsSection />
-      <WorkExperienceSection />
-    </main>
-  );
 }
 
 function AppContent() {

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useLocation } from "react-router";
 import { useMode } from "../ModeContext";
 import { Eye } from "../hero/EyeHeadline";
+import { isPencilOn, setPencil } from "./InkCursor";
 
 export type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye" | "tie" | "popper";
 
@@ -125,6 +126,12 @@ export function Stickers() {
   const [armed, setArmed] = useState<Kind | null>(null);
   const [placed, setPlaced] = useState<Placed[]>([]);
   const [cursor, setCursor] = useState({ x: -200, y: -200 });
+  const [pencil, setPencilState] = useState(() => isPencilOn());
+  const togglePencil = () => {
+    const n = !pencil;
+    setPencilState(n);
+    setPencil(n);
+  };
   const trayRef = useRef<HTMLDivElement>(null);
   const idRef = useRef(1);
 
@@ -229,6 +236,19 @@ export function Stickers() {
                   </button>
                 </div>
               </div>
+              <button
+                onClick={togglePencil}
+                aria-pressed={pencil}
+                className={`w-full mb-2 flex items-center justify-between rounded-[10px] border px-2.5 py-1.5 font-['Work_Sans'] text-[12.5px] transition-colors ${pencil ? "border-black bg-[#FFE8C2]" : "border-black/15 hover:border-black/40"}`}
+              >
+                <span className="flex items-center gap-2">
+                  <svg width="18" height="18" viewBox="0 0 34 34" aria-hidden><path d="M3 31 L7 21 L24 4 L30 10 L13 27 Z" fill="#FFC53D" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" /><path d="M24 4 L30 10 L32 7 L27 2 Z" fill="#ff614c" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" /></svg>
+                  {isProfessional ? "pencil cursor" : "cursor → pencil"}
+                </span>
+                <span className={`w-9 h-5 rounded-full border-2 border-black relative transition-colors ${pencil ? "bg-[#ff614c]" : "bg-white"}`}>
+                  <span className={`absolute top-[2px] w-3 h-3 rounded-full bg-black transition-all ${pencil ? "left-[18px]" : "left-[2px]"}`} />
+                </span>
+              </button>
               <div className="grid grid-cols-5 gap-1.5">
                 {KINDS.map((k) => (
                   <button

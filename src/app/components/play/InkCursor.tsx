@@ -1,9 +1,27 @@
 /*
- * The cursor is a pencil, and it leaves a short coral ink line that fades away,
- * like sketching in the margin. Mouse only; off for touch and "reduce motion".
- * Over links and buttons the pencil tilts and the ink turns black.
+ * Optional pencil cursor: off by default. Turn it on from the sticker tray
+ * (the "pencil" switch) and the cursor becomes a pencil that leaves a short
+ * coral ink line, like sketching in the margin. Mouse only.
  */
 import { useEffect, useRef, useState } from "react";
+
+const KEY = "alaa-pencil";
+const EVT = "pencil:toggle";
+export function isPencilOn() {
+  try {
+    return localStorage.getItem(KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+export function setPencil(on: boolean) {
+  try {
+    localStorage.setItem(KEY, on ? "1" : "0");
+  } catch {
+    /* ignore */
+  }
+  window.dispatchEvent(new CustomEvent(EVT, { detail: on }));
+}
 
 const MAX_AGE = 520; // ms an ink point lives
 
@@ -15,7 +33,11 @@ export function InkCursor() {
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setEnabled(fine && !reduce);
+    const ok = fine && !reduce;
+    setEnabled(ok && isPencilOn());
+    const onToggle = (e: Event) => setEnabled(ok && (e as CustomEvent<boolean>).detail);
+    window.addEventListener(EVT, onToggle);
+    return () => window.removeEventListener(EVT, onToggle);
   }, []);
 
   useEffect(() => {
