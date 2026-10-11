@@ -7,7 +7,7 @@ import { useContactForm } from "../components/ContactFormContext";
 import { BeforeAfter } from "../components/BeforeAfter";
 import { BeforeChat } from "../components/BeforeChat";
 import { BrowserShowcase, PhoneFan, ScreenRow } from "../components/Phone";
-import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline, SectionTitle } from "../components/motion/Doodles";
+import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline } from "../components/motion/Doodles";
 import { categories, getNextReady, getProject, type Project } from "../data/projects";
 import { ProblemSketch } from "../components/ProblemSketch";
 import { ProjectCover } from "../components/ProjectCover";
@@ -16,6 +16,9 @@ import { CharacterMoods } from "../components/story/CharacterMoods";
 import { SoundBoard } from "../components/story/SoundBoard";
 import { Journey } from "../components/story/Journey";
 import { DoodleTitle } from "../components/play/DoodleTitle";
+import { StickerArt, type Kind } from "../components/play/Stickers";
+import { Scribble } from "../components/ui/Kit";
+import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { usePageMeta } from "../usePageMeta";
 
 function BackLink() {
@@ -72,56 +75,62 @@ function NotReady({ project }: { project?: Project }) {
 }
 
 /* ── Steps with a line that draws as you scroll ── */
-function Steps({ steps }: { steps: NonNullable<NonNullable<Project["caseStudy"]>["steps"]> }) {
-  const ref = useRef<HTMLOListElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 60%"] });
-  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+const CHAPTER_STICKERS: Kind[] = ["star", "bolt", "heart", "wow", "sparkle", "crown", "swirl"];
 
+/** The chapters: big hand-drawn number, a title in marker, the story, how it felt, and the screens. */
+function Chapters({ steps, color }: { steps: NonNullable<NonNullable<Project["caseStudy"]>["steps"]>; color: string }) {
+  const { isProfessional } = useMode();
   return (
-    <ol ref={ref} className="relative flex flex-col gap-12 md:gap-16 mt-10">
-      <div aria-hidden className="absolute left-[23px] md:left-[31px] top-2 bottom-2 w-[2px] bg-black/10" />
-      <motion.div
-        aria-hidden
-        style={{ scaleY }}
-        className="absolute left-[23px] md:left-[31px] top-2 bottom-2 w-[2px] bg-[#ff614c] origin-top"
-      />
+    <ol className="flex flex-col gap-20 md:gap-28 mt-12">
       {steps.map((s, i) => (
-        <Reveal as="li" key={s.title} className="relative grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-4 md:gap-8">
-          <div className="relative z-10 flex items-start justify-center">
-            <motion.span
-              initial={{ scale: 0, rotate: -20 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ type: "spring", stiffness: 300, damping: 14 }}
-              className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#fdecd0] border border-black flex items-center justify-center font-['Playfair_Display'] italic font-bold text-[22px] md:text-[28px] text-[#ff614c]"
-            >
-              {i + 1}
-            </motion.span>
-          </div>
-          <div className="flex flex-col gap-3 pt-1 md:pt-3">
-            <h3 className="font-['Playfair_Display'] font-bold text-black text-[22px] md:text-[30px] leading-tight">
-              {s.title}
-            </h3>
-            <p className="font-['IBM_Plex_Serif'] text-black/85 text-[16px] md:text-[19px] leading-[1.65] max-w-[680px]">
-              {s.body}
-            </p>
+        <li key={s.title} className="relative">
+          <Reveal>
+            <div className="grid md:grid-cols-[110px_1fr] gap-4 md:gap-8 items-start">
+              <div className="relative flex md:flex-col items-center md:items-start gap-3">
+                <motion.span
+                  initial={{ scale: 0, rotate: -30 }}
+                  whileInView={{ scale: 1, rotate: i % 2 ? 6 : -6 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 14 }}
+                  className="w-16 h-16 md:w-[84px] md:h-[84px] rounded-full border border-black bg-[#fffaf1] flex items-center justify-center font-display text-[34px] md:text-[44px] leading-none shadow-[3px_3px_0_0_#1d1a17]"
+                  style={{ color }}
+                >
+                  {i + 1}
+                </motion.span>
+                <motion.span
+                  aria-hidden
+                  className="md:ml-10"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.25, type: "spring", stiffness: 400, damping: 12 }}
+                >
+                  <StickerArt kind={CHAPTER_STICKERS[i % CHAPTER_STICKERS.length]} size={34} />
+                </motion.span>
+              </div>
+              <div className="flex flex-col gap-4">
+                <h3 className="font-display lowercase text-[34px] md:text-[52px] leading-[1] text-black">{s.title}</h3>
+                <p className="font-['IBM_Plex_Serif'] text-black/85 text-[17px] md:text-[20px] leading-[1.65] max-w-[720px]">{s.body}</p>
+                {s.feeling && (
+                  <p className="inline-flex items-start gap-2 self-start rounded-[12px] border border-dashed border-black/40 bg-[#fffaf1]/70 px-4 py-2.5 font-['Shantell_Sans',cursive] text-[15px] md:text-[16px] text-black/75 rotate-[-1deg]">
+                    <span className="text-black/45">{isProfessional ? "how it felt:" : "mood:"}</span>
+                    {s.feeling}
+                  </p>
+                )}
+              </div>
+            </div>
             {s.phones && s.phones.length > 0 && (
-              <div className="mt-5">
+              <div className="mt-8 md:ml-[118px]">
                 <ScreenRow shots={s.phones} />
               </div>
             )}
             {s.image && (
-              <PenWipe className="mt-4">
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  loading="lazy"
-                  className="w-full rounded-[6px] border border-black shadow-[4px_4px_0px_0px_black]"
-                />
+              <PenWipe className="mt-8 md:ml-[118px]">
+                <img src={s.image} alt={s.title} loading="lazy" className="w-full rounded-[12px] border border-black shadow-[4px_4px_0_0_#1d1a17]" />
               </PenWipe>
             )}
-          </div>
-        </Reveal>
+          </Reveal>
+        </li>
       ))}
     </ol>
   );
@@ -131,8 +140,8 @@ function Result({ value, label, i }: { value: string; label: string; i: number }
   const m = value.match(/^(\d+)(.*)$/);
   const numeric = m && m[2].trim() === "" ? Number(m[1]) : null;
   return (
-    <Reveal delay={i * 0.08} className="flex flex-col gap-2 border-t-2 border-black pt-4">
-      <span className="font-['Playfair_Display'] font-bold italic text-[#ff614c] text-[52px] md:text-[72px] leading-none">
+    <Reveal delay={i * 0.08} className="flex flex-col gap-2 border-t border-black pt-4">
+      <span className="font-display text-[#ff614c] text-[60px] md:text-[84px] leading-none">
         {numeric !== null ? <CountUp to={numeric} /> : value}
       </span>
       <span className="font-['IBM_Plex_Serif'] text-black text-[15px] md:text-[18px] leading-snug">{label}</span>
@@ -186,7 +195,7 @@ export function CaseStudyPage() {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h1 className="font-['Playfair_Display'] font-bold text-black text-[52px] md:text-[96px] leading-[0.95] mt-3">
+              <h1 className="font-display lowercase text-[64px] md:text-[120px] leading-[0.9] mt-3" style={{ color: cat.color === "#1F1F1F" ? "#1d1a17" : cat.color }}>
                 {project.name}
               </h1>
             </Reveal>
@@ -196,10 +205,10 @@ export function CaseStudyPage() {
                 {isProfessional ? project.proHook : project.funHook}
               </p>
             </Reveal>
-            {!isProfessional && cs.funTldr && (
+            {cs.funTldr && (
               <Reveal delay={0.25}>
-                <p className="font-['IBM_Plex_Serif'] italic font-light text-black/70 text-[16px] md:text-[20px] leading-[1.5] mt-4 max-w-[680px]">
-                  “{cs.funTldr}”
+                <p className="font-['Shantell_Sans',cursive] text-black/65 text-[15px] md:text-[18px] leading-[1.5] mt-5 max-w-[640px] rotate-[-0.5deg]">
+                  {cs.funTldr}
                 </p>
               </Reveal>
             )}
@@ -240,7 +249,7 @@ export function CaseStudyPage() {
         {/* ── Problem ── */}
         {cs.problem && cs.problem.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "The Problem" : "What Was Broken"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "where it {bolt} started" : "what was {bolt} broken"} className="text-[40px] md:text-[64px]" />
             <div className="flex flex-col gap-5 mt-8">
               {cs.problem.map((p, i) => (
                 <Reveal key={i} delay={i * 0.08}>
@@ -264,7 +273,7 @@ export function CaseStudyPage() {
         {/* ── Real sketches from the notebook ── */}
         {cs.sketches && cs.sketches.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "From the sketchbook" : "Napkin math"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "from the {pencil} sketchbook" : "napkin {pencil} math"} className="text-[40px] md:text-[64px]" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10">
               {cs.sketches.map((sk, i) => (
                 <PenWipe key={sk.src} delay={(i % 2) * 0.1} direction="up">
@@ -292,7 +301,7 @@ export function CaseStudyPage() {
         {/* ── Before / after as a chat ── */}
         {cs.beforeChat && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "Before & After" : "The Glow-Up"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "before {sparkle} after" : "the {sparkle} glow-up"} className="text-[40px] md:text-[64px]" />
             <div className="mt-10">
               <BeforeChat
                 lines={cs.beforeChat.lines}
@@ -311,15 +320,16 @@ export function CaseStudyPage() {
         {/* ── What I did ── */}
         {cs.steps && cs.steps.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "What I Did" : "How I Fixed It"}</SectionTitle>
-            <Steps steps={cs.steps} />
+            <DoodleTitle text={isProfessional ? "how we {hand} got there" : "how i {hand} fixed it"} className="text-[40px] md:text-[64px]" />
+            <Scribble className="mt-2">{isProfessional ? "chapter by chapter, with how it felt at the time" : "the chapters. with moods. because there were moods."}</Scribble>
+            <Chapters steps={cs.steps} color={cat.color} />
           </section>
         )}
 
         {/* ── The character ── */}
         {cs.character && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? `Meet ${cs.character.name}` : `${cs.character.name} has feelings`}</SectionTitle>
+            <DoodleTitle text={isProfessional ? `meet {heart} ${cs.character.name.toLowerCase()}` : `${cs.character.name.toLowerCase()} has {heart} feelings`} className="text-[40px] md:text-[64px]" />
             <div className="mt-8">
               <CharacterMoods name={cs.character.name} intro={cs.character.intro} moods={cs.character.moods} color={cat.color} />
             </div>
@@ -329,7 +339,7 @@ export function CaseStudyPage() {
         {/* ── Sound ── */}
         {cs.sounds && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "How it sounds" : "Turn your sound on"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "how it {star} sounds" : "turn your {star} sound on"} className="text-[40px] md:text-[64px]" />
             <div className="mt-8">
               <SoundBoard intro={cs.sounds.intro} tones={cs.sounds.tones} voices={cs.sounds.voices} color={cat.color} />
             </div>
@@ -339,7 +349,7 @@ export function CaseStudyPage() {
         {/* ── Journey ── */}
         {cs.journey && cs.journey.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "The journey" : "How it actually happened"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "the {swirl} journey" : "how it {swirl} actually happened"} className="text-[40px] md:text-[64px]" />
             <div className="mt-10">
               <Journey stops={cs.journey} color={cat.color} />
             </div>
@@ -349,7 +359,7 @@ export function CaseStudyPage() {
         {/* ── Before / after ── */}
         {cs.before && cs.after && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "Before / After" : "The Glow-Up"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "before {sparkle} after" : "the {sparkle} glow-up"} className="text-[40px] md:text-[64px]" />
             <Reveal className="mt-8">
               <BeforeAfter before={cs.before} after={cs.after} />
             </Reveal>
@@ -359,7 +369,7 @@ export function CaseStudyPage() {
         {/* ── Results ── */}
         {cs.results && cs.results.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "Results" : "The Receipts"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "what {crown} changed" : "the {crown} receipts"} className="text-[40px] md:text-[64px]" />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mt-10">
               {cs.results.map((r, i) => (
                 <Result key={r.label} value={r.value} label={r.label} i={i} />
@@ -371,7 +381,7 @@ export function CaseStudyPage() {
         {/* ── Gallery ── */}
         {cs.gallery && cs.gallery.length > 0 && (
           <section>
-            <SectionTitle color={cat.color}>{isProfessional ? "Gallery" : "More Pretty Pictures"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "more {eye} screens" : "more pretty {eye} pictures"} className="text-[40px] md:text-[64px]" />
             <div className="columns-1 md:columns-2 gap-6 mt-10 [&>*]:mb-6">
               {cs.gallery.map((src, i) => (
                 <PenWipe key={src} delay={(i % 2) * 0.1} direction="up">
@@ -387,12 +397,19 @@ export function CaseStudyPage() {
           </section>
         )}
 
-        {/* ── Closing ── */}
+        {/* ── Closing: a note, in my handwriting ── */}
         {cs.closing && (
           <Reveal>
-            <blockquote className="relative font-['IBM_Plex_Serif'] italic font-light text-black text-[20px] md:text-[28px] leading-[1.45] border-l-4 pl-6 md:pl-10" style={{ borderColor: cat.color }}>
-              {cs.closing}
-            </blockquote>
+            <div className="relative max-w-[760px] mx-auto">
+              <span aria-hidden className="absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-[#FFE9C7]/90 rotate-[-3deg] border border-black/10 z-10" />
+              <div className="relative rounded-[6px] bg-[#fffaf1] border border-black/70 shadow-[4px_4px_0_0_#1d1a17] px-7 md:px-12 py-9 md:py-12 rotate-[0.6deg]">
+                <p className="font-['Shantell_Sans',cursive] text-black text-[19px] md:text-[26px] leading-[1.55]">{cs.closing}</p>
+                <p className="font-display text-[26px] md:text-[32px] text-[#ff614c] mt-6 lowercase">— ala'a</p>
+                <span className="absolute -right-6 -bottom-7 w-[92px] h-[110px] overflow-hidden rotate-[8deg]" aria-hidden>
+                  <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgHead} />
+                </span>
+              </div>
+            </div>
           </Reveal>
         )}
       </div>

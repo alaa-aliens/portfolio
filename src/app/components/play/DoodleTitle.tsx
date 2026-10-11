@@ -56,7 +56,7 @@ export function DoodleTitle({
       <Reveal y={16}>
         <H
           aria-label={text.replace(/\{[a-z]+\}\s?/g, "")}
-          className={`font-['Playfair_Display'] font-bold text-black leading-[1.05] [text-wrap:balance] ${className}`}
+          className={`font-display lowercase text-black leading-[1] [text-wrap:balance] ${className}`}
         >
           {parts.map((p, i) => {
             const m = p.match(/^\{([a-z]+)\}$/);

@@ -125,6 +125,8 @@ export interface CaseStudy {
     body: string;
     image?: string;
     phones?: { src: string; alt: string; caption?: string; kind?: "phone" | "desktop" }[];
+    /** One handwritten line about how this chapter felt at the time */
+    feeling?: string;
   }[];
   before?: string;
   after?: string;
@@ -206,6 +208,7 @@ export const projects: Project[] = [
       steps: [
         {
           title: "Put the VIN field where the hero used to be",
+          feeling: "a small fight with the marketing page. the field won.",
           body: "Every page opens with the same question: what's the car? VIN or plate, one field, one button. The marketing moved below it. Dedicated landing pages for VIN decoding and plate lookup do the same thing with different words, so search traffic lands exactly where it can act.",
           phones: [
             { src: csHome, alt: "Home page with the VIN field first", caption: "the field is the hero", kind: "desktop" },
@@ -214,6 +217,7 @@ export const projects: Project[] = [
         },
         {
           title: "Turn the report into an answer, then the evidence",
+          feeling: "like translating. the data was there, it just didn't speak.",
           body: "The new report opens with a verdict strip: accidents, odometer, title, recalls, each with a plain state. Below it, the full history as a timeline rather than a table. The warm palette carries the brand, but orange is reserved for one job: things you should look at twice.",
           phones: [
             { src: csReport, alt: "Report with a verdict strip up top", caption: "verdict first", kind: "desktop" },
@@ -222,11 +226,13 @@ export const projects: Project[] = [
         },
         {
           title: "Price the packages by the question they answer",
+          feeling: "sceptical at first. then the copy got simpler and it clicked.",
           body: "One report, three reports, or a month of them. Each package is written for a situation (\"I'm looking at one car\", \"I'm shopping around\", \"I sell cars\") instead of a feature grid, and the differences are three lines, not thirty.",
           phones: [{ src: csPricing, alt: "Packages and pricing", caption: "pick a situation, not a feature grid", kind: "desktop" }],
         },
         {
           title: "Give the buyer a garage",
+          feeling: "fun. this was the page I'd actually use.",
           body: "Shopping for a car takes weeks and several candidates. My Garage keeps every checked car in one place with its verdict, so comparing is a glance instead of a folder of PDFs. It's the page people come back to, which is why it gets the same care as the report.",
           phones: [
             { src: csGarage, alt: "My Garage on desktop", caption: "every car you checked", kind: "desktop" },
@@ -235,12 +241,20 @@ export const projects: Project[] = [
         },
         {
           title: "Design the phone version properly, not by squeezing",
+          feeling: "tedious, honestly. twelve pages, twice. worth it.",
           body: "Twelve pages, each designed at 1512 and again at 393. The mobile menu is a full-screen sheet with the VIN field in it, because a buyer standing next to a car is on a phone, not a laptop.",
           phones: [
             { src: csGetReportMobile, alt: "Get report flow on mobile", caption: "VIN to report on a phone" },
             { src: csMenuMobile, alt: "Mobile menu with the VIN field", caption: "the menu has the field too" },
           ],
         },
+      ],
+      journey: [
+        { date: "Round 1", title: "Twelve pages, prompted", body: "The first website came out of Figma Make prompts, page by page: Tools, Business, APIs, Pricing. Fast, rough, and enough to argue about." },
+        { date: "Round 2", title: "The report gets its own brief", body: "The website was the easy part. The report was the product. We pulled it out as its own redesign with its own rules: verdict first, evidence second." },
+        { date: "Tokens", title: "Orange, dark, warm white, Inter", body: "A small set of brand tokens so every page stopped inventing its own greys. Orange kept one job." },
+        { date: "V3", title: "The \"V3 · Website\" page", body: "Every page rebuilt in Figma at 1512 and 393. A state doc written so each new session picked up where the last one stopped. [tell me what the client said here]" },
+        { date: "Details", title: "The carousel argument", body: "Arrows on each side of the cards, vertically centred, not bunched next to the title. Small, but it's the kind of thing that makes a site feel designed." },
       ],
       results: [
         { value: "12", label: "Pages redesigned" },
@@ -396,6 +410,7 @@ export const projects: Project[] = [
       steps: [
         {
           title: "Draw the smallest loop that actually helps",
+          feeling: "relief. the first night I didn't mark a single quiz.",
           body: "Photos in. The AI drafts a summary, key facts and an exam. A parent reviews, then publishes. The child studies and sits the exam in the app, and the parent sees what she got wrong without marking anything by hand.",
           phones: [
             { src: sibaParentHome, alt: "Parent home with a review queue", caption: "what needs you, first" },
@@ -404,11 +419,13 @@ export const projects: Project[] = [
         },
         {
           title: "Nothing reaches the child until a parent has read it",
+          feeling: "stubborn. everyone said \"just trust the AI\". I didn't.",
           body: "Four sections, four separate confirmations, and the publish button stays dead until all four are ticked, in the interface and in the database. There is deliberately no \"confidence is high, skip the review\" path. A confident wrong answer is the dangerous kind, and only someone who knows the child's book can catch it.",
           phones: [{ src: sibaParentReview, alt: "The four-part review screen with a locked publish button", caption: "publish stays locked" }],
         },
         {
           title: "Study modes come from the page, not the subject",
+          feeling: "nerdy joy. Alma found the mind map before I showed her.",
           body: "A page of definitions supports flashcards and matching. A page describing a process supports ordering. Siba only offers the modes a page can honestly support, and they all read the same reviewed facts, so adding a mode doesn't multiply the parent's review time.",
           phones: [
             { src: sibaKidLesson, alt: "Lesson with study modes", caption: "7 ways into one page" },
@@ -418,6 +435,7 @@ export const projects: Project[] = [
         },
         {
           title: "Bilingual without guessing",
+          feeling: "humbling. Arabic RTL broke things I thought were solid.",
           body: "Arabic and English, right-to-left and left-to-right. The content's language belongs to the material, not the subject: an Arabic science book can still have an English glossary. When detection disagrees, the parent gets a banner, never a silent correction.",
           phones: [
             { src: sibaKidLessonAr, alt: "An Arabic lesson in the child app", caption: "Arabic content" },
@@ -426,6 +444,7 @@ export const projects: Project[] = [
         },
         {
           title: "A streak that can't punish her",
+          feeling: "protective. I've watched streak apps make my kid cry.",
           body: "The streak is a lantern that never goes out on its own: a missed day burns spare oil, and only when the oil runs out does the count restart. The first attempt is the score, and she's told that before she starts. There is no leaderboard between sisters.",
           phones: [
             { src: sibaKidStreak, alt: "Streak lantern screen", caption: "the lantern" },
@@ -434,6 +453,7 @@ export const projects: Project[] = [
         },
         {
           title: "Built by a designer who doesn't code",
+          feeling: "terrified, then unreasonably proud.",
           body: "I designed every interaction, then built the app by directing Claude Code. Two AI calls, two models: a strong one reads the phone photos, a cheaper one writes the questions. That keeps a 6-page chapter at a few cents.",
           phones: [{ src: sibaKidPlay, alt: "Siba guiding a lesson", caption: "Siba, the guide" }],
         },
@@ -486,6 +506,7 @@ export const projects: Project[] = [
       steps: [
         {
           title: "Points, not checkmarks",
+          feeling: "guilty. the old rule had been mine.",
           body: "Every task is worth points. A perfect week is 240. The week decides what share of the allowance she keeps, on a banded ladder, so a bad Tuesday costs a little instead of everything. One free pass a week, and it can be used after the fact, because that's when you need it.",
           phones: [
             { src: slToday, alt: "Today's list with points", caption: "each task has a price" },
@@ -494,11 +515,13 @@ export const projects: Project[] = [
         },
         {
           title: "The timer is in the app, not in my head",
+          feeling: "free. thirty minutes I got back twice a week.",
           body: "Music is thirty minutes, twice a week. The timer runs in the app and the task only completes when it ends. Daily things like Duolingo are daily; music and coding are weekly quotas, because frequency matters more than ticking a box every day.",
           phones: [{ src: slTimer, alt: "The in-app practice timer", caption: "30 minutes, enforced kindly" }],
         },
         {
           title: "Proof goes to a queue, and a parent decides",
+          feeling: "organised for the first time in this household.",
           body: "She attaches the screenshot or the recording to the task itself. I get a review queue, approve or decline with a reason, and anything I ignore for 48 hours approves itself, because a slow parent shouldn't cost a kid her points.",
           phones: [
             { src: slParentHome, alt: "Parent home", caption: "what needs me" },
@@ -507,6 +530,7 @@ export const projects: Project[] = [
         },
         {
           title: "Points are the currency, money is one way to spend them",
+          feeling: "negotiated. Alma wanted a better exchange rate.",
           body: "I don't want the girls holding cash. Points can become money (100 points = JD 1), play time, or something from a rewards menu. Cashing out is a request, which I approve, and the transfer goes to her account.",
           phones: [
             { src: slRewards, alt: "The rewards menu", caption: "100 points = JD 1" },
@@ -515,6 +539,7 @@ export const projects: Project[] = [
         },
         {
           title: "Friday is a ceremony",
+          feeling: "proud. Friday stopped being an argument.",
           body: "Payday shows the week, the band she landed on, and what she kept. It's the screen that replaced the argument. Saturday to Friday is the week, and the whole thing closes at 8 PM because that's bedtime.",
           phones: [
             { src: slPayday, alt: "Friday payday screen", caption: "payday" },
@@ -523,9 +548,18 @@ export const projects: Project[] = [
         },
         {
           title: "Rules first, pixels second",
+          feeling: "patient. writing rules is slower than drawing screens.",
           body: "Before choosing a visual style I wrote the rules out: thirty of them, with every edge case we'd argued about. Then the app borrowed Siba's design system, so the two feel like siblings. In Figma that became a variable-bound component library and 25 screens for onboarding, the parent and the kids.",
           phones: [{ src: slWelcome, alt: "Onboarding welcome", caption: "same family as Siba" }],
         },
+      ],
+      journey: [
+        { date: "Before", title: "The all-or-nothing rule", body: "Full list, full allowance. Miss one thing, nothing. My rule. Everyone, including me, thought it was unfair." },
+        { date: "Day 1", title: "Four concepts, all rejected", body: "Runway, ladder, proof-first, receipt. Too clever, wrong style, no states, and the money wasn't on screen. Back to plain." },
+        { date: "Day 2", title: "A child-psychology detour, also rejected", body: "Base-plus-bonus, non-monetary rewards, kids co-writing the rules. Nice ideas. Not what this family needed. Points and a ladder, kept as is." },
+        { date: "Day 3", title: "Thirty rules", body: "Before any visual style: 30 numbered rules and four open questions. Then the four got answered: 48-hour auto-approve, Saturday to Friday, a +40 bonus cap, retroactive free pass." },
+        { date: "9 Sep", title: "It becomes Siba's sibling", body: "Rubik, brand green, gold for points, the solid-edge depth. The list app borrows Siba's design system instead of inventing one.", img: slToday },
+        { date: "10 Sep", title: "Working prototype + Figma", body: "Both sides working with shared data, the rules as database functions, and a Figma file with foundations, components and 25 screens.", img: slPayday },
       ],
       results: [
         { value: "30", label: "Rules, written before any screen" },
@@ -592,6 +626,7 @@ export const projects: Project[] = [
       steps: [
         {
           title: "Wireframes first, grey on purpose",
+          feeling: "calm. grey boxes stop the \"I don't like the blue\" meetings.",
           body: "We agreed everything in lo-fi before a single colour: five core screens, one page of notes. Two benchmarks sat next to the wireframes with a borrow / adapt / skip board, so every decision had a reason written down and the team could argue about structure instead of taste.",
           phones: [
             { src: thWireMap, alt: "Map-first wireframe", caption: "the map wins the argument", kind: "desktop" },
@@ -600,11 +635,13 @@ export const projects: Project[] = [
         },
         {
           title: "Four groups instead of twelve items",
+          feeling: "obvious in hindsight. that's usually the sign.",
           body: "The side menu became Operations (live tracking, alerts, maintenance), Management (units, trackers, geofences, automations), Insights (history, reports) and Settings. Same features, zero new ones, but now the menu reads like the dispatcher's day.",
           phones: [{ src: thGeofences, alt: "Geofences under Management", caption: "management, not a mystery", kind: "desktop" }],
         },
         {
           title: "Live tracking on one page, at any fleet size",
+          feeling: "the hard one. 100 dots on a map is a different design.",
           body: "The fleet list, the map and the selected unit live together. The layout was designed for 12, 40 and 100 units, because a screen that's lovely with twelve dots falls apart with a hundred. Orange is spent on exactly one meaning: live, right now.",
           phones: [
             { src: thLiveFleet, alt: "Live tracking with the fleet list", caption: "the fleet", kind: "desktop" },
@@ -613,6 +650,7 @@ export const projects: Project[] = [
         },
         {
           title: "A UI system that reads like an instrument",
+          feeling: "the fun part. I got to pick a mono font.",
           body: "Archivo for display and numerals, Inter for the interface, a mono face for machine data like coordinates and IMEIs. Ink primary buttons, orange reserved for live state and the active nav. Light by default, with a dark theme for the night shift.",
           phones: [
             { src: thLiveDark, alt: "Live tracking in dark mode", caption: "night shift", kind: "desktop" },
@@ -621,12 +659,21 @@ export const projects: Project[] = [
         },
         {
           title: "Alerts, maintenance and reports that summarise before they list",
+          feeling: "tidy. like clearing a desk.",
           body: "Each of these pages used to open with a table. Now each opens with the handful of numbers a manager actually checks, and the table is underneath for when they need it. Per-unit alert settings were the one addition the team allowed, because users kept asking for it.",
           phones: [
             { src: thMaintenance, alt: "Maintenance overview", caption: "what's due, then the list", kind: "desktop" },
             { src: thReports, alt: "Reports", caption: "reports you'd open on purpose", kind: "desktop" },
           ],
         },
+      ],
+      journey: [
+        { date: "Kick-off", title: "\"Our users are not tech people\"", body: "The brief in one line. Minimal, easy access, group the data. And the rule that shaped everything: no new features." },
+        { date: "Week 1", title: "Grey boxes, on purpose", body: "Five core screens in lo-fi with notes, on one Figma page, for approval before any colour. Live Tracking first, because it's the page everyone opens." },
+        { date: "Benchmarks", title: "Hapn and Samsara, borrow / adapt / skip", body: "Two boards next to the wireframes. Hapn for its clarity, Samsara because it's \"much like us\". Every borrowed pattern had a verdict written next to it.", img: thWireMap },
+        { date: "The menu", title: "Twelve items become four groups", body: "Operations, Management, Insights, Settings. The one addition we allowed: per-unit alert settings, because users kept asking." },
+        { date: "UI v1", title: "Uber-inspired, Trackhawk tokens", body: "Thirteen hi-fi screens including dark and sign-in. Archivo, Inter, a mono face. Orange means live. [add the meeting reaction here]", img: thLiveFleet },
+        { date: "Focus", title: "Live tracking, every scenario", body: "The scope narrowed to the one page that matters, designed for 12, 40 and 100 units, desktop only. A tracking product, not a delivery app.", img: thLiveUnit },
       ],
       results: [
         { value: "1", label: "Page for live tracking (was many)" },
