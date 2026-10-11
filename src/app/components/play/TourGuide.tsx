@@ -71,6 +71,7 @@ export function TourGuide() {
 
   useEffect(() => {
     if (dismissed || hidden) return;
+    if (!window.matchMedia("(min-width: 1180px)").matches) return; // on smaller screens, only talk when tapped
     const t = window.setTimeout(() => say(), 500);
     return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +87,7 @@ export function TourGuide() {
           animate={{ y: 0 }}
           exit={{ y: 140 }}
           transition={{ type: "spring", stiffness: 200, damping: 18 }}
-          className="fixed z-[75] right-3 md:right-6 bottom-[76px] md:bottom-4 flex items-end gap-2"
+          className="fixed z-[75] right-3 md:right-6 bottom-3 md:bottom-4 flex items-end gap-2"
         >
           <AnimatePresence>
             {bubble && line && (

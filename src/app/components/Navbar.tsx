@@ -1,7 +1,9 @@
 import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
-import { Link, NavLink, useLocation } from "react-router";
+import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
+import { useContactForm } from "./ContactFormContext";
+import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "motion/react";
 
 type Mode = "professional" | "fun";
@@ -51,80 +53,251 @@ function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMod
   );
 }
 
+type Item = { label: [string, string]; to: string; hash?: string };
+const ITEMS: Item[] = [
+  { label: ["Work", "Stuff"], to: "/work" },
+  { label: ["About", "Me"], to: "/", hash: "about" },
+  { label: ["Skills", "Table"], to: "/", hash: "skills" },
+  { label: ["Experience", "Lore"], to: "/", hash: "experience" },
+  { label: ["Contact", "Say hi"], to: "/", hash: "contact" },
+];
+
+/** Ala'a's doodle head: rolls as you scroll, and spins faster the faster you scroll. */
+function RollingHead({ size }: { size: number }) {
+  const { scrollY } = useScroll();
+  const v = useVelocity(scrollY);
+  const spin = useSpring(useTransform(v, [-3000, 0, 3000], [-25, 0, 25]), { stiffness: 120, damping: 14 });
+  const roll = useTransform(scrollY, (y) => y / 6);
+  const rotate = useTransform([roll, spin], ([r, s]: number[]) => r + s);
+  return (
+    <motion.div style={{ rotate, width: size, height: size * 1.2 }} className="relative overflow-hidden shrink-0">
+      <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgImage4} />
+    </motion.div>
+  );
+}
+
 export function Navbar() {
-  const { mode, setMode, lang, setLang, isArabic } = useMode();
+  const { mode, setMode, lang, setLang, isArabic, isProfessional } = useMode();
+  const { openContact } = useContactForm();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hoverItem, setHoverItem] = useState<number | null>(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  const go = (it: Item) => {
+    setMenuOpen(false);
+    if (it.hash === "contact") {
+      openContact();
+      return;
+    }
+    navigate(it.hash ? `${it.to}#${it.hash}` : it.to);
+  };
+  const activeIndex = pathname.startsWith("/work") ? 0 : -1;
+  const arrowAt = hoverItem ?? (activeIndex >= 0 ? activeIndex : null);
+  const compact = scrolled;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-[#fdecd0] flex items-center justify-between px-6 md:px-10 h-[80px] md:h-[100px] transition-shadow duration-300 ${scrolled ? "shadow-[0_2px_12px_rgba(0,0,0,0.08)]" : ""}`}>
-      {/* Logo */}
-      <Link
-        to="/"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="group flex items-center gap-3 cursor-pointer"
-        aria-label="Ala'a Ali — home"
+    <>
+      <motion.nav
+        className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-4 md:px-8"
+        animate={{ paddingTop: compact ? 10 : 18, paddingBottom: compact ? 10 : 14 }}
+        transition={{ type: "spring", stiffness: 300, damping: 32 }}
       >
-        <div className="w-10 h-12 relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110">
-          <img
-            alt="Logo"
-            className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none"
-            src={imgImage4}
-          />
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 bg-[#fdecd0]/90 backdrop-blur-md border-b-2 border-black"
+          initial={false}
+          animate={{ opacity: compact ? 1 : 0 }}
+        />
+
+        {/* Logo + stacked menu */}
+        <div className="relative flex items-start gap-4 md:gap-7">
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="group flex items-center gap-2"
+            aria-label="Ala'a Ali, home"
+          >
+            <RollingHead size={compact ? 36 : 44} />
+            <motion.span
+              className="font-display text-[24px] md:text-[30px] text-black lowercase whitespace-nowrap overflow-hidden leading-none"
+              initial={false}
+              animate={{ width: compact ? 0 : "auto", opacity: compact ? 0 : 1 }}
+              transition={{ type: "spring", stiffness: 260, damping: 30 }}
+            >
+              ala'a ali
+            </motion.span>
+          </Link>
+
+          <AnimatePresence initial={false}>
+            {!compact && !isArabic && (
+              <motion.ul
+                key="stack"
+                className="hidden lg:flex flex-col pt-1"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                onMouseLeave={() => setHoverItem(null)}
+              >
+                {ITEMS.map((it, i) => (
+                  <li key={it.label[0]}>
+                    <button
+                      onClick={() => go(it)}
+                      onMouseEnter={() => setHoverItem(i)}
+                      className="relative flex items-center gap-2 font-['Work_Sans'] font-semibold uppercase tracking-[0.12em] text-[11.5px] leading-[1.55] text-black/80 hover:text-black"
+                    >
+                      {it.label[isProfessional ? 0 : 1]}
+                      {arrowAt === i && (
+                        <motion.span layoutId="nav-arrow" className="text-[#ff614c]" transition={{ type: "spring", stiffness: 500, damping: 30 }}>
+                          →
+                        </motion.span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
         </div>
-        <span className="font-['IBM_Plex_Serif'] font-bold text-[22px] md:text-[28px] text-black">
-          Ala'a Ali
-        </span>
-      </Link>
 
-      {/* Toggle */}
-      <div className="hidden md:flex items-center rounded-full border border-[#c9b9a0] p-[6px] w-[340px] md:w-[400px]">
-        <ModeToggle mode={mode} setMode={setMode} id="desktop" />
-      </div>
+        {/* Mode toggle */}
+        <div className="relative hidden md:flex items-center rounded-full border-2 border-black/80 bg-[#fdecd0] p-[4px] w-[300px] lg:w-[340px]">
+          <ModeToggle mode={mode} setMode={setMode} id="desktop" />
+        </div>
 
-      {/* Work link + Language */}
-      <div className="flex items-center gap-2 font-['IBM_Plex_Serif'] font-bold text-[18px] md:text-[20px]">
-        <NavLink
-          to="/work"
-          className={({ isActive }) =>
-            `mr-3 md:mr-6 relative transition-colors ${isActive || pathname.startsWith("/work") ? "text-[#ff614c]" : "text-black hover:text-[#ff614c]"}`
-          }
-        >
-          Work
-        </NavLink>
-        <button
-          onClick={() => {
-            setLang("en");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className={`cursor-pointer transition-colors ${lang === "en" ? "text-black" : "text-[#999]"}`}
-        >
-          En
-        </button>
-        <span className="text-[#c9b9a0]">|</span>
-        <button
-          onClick={() => {
-            setLang("ar");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className={`cursor-pointer transition-colors ${lang === "ar" ? "text-black" : "text-[#999]"}`}
-        >
-          Ar
-        </button>
-      </div>
+        {/* Language + menu button */}
+        <div className="relative flex items-center gap-3 md:gap-4 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px] pt-1.5">
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => {
+                setLang("en");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className={`transition-colors ${lang === "en" ? "text-black" : "text-[#999]"}`}
+            >
+              En
+            </button>
+            <span className="text-[#c9b9a0]">|</span>
+            <button
+              onClick={() => {
+                setLang("ar");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className={`transition-colors ${lang === "ar" ? "text-black" : "text-[#999]"}`}
+            >
+              Ar
+            </button>
+          </div>
+          <AnimatePresence initial={false}>
+            {(compact || true) && (
+              <motion.button
+                key="menu"
+                onClick={() => setMenuOpen(true)}
+                aria-expanded={menuOpen}
+                aria-label="Open menu"
+                className={`${compact ? "flex" : "flex lg:hidden"} items-center gap-2 bg-black text-white rounded-full pl-3.5 pr-3 py-1.5 font-['Work_Sans'] font-semibold text-[13px] uppercase tracking-[0.1em]`}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                whileHover={{ rotate: -4, scale: 1.05 }}
+              >
+                Menu
+                <span className="flex flex-col gap-[3px]" aria-hidden>
+                  <span className="block w-3.5 h-[2px] bg-white rounded" />
+                  <span className="block w-2.5 h-[2px] bg-white rounded" />
+                </span>
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
 
-      {/* Mobile toggle */}
-      <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center rounded-full border border-[#c9b9a0] bg-[#fdecd0] p-[5px] w-[260px] shadow-lg">
+      {/* Mobile mode toggle */}
+      <div className="md:hidden fixed bottom-4 left-4 z-50 flex items-center rounded-full border-2 border-black bg-[#fdecd0] p-[4px] w-[220px] shadow-[3px_3px_0_0_black]">
         <ModeToggle mode={mode} setMode={setMode} id="mobile" compact />
       </div>
-    </nav>
+
+      {/* Full-screen menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            className="fixed inset-0 z-[95] bg-[#ff614c] text-[#fffaf1] overflow-y-auto"
+            initial={{ clipPath: "circle(0% at calc(100% - 60px) 36px)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 60px) 36px)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 60px) 36px)" }}
+            transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
+          >
+            <div className="min-h-full flex flex-col px-5 md:px-12 py-5 md:py-8">
+              <div className="flex items-center justify-between">
+                <span className="font-['Shantell_Sans',cursive] text-[15px] md:text-[17px] opacity-80">
+                  {isProfessional ? "where to?" : "pick a door. any door."}
+                </span>
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close menu"
+                  className="w-11 h-11 rounded-full bg-[#fffaf1] text-black text-[18px] border-2 border-black shadow-[3px_3px_0_0_black] hover:rotate-90 transition-transform"
+                >
+                  ✕
+                </button>
+              </div>
+              <ul className="flex-1 flex flex-col justify-center gap-1 md:gap-2 py-8">
+                {ITEMS.map((it, i) => (
+                  <motion.li
+                    key={it.label[0]}
+                    initial={{ y: 60, opacity: 0, rotate: 4 }}
+                    animate={{ y: 0, opacity: 1, rotate: 0 }}
+                    exit={{ y: 30, opacity: 0 }}
+                    transition={{ delay: 0.18 + i * 0.06, type: "spring", stiffness: 260, damping: 20 }}
+                  >
+                    <button onClick={() => go(it)} className="group flex items-baseline gap-4 md:gap-6 text-left">
+                      <span className="font-['Work_Sans'] text-[13px] md:text-[15px] tabular-nums opacity-60">0{i + 1}</span>
+                      <span className="font-display lowercase text-[52px] md:text-[104px] leading-[0.95] transition-transform duration-300 group-hover:translate-x-3 group-hover:-rotate-2 group-hover:text-black">
+                        {it.label[isProfessional ? 0 : 1]}
+                      </span>
+                      <span className="font-display text-[36px] md:text-[64px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-black">→</span>
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap items-center justify-between gap-4 font-['Work_Sans'] text-[14px] md:text-[15px]">
+                <span className="select-all">alaa@alaa-ali.com</span>
+                <div className="flex gap-4">
+                  <a href="https://www.instagram.com/alaa_aliens" target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">Instagram</a>
+                  <a href="https://www.linkedin.com/in/alaa-aliens" target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">LinkedIn</a>
+                </div>
+              </div>
+            </div>
+            <motion.div
+              aria-hidden
+              className="absolute right-[6%] bottom-[12%] w-[120px] md:w-[220px] h-[144px] md:h-[264px] overflow-hidden pointer-events-none"
+              initial={{ y: 200, rotate: 20 }}
+              animate={{ y: 0, rotate: [-6, 6, -6] }}
+              transition={{ y: { delay: 0.3, type: "spring", stiffness: 140, damping: 14 }, rotate: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } }}
+            >
+              <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgImage4} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

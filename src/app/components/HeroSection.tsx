@@ -113,6 +113,11 @@ export function HeroSection() {
 
           <button
             onClick={openContact}
+            onMouseEnter={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              window.dispatchEvent(new CustomEvent("crowd:attract", { detail: { x: r.left + r.width / 2, y: r.bottom + 10 } }));
+            }}
+            onMouseLeave={() => window.dispatchEvent(new CustomEvent("crowd:attract", { detail: null }))}
             className="pointer-events-auto self-center md:self-start bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] md:text-[19px] text-black relative hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_black] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all shadow-[4px_4px_0px_0px_black] border border-black"
           >
             {isProfessional ? "Get in Touch" : "Say Hi"}
@@ -125,12 +130,12 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2.2, duration: 0.6 }}
-        className="pointer-events-none absolute bottom-6 md:bottom-8 right-6 md:right-[8%] font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] text-black/55 rotate-[-3deg] flex items-center gap-2"
+        className="pointer-events-none absolute bottom-6 md:bottom-8 left-6 md:left-auto md:right-[30%] font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] text-black/55 rotate-[-3deg] flex items-center gap-2"
       >
         <svg width="34" height="22" viewBox="0 0 34 22" fill="none" aria-hidden className="-scale-x-100 rotate-[20deg]">
           <path d="M2 18 C 10 6, 20 4, 31 8 M24 3 L32 8 L25 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        {isProfessional ? "these are my users. say hi (click one)" : "my users. they have notes. poke one."}
+        {isProfessional ? "these are my users. click one for its persona" : "my users. they have notes. poke one."}
       </motion.p>
     </section>
   );

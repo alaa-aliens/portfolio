@@ -44,7 +44,7 @@ export function SkillsTable() {
     const engine = Engine.create({ gravity: { x: 0, y: 1.1 } });
 
     // Desk top (matches the drawing), floor and walls.
-    const deskW = Math.min(W * 0.62, 620);
+    const deskW = W < 640 ? W * 0.9 : Math.min(W * 0.62, 620);
     const deskY = H * 0.5;
     const opts = { isStatic: true, friction: 0.8, render: { visible: false } };
     Composite.add(engine.world, [
@@ -131,11 +131,11 @@ export function SkillsTable() {
 
       <div
         ref={stageRef}
-        className="relative w-full h-[440px] md:h-[460px] overflow-hidden select-none"
+        className="relative w-full h-[440px] md:h-[460px] overflow-hidden select-none [--desk-w:90%] sm:[--desk-w:min(62%,620px)]"
         style={{ cursor: touch || reduce ? "default" : "grab", touchAction: "pan-y" }}
       >
         {/* The desk, hand-drawn */}
-        <svg aria-hidden className="absolute left-1/2 -translate-x-1/2 overflow-visible" style={{ top: "50%", width: "min(62%, 620px)" }} height="230" viewBox="0 0 620 230" preserveAspectRatio="none" fill="none">
+        <svg aria-hidden className="absolute left-1/2 -translate-x-1/2 overflow-visible" style={{ top: "50%", width: "var(--desk-w)" }} height="230" viewBox="0 0 620 230" preserveAspectRatio="none" fill="none">
           <path d="M4 6 C 120 2, 260 9, 400 4 S 580 3, 616 7" stroke="#1d1a17" strokeWidth="5" strokeLinecap="round" />
           <path d="M8 13 C 160 16, 420 11, 612 14" stroke="#ff614c" strokeWidth="3" strokeLinecap="round" opacity="0.7" />
           <path d="M46 14 C 44 90, 49 160, 44 226" stroke="#1d1a17" strokeWidth="5" strokeLinecap="round" />
@@ -143,19 +143,19 @@ export function SkillsTable() {
           <path d="M46 70 C 200 76, 420 66, 574 72" stroke="#1d1a17" strokeWidth="2.5" strokeLinecap="round" opacity="0.35" />
         </svg>
         {/* A mug and a plant on the desk, because of course */}
-        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 46px)", left: "calc(50% + min(26%, 255px))" }} width="44" height="46" viewBox="0 0 44 46" fill="none">
+        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 46px)", left: "calc(50% + var(--desk-w) * 0.38)" }} width="44" height="46" viewBox="0 0 44 46" fill="none">
           <path d="M6 14h24l-2 26c-.2 2-1.8 3.5-3.8 3.5H11.8c-2 0-3.6-1.5-3.8-3.5z" fill="#fffaf1" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" />
           <path d="M30 18c6-1 8 3 6 7-1.5 3-4.5 4-7 4" stroke="#1d1a17" strokeWidth="2.4" strokeLinecap="round" />
           <path d="M13 3c-2 3 2 5 0 8M20 2c-2 3 2 5 0 8" stroke="#ff614c" strokeWidth="2.2" strokeLinecap="round" />
         </svg>
-        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 58px)", left: "calc(50% - min(29%, 290px))" }} width="40" height="58" viewBox="0 0 40 58" fill="none">
+        <svg aria-hidden className="absolute" style={{ top: "calc(50% - 58px)", left: "calc(50% - var(--desk-w) * 0.45)" }} width="40" height="58" viewBox="0 0 40 58" fill="none">
           <path d="M20 30C19 20 12 14 5 14c1 8 7 13 15 16zM20 26c1-11 8-18 16-18-1 9-8 15-16 18z" fill="#53B858" stroke="#1d1a17" strokeWidth="2" strokeLinejoin="round" />
           <path d="M20 30v8" stroke="#1d1a17" strokeWidth="2" />
           <path d="M9 37h22l-3 19H12z" fill="#ff614c" stroke="#1d1a17" strokeWidth="2.2" strokeLinejoin="round" />
         </svg>
 
         {/* Chips (positioned by the physics loop; stacked neatly when motion is reduced) */}
-        <div className={reduce ? "absolute left-1/2 -translate-x-1/2 bottom-[52%] w-[min(62%,620px)] flex flex-wrap gap-2 justify-center" : ""}>
+        <div className={reduce ? "absolute left-1/2 -translate-x-1/2 bottom-[52%] w-[var(--desk-w)] flex flex-wrap gap-2 justify-center" : ""}>
           {skills.map((s, i) => (
             <motion.button
               key={`${mode}-${s}`}

@@ -188,3 +188,83 @@ export function ImageLogo({ src, bgColor, imgClass = "w-16 h-6 object-contain", 
     />
   );
 }
+
+/* Brand marks on their own (used by the project cards). */
+export function BravoBravoMark({ className = "w-[77px] h-[26px]" }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 77 26">
+      {/* Dark outlines group 1 */}
+      <path d={svgPaths.p19c3b700} fill="#002A3A" />
+      <path d={svgPaths.p1d5aba32} fill="#002A3A" />
+      <path d={svgPaths.p697b700} fill="#002A3A" />
+      <path d={svgPaths.p16d03a00} fill="#002A3A" />
+      <path d={svgPaths.p3d4d4570} fill="#002A3A" />
+      <path d={svgPaths.p17553600} fill="#002A3A" />
+      <path d={svgPaths.p3128ce80} fill="#002A3A" />
+      <path d={svgPaths.p3209dc00} fill="#002A3A" />
+      <path d={svgPaths.p3084b400} fill="#002A3A" />
+      {/* Stars */}
+      <path d={svgPaths.p2bba7c0} fill="#FFAE3B" />
+      <path d={svgPaths.p3e809f00} fill="#FFAE3B" />
+      <path d={svgPaths.p15b18300} fill="#FFAE3B" />
+      {/* Dark outlines group 2 */}
+      <path d={svgPaths.p2fa9ba80} fill="#002A3A" />
+      <path d={svgPaths.p9696d80} fill="#002A3A" />
+      <path d={svgPaths.p1af08f00} fill="#002A3A" />
+      <path d={svgPaths.p1f5a8500} fill="#002A3A" />
+      <path d={svgPaths.p2a8f3c00} fill="#002A3A" />
+      <path d={svgPaths.p1a24bf40} fill="#002A3A" />
+      <path d={svgPaths.p3cd3a900} fill="#002A3A" />
+      <path d={svgPaths.pb316880} fill="#002A3A" />
+      <path d={svgPaths.pb320d70} fill="#002A3A" />
+      <path d={svgPaths.p3f9a1200} fill="#002A3A" />
+      <path d={svgPaths.p38998600} fill="#002A3A" />
+      <path d={svgPaths.p3d909500} fill="#002A3A" />
+      <path d={svgPaths.pb838000} fill="#002A3A" />
+      <path d={svgPaths.p2b148700} fill="#002A3A" />
+      <path d={svgPaths.p25ec88f0} fill="#002A3A" />
+      <path d={svgPaths.p32092600} fill="#002A3A" />
+      <path d={svgPaths.p3c46c070} fill="#002A3A" />
+      <path d={svgPaths.p27cd100} fill="#002A3A" />
+      <path d={svgPaths.p27469400} fill="#002A3A" />
+      <path d={svgPaths.p19366000} fill="#002A3A" />
+      <path d={svgPaths.p3f41c480} fill="#002A3A" />
+      <path d={svgPaths.p16721b00} fill="#002A3A" />
+      <path d={svgPaths.p3e1e5040} fill="#002A3A" />
+      <path d={svgPaths.p3c201f80} fill="#002A3A" />
+      <path d={svgPaths.p31292200} fill="#002A3A" />
+      <path d={svgPaths.p30e38400} fill="#002A3A" />
+      <path d={svgPaths.p3725a000} fill="#002A3A" />
+      <path d={svgPaths.p77fb2c0} fill="#002A3A" />
+      <path d={svgPaths.p16b37680} fill="#002A3A" />
+      <path d={svgPaths.p11d63500} fill="#002A3A" />
+      {/* White fills */}
+      <path d={svgPaths.p21c68300} fill="white" />
+      <path d={svgPaths.pdf92400} fill="white" />
+      <path d={svgPaths.p3aaf1880} fill="white" />
+      <path d={svgPaths.p1d86f580} fill="white" />
+      <path d={svgPaths.p31961370} fill="white" />
+      <path d={svgPaths.p310c87c0} fill="white" />
+      <path d={svgPaths.p2db49900} fill="white" />
+      <path d={svgPaths.p16311f00} fill="white" />
+      <path d={svgPaths.p62ec880} fill="white" />
+      <path d={svgPaths.pfb2c280} fill="white" />
+    </svg>
+  );
+}
+
+export function CarseerMark({ className = "w-[32px] h-[20px]" }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 36.7787 23.0267">
+      <g>
+        <mask id="carseerMask" maskUnits="userSpaceOnUse" style={{ maskType: "luminance" as const }} x="8" y="0" width="29" height="15">
+          <path clipRule="evenodd" d={svgPaths.p18847200} fill="white" fillRule="evenodd" />
+        </mask>
+        <g mask="url(#carseerMask)">
+          <path clipRule="evenodd" d={svgPaths.p274cfc00} fill="black" fillRule="evenodd" />
+        </g>
+      </g>
+      <path clipRule="evenodd" d={svgPaths.p1bbcf800} fill="white" fillRule="evenodd" />
+    </svg>
+  );
+}

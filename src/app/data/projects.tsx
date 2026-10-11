@@ -7,12 +7,7 @@
  * Images: drop files in /public/work/<slug>/ and reference them as "/work/<slug>/file.webp".
  */
 import React from "react";
-import {
-  BravoBravoLogo,
-  CarseerLogo,
-  ImageLogo,
-  TextLogo,
-} from "../components/ProjectFolder";
+import { BravoBravoMark, CarseerMark } from "../components/ProjectFolder";
 import imgJawaker from "figma:asset/155eb9c567562f7fc4db482f0e44b69f71f4a7db.png";
 import imgTamatem from "figma:asset/316e887e6e85ad89f6a04ace8c986909a43a9089.png";
 import imgTrt from "figma:asset/840a0dca576b0360f028ae53fcfd9d51286d8626.png";
@@ -54,6 +49,10 @@ export interface CaseStudy {
   /** One-line fun summary shown in Fun mode under the hook */
   funTldr?: string;
   problem?: string[];
+  /** The problem as a hand-drawn storyboard (pain points get circled in red) */
+  problemSketch?: { frames: { icon: import("../components/ProblemSketch").SketchIcon; label: string; pain?: string }[]; loop?: string };
+  /** Photos/scans of real sketches from the notebook or iPad, shown taped to the page */
+  sketches?: { src: string; caption?: string }[];
   /** Up to three screens fanned out under the hero */
   showcase?: { src: string; alt: string }[];
   /** The old way, as a chat, next to the product screen */
@@ -80,8 +79,12 @@ export interface Project {
   status: "ready" | "soon";
   proHook?: string;
   funHook?: string;
-  /** Custom folder art; if omitted, a lettered folder in the category colour is drawn. */
-  folder?: (isHovered: boolean) => React.ReactNode;
+  /** Brand mark shown on the card cover (logo). If omitted, the name is lettered on the cover. */
+  mark?: React.ReactNode;
+  /** Brand colour behind the mark. Defaults to the category colour. */
+  brand?: string;
+  /** Short tags shown as chips on the card. */
+  tags?: string[];
   caseStudy?: CaseStudy;
 }
 
@@ -95,7 +98,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Gamified reading system & LMS for schools",
     funHook: "Made homework less painful (you're welcome, kids)",
-    folder: (h) => <BravoBravoLogo isHovered={h} />,
+    brand: "#54c8e8",
+    mark: <BravoBravoMark className="w-[62%] h-auto" />,
+    tags: ["LMS", "Gamification"],
   },
   {
     slug: "carseer",
@@ -105,7 +110,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Comprehensive vehicle history reports platform",
     funHook: "Made car history reports actually readable",
-    folder: (h) => <CarseerLogo isHovered={h} />,
+    brand: "#ff9933",
+    mark: <CarseerMark className="w-[34%] h-auto" />,
+    tags: ["Platform", "Data"],
   },
   {
     slug: "jawaker",
@@ -115,9 +122,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Social card gaming platform profile enhancements",
     funHook: "Redesigned profiles for millions of card game addicts",
-    folder: (h) => (
-      <ImageLogo src={imgJawaker} bgColor="#000" imgClass="w-16 h-7 object-contain" isHovered={h} />
-    ),
+    brand: "#111",
+    mark: <img src={imgJawaker} alt="" className="w-[52%] h-auto" />,
+    tags: ["Games", "Profiles"],
   },
   {
     slug: "tamatem",
@@ -127,9 +134,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Player engagement & monetization platform",
     funHook: "Made gamers spend money without hating the experience",
-    folder: (h) => (
-      <ImageLogo src={imgTamatem} bgColor="#fff" imgClass="w-20 h-10 object-contain" isHovered={h} />
-    ),
+    brand: "#ffffff",
+    mark: <img src={imgTamatem} alt="" className="w-[56%] h-auto" />,
+    tags: ["Games", "Monetization"],
   },
   {
     slug: "trt-news",
@@ -139,9 +146,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Multi-platform digital news experience for TRT Arabi",
     funHook: "Made breaking news feel less broken on mobile",
-    folder: (h) => (
-      <ImageLogo src={imgTrt} bgColor="#02b5c9" imgClass="w-[100px] h-[52px] object-contain" isHovered={h} />
-    ),
+    brand: "#02b5c9",
+    mark: <img src={imgTrt} alt="" className="w-[50%] h-auto" />,
+    tags: ["News", "Mobile"],
   },
   {
     slug: "smasco-raha",
@@ -151,9 +158,9 @@ export const projects: Project[] = [
     status: "soon",
     proHook: "Smart building management & tenant services app",
     funHook: 'Made "my AC is broken" feel like a premium interaction',
-    folder: (h) => (
-      <ImageLogo src={imgSmasco} bgColor="#fff" imgClass="w-14 h-12 object-contain" isHovered={h} />
-    ),
+    brand: "#ffffff",
+    mark: <img src={imgSmasco} alt="" className="w-[30%] h-auto" />,
+    tags: ["Mobile app", "Services"],
   },
 
   /* ───────────── My own products ───────────── */
@@ -164,7 +171,8 @@ export const projects: Project[] = [
     status: "ready",
     proHook: "A study app that turns textbook photos into parent-checked lessons, games and quizzes, in Arabic and English.",
     funHook: "I got tired of marking quizzes over iMessage, so I built an app. Without knowing how to code.",
-    folder: (h) => <TextLogo text="سيبا" bgColor="#02B5C9" fontSize="24px" isHovered={h} />,
+    brand: "#DDF3E8",
+    tags: ["Side project", "AI", "Arabic & English"],
     caseStudy: {
       client: "My own product",
       role: "Product design + build (with Claude Code)",
@@ -181,6 +189,16 @@ export const projects: Project[] = [
         "At home, studying ran on a manual loop: the kids photographed their textbook pages, I used AI to turn them into a summary and a quiz, sent it over iMessage, then marked every answer by hand.",
         "It worked, barely. Nothing was saved, nobody else could see progress, and every quiz cost me an evening. I wanted one place where each child studies, and where a parent stays in control of what the AI produces.",
       ],
+      problemSketch: {
+        frames: [
+          { icon: "phone", label: "The kids snap the textbook pages" },
+          { icon: "robot", label: "I ask an AI for a summary and a quiz" },
+          { icon: "chat", label: "I send it over iMessage", pain: "lost in the chat by Monday" },
+          { icon: "pen", label: "They answer, I mark every one by hand", pain: "every. single. evening." },
+          { icon: "eyes", label: "Nobody else can see how they're doing", pain: "not even their mom" },
+        ],
+        loop: "now repeat for 2 kids × every subject × every week",
+      },
       beforeChat: {
         lines: [
           { who: "kid", text: "📷 page 42" },
@@ -307,25 +325,4 @@ export function getNextReady(slug: string) {
   if (ready.length < 2) return undefined;
   const i = ready.findIndex((p) => p.slug === slug);
   return ready[(i + 1) % ready.length];
-}
-
-/** Folder art for any project, with a lettered fallback. */
-export function renderFolder(p: Project, isHovered: boolean) {
-  if (p.folder) return p.folder(isHovered);
-  const initials = p.name
-    .replace(/[^A-Za-z\s]/g, "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-  return (
-    <TextLogo
-      text={initials || p.name.slice(0, 2)}
-      bgColor={categories[p.category].color}
-      fontSize="26px"
-      isHovered={isHovered}
-    />
-  );
 }

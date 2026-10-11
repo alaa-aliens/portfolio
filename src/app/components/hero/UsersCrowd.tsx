@@ -3,7 +3,8 @@
  * saying the things users (and clients) say. Click one and it hops.
  * Drawn on a canvas so dozens of them stay cheap. Freezes in place for "reduce motion".
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { useReducedMotion } from "motion/react";
 import { useMode } from "../ModeContext";
 
@@ -35,6 +36,23 @@ const FUN_LINES = [
 ];
 const POKE_LINES_PRO = ["Hi!", "Hey there!", "Oh, hello", "👋"];
 const POKE_LINES_FUN = ["Rude.", "Personal space!", "Did you just click me?", "Ow.", "I'm a user, not a button"];
+/* Every user carries a tiny UX persona. Click one to read it. */
+interface Persona { name: string; age: number; goal: string; pain: string; quote: string }
+const NAMES = ["Rania", "Omar", "Lina", "Khaled", "Sara", "Yousef", "Maya", "Tariq", "Huda", "Sam", "Noor", "Zaid"];
+const PRO_P = {
+  goal: ["Pay a bill in under a minute", "Find her kid's grades", "Book a car inspection", "Track 40 trucks at once", "Learn without a manual", "Read the news on a bus"],
+  pain: ["Too many steps", "Can't find the back button", "Forms that forget everything", "Tiny tap targets", "English-only screens", "Error messages in code"],
+  quote: ["Just tell me what to do next.", "Why is this button grey?", "I'll do it on my laptop later.", "Is it in Arabic?", "Where did my data go?", "Clean. I like it."],
+};
+const FUN_P = {
+  goal: ["Find the cancel button", "Close the pop-up. Any pop-up.", "Skip onboarding forever", "Make the logo bigger", "Buy one thing. Just one.", "Understand the hamburger menu"],
+  pain: ["Cookie banners", "Passwords with 3 symbols", "Captchas with traffic lights", "Dark patterns", "Autoplay videos", "Carousels"],
+  quote: ["I clicked it 7 times.", "My nephew could build this.", "Can it be more… blue?", "I don't read. I scan.", "Where's the Comic Sans?", "Is this a button??"],
+};
+function makePersona(): Persona {
+  return { name: pick(NAMES), age: Math.floor(rand(9, 68)), goal: "", pain: "", quote: "" };
+}
+
 const CAPS = ["#ff614c", "#6A4CFF", "#02B5C9", "#53B858", "#FF9F1C", "#FF4C79", null, null, null];
 
 interface Person {
@@ -50,6 +68,9 @@ interface Person {
   pause: number; // seconds left standing still
   bubble?: { text: string; t: number; dur: number };
   turnIn: number;
+  persona: Persona;
+  hatColor: string;
+  ring: number;
 }
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
@@ -59,6 +80,9 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reduce = useReducedMotion();
   const { isProfessional } = useMode();
+  const [card, setCard] = useState<{ x: number; y: number; p: Persona; key: number } | null>(null);
+  const setCardRef = useRef(setCard);
+  setCardRef.current = setCard;
   const modeRef = useRef(isProfessional);
   modeRef.current = isProfessional;
 
@@ -116,6 +140,9 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
         hop: 0,
         pause: Math.random() < 0.3 ? rand(0.5, 3) : 0,
         turnIn: rand(2, 7),
+        persona: makePersona(),
+        hatColor: pick(["#ff614c", "#6A4CFF", "#02B5C9", "#FFC53D", "#FF4C79", "#53B858"]),
+        ring: rand(40, 120),
       };
     };
 
@@ -167,13 +194,32 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
       }
       if (best) {
         best.hop = 0.0001;
-        best.bubble = {
-          text: pick(modeRef.current ? POKE_LINES_PRO : POKE_LINES_FUN),
-          t: 0,
-          dur: 2.2,
-        };
+        best.pause = 3;
+        best.bubble = { text: pick(modeRef.current ? POKE_LINES_PRO : POKE_LINES_FUN), t: 0, dur: 1.6 };
+        const bank = modeRef.current ? PRO_P : FUN_P;
+        const p = best.persona;
+        const m = modeRef.current ? "pro" : "fun";
+        if (!p.goal || (p as Persona & { m?: string }).m !== m)
+          Object.assign(p, { goal: pick(bank.goal), pain: pick(bank.pain), quote: pick(bank.quote), m });
+        setCardRef.current({ x: best.x, y: best.y, p: { ...p }, key: Date.now() });
+      } else {
+        setCardRef.current(null);
       }
     };
+    // Something interesting (like the CTA button) asks the crowd to come and look.
+    let attract: { x: number; y: number } | null = null;
+    let attractTalked = false;
+    const onAttract = (e: Event) => {
+      const d = (e as CustomEvent<{ x: number; y: number } | null>).detail;
+      if (!d) {
+        attract = null;
+        return;
+      }
+      const r = canvas.getBoundingClientRect();
+      attract = { x: d.x - r.left, y: d.y - r.top };
+      attractTalked = false;
+    };
+    window.addEventListener("crowd:attract", onAttract);
     window.addEventListener("pointermove", onMove, { passive: true });
     canvas.addEventListener("pointerdown", onDown);
     document.addEventListener("pointerleave", onLeave);
@@ -230,8 +276,22 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
       ctx.fill();
       ctx.stroke();
 
-      // cap / hair
-      if (p.cap) {
+      // party hat in Fun mode
+      if (!modeRef.current) {
+        ctx.fillStyle = p.hatColor;
+        ctx.beginPath();
+        ctx.moveTo(x - 4.6 * s, y - 30 * s);
+        ctx.lineTo(x + 0.6 * s, y - 43 * s);
+        ctx.lineTo(x + 4.6 * s, y - 30 * s);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#FFC53D";
+        ctx.beginPath();
+        ctx.arc(x + 0.6 * s, y - 43.5 * s, 2 * s, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else if (p.cap) {
         ctx.fillStyle = p.cap;
         ctx.beginPath();
         ctx.arc(x, y - 27.5 * s, 5.6 * s, Math.PI * 1.05, Math.PI * 1.95);
@@ -299,6 +359,39 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
 
       if (!reduce) {
         for (const p of people) {
+          if (attract) {
+            const ax = attract.x - p.x;
+            const ay = attract.y - p.y;
+            const ad = Math.hypot(ax, ay);
+            if (ad > p.ring) {
+              p.vx = ax / ad;
+              p.vy = ay / ad;
+              p.pause = 0;
+              p.x += p.vx * p.speed * 9 * dt;
+              p.y += p.vy * p.speed * 9 * dt;
+            } else {
+              p.vx = ax >= 0 ? 0.01 : -0.01; // face the button
+              if (!p.bubble && !attractTalked && Math.random() < 0.02) {
+                attractTalked = true;
+                p.bubble = { text: modeRef.current ? "Ooh, a button" : "IS THAT A BUTTON?!", t: 0, dur: 2 };
+                p.hop = 0.0001;
+              }
+            }
+            if (p.x < 14) p.x = 14;
+            if (p.x > W - 14) p.x = W - 14;
+            if (p.y < H * 0.12) p.y = H * 0.12;
+            if (p.y > H - 8) p.y = H - 8;
+            pushOut(p);
+            if (p.hop > 0) {
+              p.hop += dt * 2.6;
+              if (p.hop >= 1) p.hop = 0;
+            }
+            if (p.bubble) {
+              p.bubble.t += dt;
+              if (p.bubble.t > p.bubble.dur) p.bubble = undefined;
+            }
+            continue;
+          }
           // flee the cursor a little
           const dx = p.x - pointer.x;
           const dy = p.y - 14 - pointer.y;
@@ -367,11 +460,51 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
+      window.removeEventListener("crowd:attract", onAttract);
       window.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerdown", onDown);
       document.removeEventListener("pointerleave", onLeave);
     };
   }, [reduce]);
 
-  return <canvas ref={canvasRef} aria-hidden className={`block w-full h-full ${className}`} />;
+  return (
+    <div className="relative w-full h-full">
+      <canvas ref={canvasRef} aria-hidden className={`block w-full h-full ${className}`} />
+      <AnimatePresence>
+        {card && (
+          <motion.div
+            key={card.key}
+            role="dialog"
+            aria-label={`User persona: ${card.p.name}`}
+            className="absolute z-30 w-[230px] bg-[#fffaf1] border-2 border-black rounded-[14px] shadow-[4px_5px_0_0_#1d1a17] p-3.5 font-['Work_Sans'] text-[12.5px] leading-snug"
+            style={{
+              left: Math.max(8, Math.min(card.x - 115, (canvasRef.current?.clientWidth ?? 600) - 238)),
+              top: card.y - 60 > 200 ? card.y - 200 : card.y + 14,
+            }}
+            initial={{ opacity: 0, scale: 0.7, rotate: -6, y: 10 }}
+            animate={{ opacity: 1, scale: 1, rotate: -2, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, rotate: 4 }}
+            transition={{ type: "spring", stiffness: 380, damping: 22 }}
+          >
+            <button
+              onClick={() => setCard(null)}
+              aria-label="Close persona"
+              className="absolute -top-2.5 -right-2.5 w-6 h-6 rounded-full bg-black text-white text-[11px]"
+            >
+              ✕
+            </button>
+            <div className="flex items-baseline justify-between mb-2">
+              <span className="font-['Playfair_Display'] font-bold text-[18px]">
+                {card.p.name}, {card.p.age}
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.14em] text-black/45">user persona</span>
+            </div>
+            <p><b>Goal:</b> {card.p.goal}</p>
+            <p className="mt-1"><b>Pain:</b> <span className="text-[#e5412c]">{card.p.pain}</span></p>
+            <p className="mt-2 font-['Shantell_Sans',cursive] text-[14px] text-black/70">“{card.p.quote}”</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }

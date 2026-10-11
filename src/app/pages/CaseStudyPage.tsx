@@ -7,7 +7,9 @@ import { BeforeAfter } from "../components/BeforeAfter";
 import { BeforeChat } from "../components/BeforeChat";
 import { PhoneFan, PhoneRow } from "../components/Phone";
 import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline, SectionTitle } from "../components/motion/Doodles";
-import { categories, getNextReady, getProject, renderFolder, type Project } from "../data/projects";
+import { categories, getNextReady, getProject, type Project } from "../data/projects";
+import { ProblemSketch } from "../components/ProblemSketch";
+import { ProjectCover } from "../components/ProjectCover";
 import { usePageMeta } from "../usePageMeta";
 
 function BackLink() {
@@ -195,13 +197,13 @@ export function CaseStudyPage() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -6 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.85, rotate: -8 }}
+            animate={{ opacity: 1, scale: 1, rotate: -3 }}
             transition={{ type: "spring", stiffness: 120, damping: 12, delay: 0.2 }}
-            className="hidden md:block scale-[1.6] origin-center mr-16"
+            className="hidden md:block w-[300px] lg:w-[340px] bg-[#fffaf1] border-2 border-black rounded-[20px] p-2.5 shadow-[6px_7px_0_0_#1d1a17]"
             onMouseEnter={() => setFolderOpen(true)}
           >
-            {renderFolder(project, folderOpen)}
+            <ProjectCover project={project} hovered={folderOpen} />
           </motion.div>
         </div>
 
@@ -235,6 +237,34 @@ export function CaseStudyPage() {
                 <Reveal key={i} delay={i * 0.08}>
                   <p className="font-['IBM_Plex_Serif'] text-black text-[17px] md:text-[21px] leading-[1.7]">{p}</p>
                 </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── The problem, sketched ── */}
+        {cs.problemSketch && (
+          <section className="lg:-mx-16">
+            <p className="font-['Shantell_Sans',cursive] text-[15px] text-black/55 mb-3 lg:mx-16 px-1">
+              {isProfessional ? "how it used to work (sketched):" : "the old system, lovingly reconstructed:"}
+            </p>
+            <ProblemSketch frames={cs.problemSketch.frames} loop={cs.problemSketch.loop} />
+          </section>
+        )}
+
+        {/* ── Real sketches from the notebook ── */}
+        {cs.sketches && cs.sketches.length > 0 && (
+          <section>
+            <SectionTitle color={cat.color}>{isProfessional ? "From the sketchbook" : "Napkin math"}</SectionTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10">
+              {cs.sketches.map((sk, i) => (
+                <PenWipe key={sk.src} delay={(i % 2) * 0.1} direction="up">
+                  <figure className="relative bg-white p-3 pb-10 shadow-[0_14px_30px_-16px_rgba(60,35,10,.5)]" style={{ rotate: `${i % 2 ? 1.5 : -1.5}deg` }}>
+                    <span aria-hidden className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-[#FFE9C7]/80 rotate-[-4deg]" />
+                    <img src={sk.src} alt={sk.caption ?? "sketch"} loading="lazy" className="w-full" />
+                    {sk.caption && <figcaption className="absolute bottom-2 left-0 right-0 text-center font-['Shantell_Sans',cursive] text-[14px] text-black/60">{sk.caption}</figcaption>}
+                  </figure>
+                </PenWipe>
               ))}
             </div>
           </section>

@@ -8,12 +8,12 @@ import { useLocation } from "react-router";
 import { useMode } from "../ModeContext";
 import { Eye } from "../hero/EyeHeadline";
 
-type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye";
+export type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye";
 
 const INK = "#1d1a17";
 const sw = { stroke: INK, strokeWidth: 2.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 
-function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
+export function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
   switch (kind) {
     case "star":
       return (

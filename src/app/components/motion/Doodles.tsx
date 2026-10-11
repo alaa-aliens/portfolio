@@ -3,7 +3,7 @@
  * All of them respect "reduce motion" through the <MotionConfig reducedMotion="user"> in App.
  */
 import React from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -35,7 +35,8 @@ export function Reveal({
   );
 }
 
-/** Reveals a drawing left-to-right, like a pen stroke passing over it. */
+/** Reveals a drawing left-to-right, like a pen stroke passing over it.
+ *  The unclipped outer box is what watches the viewport (a fully clipped element never "intersects"). */
 export function PenWipe({
   children,
   delay = 0,
@@ -49,17 +50,19 @@ export function PenWipe({
   className?: string;
   direction?: "right" | "up";
 }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
   const hidden = direction === "right" ? "inset(-10% 100% -10% -10%)" : "inset(100% -10% -10% -10%)";
   return (
-    <motion.div
-      className={className}
-      initial={{ clipPath: hidden, rotate: -2 }}
-      whileInView={{ clipPath: "inset(-10% -10% -10% -10%)", rotate: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration, delay, ease: [0.65, 0, 0.35, 1] }}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref} className={className}>
+      <motion.div
+        initial={{ clipPath: hidden, rotate: -2 }}
+        animate={inView ? { clipPath: "inset(-10% -10% -10% -10%)", rotate: 0 } : undefined}
+        transition={{ duration, delay, ease: [0.65, 0, 0.35, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
 
