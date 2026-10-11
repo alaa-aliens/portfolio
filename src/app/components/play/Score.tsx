@@ -17,11 +17,11 @@ type State = { points: number; lives: number; done: string[] };
 function load(): State {
   try {
     const s = JSON.parse(localStorage.getItem(KEY) || "null");
-    if (s && typeof s.points === "number") return { points: s.points, lives: s.lives ?? 3, done: s.done ?? [] };
+    if (s && typeof s.points === "number") return { points: s.points, lives: s.lives ?? 1, done: s.done ?? [] };
   } catch {
     /* ignore */
   }
-  return { points: 0, lives: 3, done: [] };
+  return { points: 0, lives: 1, done: [] };
 }
 function save(s: State) {
   try {
@@ -32,7 +32,9 @@ function save(s: State) {
   window.dispatchEvent(new CustomEvent(EVT, { detail: s }));
 }
 
-let last: { text: string; delta: number; kind: "point" | "life" | "bonus" } | null = null;
+/** Points at which a heart fills up. */
+const HEART_AT = [30, 80, 150];
+let last: { text: string; delta: number; kind: "point" | "life" | "bonus" | "heart" } | null = null;
 const toastEvt = "game:toast";
 function toast(t: typeof last) {
   last = t;
@@ -43,8 +45,18 @@ function toast(t: typeof last) {
 export function addScore(points: number, text: string, key?: string, bonus = false) {
   const s = load();
   if (key && s.done.includes(key)) return false;
+  const before = s.points;
   s.points += points;
   if (key) s.done.push(key);
+  // hearts fill up as you explore: one at each milestone, up to 3
+  const earned = HEART_AT.filter((m) => before < m && s.points >= m).length;
+  if (earned > 0 && s.lives < 3) {
+    s.lives = Math.min(3, s.lives + earned);
+    save(s);
+    toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
+    window.setTimeout(() => toast({ text: s.lives === 3 ? "all hearts full. show-off." : "heart earned", delta: 0, kind: "heart" }), 1500);
+    return true;
+  }
   save(s);
   toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
   return true;
@@ -54,8 +66,8 @@ export function loseLife(text: string) {
   const s = load();
   s.lives = Math.max(0, s.lives - 1);
   if (s.lives === 0) {
-    toast({ text: "game over. just kidding, have your lives back.", delta: 0, kind: "life" });
-    s.lives = 3;
+    toast({ text: "game over. just kidding, have one back.", delta: 0, kind: "life" });
+    s.lives = 1;
     s.points = Math.max(0, s.points - 20);
   } else toast({ text, delta: -1, kind: "life" });
   save(s);
@@ -81,7 +93,7 @@ export function ScoreTracker() {
     } catch {
       /* ignore */
     }
-    const t = setTimeout(() => toast({ text: "3 lives. explore to earn points. tap ❤ to see how", delta: 0, kind: "point" }), 2500);
+    const t = setTimeout(() => toast({ text: "one heart. explore to fill the rest. tap ❤ to see how", delta: 0, kind: "point" }), 2500);
     return () => clearTimeout(t);
   }, []);
   useEffect(() => {
@@ -140,7 +152,7 @@ function Rules({ onClose, done }: { onClose: () => void; done: string[] }) {
         <button onClick={onClose} aria-label="Close" className="w-7 h-7 rounded-full border border-black text-[13px] leading-none hover:rotate-90 transition-transform">✕</button>
       </div>
       <p className="font-['Shantell_Sans',cursive] text-[13px] text-black/60 mt-1">
-        {isProfessional ? "You start with 3 lives. Explore to earn points. Ticks are things you've already done." : "3 lives. points for snooping around. ticks = already done, show-off."}
+        {isProfessional ? "You start with one heart. Points fill the others (at 30, 80 and 150). Ticks are things you've already done." : "one heart to start. points fill the rest (30 · 80 · 150). ticks = already done, show-off."}
       </p>
       <p className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[10px] text-black/45 mt-4 mb-1.5">{isProfessional ? "Earn" : "Get points"}</p>
       <ul className="flex flex-col gap-1">
@@ -152,7 +164,7 @@ function Rules({ onClose, done }: { onClose: () => void; done: string[] }) {
           </li>
         ))}
       </ul>
-      <p className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[10px] text-black/45 mt-4 mb-1.5">{isProfessional ? "Lose a life" : "Lose a heart"}</p>
+      <p className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[10px] text-black/45 mt-4 mb-1.5">{isProfessional ? "Lose a heart" : "Lose a heart"}</p>
       <ul className="flex flex-col gap-1">
         {RULES.lose.map((r, i) => (
           <li key={i} className="flex items-center gap-2 font-['Work_Sans'] text-[13px] text-black">
@@ -161,7 +173,7 @@ function Rules({ onClose, done }: { onClose: () => void; done: string[] }) {
           </li>
         ))}
       </ul>
-      <p className="font-['Shantell_Sans',cursive] text-[12px] text-black/50 mt-3">{isProfessional ? "Lose all three and you respawn, minus 20 points. No real consequences. It's a portfolio." : "lose all three → respawn, −20 pts. it's a portfolio, not dark souls."}</p>
+      <p className="font-['Shantell_Sans',cursive] text-[12px] text-black/50 mt-3">{isProfessional ? "Lose them all and you respawn with one, minus 20 points. No real consequences. It's a portfolio." : "lose them all → respawn with one, −20 pts. it's a portfolio, not dark souls."}</p>
     </motion.div>
   );
 }
@@ -254,10 +266,10 @@ export function ScoreHUD({ compact = false }: { compact?: boolean }) {
             exit={{ opacity: 0, y: -8, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 420, damping: 22 }}
             className={`absolute top-full right-0 mt-2 whitespace-nowrap rounded-full border border-black px-3 py-1.5 font-['Shantell_Sans',cursive] text-[13px] shadow-[3px_3px_0_0_#1d1a17] ${
-              msg.kind === "bonus" ? "bg-[#FFC53D] text-black" : msg.kind === "life" ? "bg-[#1d1a17] text-[#fffaf1]" : "bg-[#fffaf1] text-black"
+              msg.kind === "bonus" ? "bg-[#FFC53D] text-black" : msg.kind === "life" ? "bg-[#1d1a17] text-[#fffaf1]" : msg.kind === "heart" ? "bg-[#ff614c] text-white" : "bg-[#fffaf1] text-black"
             }`}
           >
-            {msg.delta > 0 ? `+${msg.delta} · ` : msg.delta < 0 ? "−1 life · " : ""}
+            {msg.delta > 0 ? `+${msg.delta} · ` : msg.delta < 0 ? "−1 heart · " : msg.kind === "heart" ? "❤ " : ""}
             {msg.text}
           </motion.div>
         )}

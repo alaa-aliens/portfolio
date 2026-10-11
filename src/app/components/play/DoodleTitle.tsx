@@ -1,3 +1,4 @@
+import imgHeadCut from "../../../assets/head.webp";
 /*
  * hilos-style headline: little drawings sit inside the words.
  * Write the text with {tokens} where a doodle should go, e.g. "Stuff I've {pencil} designed".
@@ -13,7 +14,7 @@ import { StickerArt, type Kind } from "./Stickers";
 const ART: Record<string, React.ReactNode> = {
   head: (
     <span className="relative inline-block w-[0.9em] h-[1.05em] overflow-hidden align-[-0.15em]">
-      <img src={imgHead} alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+      <img src={imgHeadCut} alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" />
     </span>
   ),
   pencil: (

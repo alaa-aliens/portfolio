@@ -1,3 +1,4 @@
+import imgHeadCut from "../../../assets/head.webp";
 /*
  * The About section as a comic strip: hand-drawn panels (rough.js) you scroll
  * through sideways. Each panel draws itself the first time it shows up.
@@ -189,7 +190,7 @@ export function ComicStrip() {
                 </p>
                 {i === PANELS.length - 1 && (
                   <span className="absolute -right-5 -bottom-4 w-[74px] h-[88px] overflow-hidden rotate-[8deg]" aria-hidden>
-                    <img src={imgHead} alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+                    <img src={imgHeadCut} alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" />
                   </span>
                 )}
               </div>

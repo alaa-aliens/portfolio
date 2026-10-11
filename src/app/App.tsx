@@ -1,8 +1,6 @@
 import { ScoreTracker } from "./components/play/Score";
 import { ModeProvider } from "./components/ModeContext";
 import { ContactFormProvider } from "./components/ContactFormContext";
-import { ContactFormModal } from "./components/ContactFormModal";
-import { useContactForm } from "./components/ContactFormContext";
 import { useMode } from "./components/ModeContext";
 import { Navbar } from "./components/Navbar";
 import { FooterSection } from "./components/FooterSection";
@@ -41,7 +39,6 @@ function ScrollManager() {
 }
 
 function AppContent() {
-  const { isContactOpen, closeContact } = useContactForm();
   const { isArabic } = useMode();
   const location = useLocation();
 
@@ -85,7 +82,6 @@ function AppContent() {
       <div className="mt-16 md:mt-24">
         <FooterSection />
       </div>
-      <ContactFormModal isOpen={isContactOpen} onClose={closeContact} />
     </div>
   );
 }

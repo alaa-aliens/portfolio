@@ -1,3 +1,4 @@
+import imgHeadCut from "../../../assets/head.webp";
 /*
  * Ala'a as the tour guide: a little doodle of his head in the corner that
  * comments on whichever section you're looking at. Tap him to hear it again.
@@ -121,7 +122,7 @@ export function TourGuide() {
           >
             <span aria-hidden className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[70%] h-2 rounded-full bg-black/15 blur-[1px]" />
             <span className="absolute inset-0 overflow-hidden">
-              <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+              <img alt="" src={imgHeadCut} className="absolute inset-0 w-full h-full object-contain max-w-none" />
             </span>
           </motion.button>
         </motion.div>

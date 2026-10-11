@@ -5,11 +5,11 @@ import { useRef } from "react";
 export function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
     <div
-      className={`relative rounded-[15%/7%] bg-[#1d1a17] p-[2.8%] shadow-[0_24px_50px_-20px_rgba(60,35,10,0.45)] ${className}`}
+      className={`relative rounded-[30px] md:rounded-[34px] bg-[#1d1a17] p-[7px] shadow-[0_24px_50px_-20px_rgba(60,35,10,0.45)] ${className}`}
     >
       {/* sizes are proportional so small phones keep the same shape */}
-      <div className="absolute top-[2.4%] left-1/2 -translate-x-1/2 w-[30%] aspect-[5/1] rounded-full bg-[#1d1a17] z-10" aria-hidden />
-      <img src={src} alt={alt} loading="lazy" className="block w-full rounded-[12.5%/5.8%]" />
+      <div className="absolute top-[13px] left-1/2 -translate-x-1/2 w-[30%] h-[14px] rounded-full bg-[#1d1a17] z-10" aria-hidden />
+      <img src={src} alt={alt} loading="lazy" className="block w-full rounded-[24px] md:rounded-[28px]" />
     </div>
   );
 }

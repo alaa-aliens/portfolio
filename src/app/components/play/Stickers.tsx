@@ -9,12 +9,34 @@ import { useMode } from "../ModeContext";
 import { Eye } from "../hero/EyeHeadline";
 import { isPencilOn, setPencil } from "./InkCursor";
 
-export type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye" | "tie" | "popper";
+import artMug from "../../../assets/stickers/mug.webp";
+import artCat from "../../../assets/stickers/cat.webp";
+import artPencil from "../../../assets/stickers/pencil.webp";
+import artBulb from "../../../assets/stickers/bulb.webp";
+import artNote from "../../../assets/stickers/note.webp";
+import artLaptop from "../../../assets/stickers/laptop.webp";
+import artController from "../../../assets/stickers/controller.webp";
+import artPlant from "../../../assets/stickers/plant.webp";
+import artHeadphones from "../../../assets/stickers/headphones.webp";
+import artPlane from "../../../assets/stickers/plane.webp";
+import artBubble from "../../../assets/stickers/bubble.webp";
+import artSun from "../../../assets/stickers/sun.webp";
+
+export type Kind =
+  | "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye" | "tie" | "popper"
+  | "mug" | "cat" | "pencil" | "bulb" | "note" | "laptop" | "controller" | "plant" | "headphones" | "plane" | "bubble" | "sun";
+
+/** Hand-drawn sticker images (drawn in Ala'a's style). */
+const ART: Partial<Record<Kind, string>> = {
+  mug: artMug, cat: artCat, pencil: artPencil, bulb: artBulb, note: artNote, laptop: artLaptop,
+  controller: artController, plant: artPlant, headphones: artHeadphones, plane: artPlane, bubble: artBubble, sun: artSun,
+};
 
 const INK = "#1d1a17";
 const sw = { stroke: INK, strokeWidth: 2.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 
 export function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
+  if (ART[kind]) return <img src={ART[kind]} alt="" draggable={false} width={size} height={size} style={{ width: size, height: size, objectFit: "contain" }} className="inline-block select-none pointer-events-none max-w-none" />;
   switch (kind) {
     case "star":
       return (
@@ -108,7 +130,7 @@ export function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
   }
 }
 
-const KINDS: Kind[] = ["star", "heart", "sparkle", "swirl", "bolt", "wow", "coffee", "user", "crown", "eye"];
+const KINDS: Kind[] = ["mug", "cat", "pencil", "bulb", "note", "laptop", "controller", "plant", "headphones", "plane", "bubble", "sun", "star", "heart", "bolt", "wow", "crown", "eye"];
 
 interface Placed {
   id: number;
@@ -249,7 +271,7 @@ export function Stickers() {
                   <span className={`absolute top-[2px] w-3 h-3 rounded-full bg-black transition-all ${pencil ? "left-[18px]" : "left-[2px]"}`} />
                 </span>
               </button>
-              <div className="grid grid-cols-5 gap-1.5">
+              <div className="grid grid-cols-6 gap-1.5">
                 {KINDS.map((k) => (
                   <button
                     key={k}

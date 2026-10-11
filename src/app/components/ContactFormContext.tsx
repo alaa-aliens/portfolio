@@ -1,5 +1,10 @@
+/*
+ * "Open contact" used to open a modal form. Now it takes you to the postcard
+ * on /contact, which is the one way to write to me on this site.
+ */
+import React, { createContext, useContext } from "react";
+import { useNavigate } from "react-router";
 import { addScore } from "./play/Score";
-import React, { createContext, useContext, useState } from "react";
 
 interface ContactFormContextType {
   isContactOpen: boolean;
@@ -7,23 +12,20 @@ interface ContactFormContextType {
   closeContact: () => void;
 }
 
-const ContactFormContext = createContext<ContactFormContextType>({
-  isContactOpen: false,
-  openContact: () => {},
-  closeContact: () => {},
-});
+const ContactFormContext = createContext<ContactFormContextType>({ isContactOpen: false, openContact: () => {}, closeContact: () => {} });
 
 export function ContactFormProvider({ children }: { children: React.ReactNode }) {
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <ContactFormContext.Provider
       value={{
-        isContactOpen,
+        isContactOpen: false,
         openContact: () => {
-          setIsContactOpen(true);
-          addScore(25, "opened the contact form", "contact:open", true);
+          addScore(25, "headed to the postcard", "contact:open", true);
+          navigate("/contact");
+          setTimeout(() => document.getElementById("postcard")?.scrollIntoView({ behavior: "smooth", block: "center" }), 450);
         },
-        closeContact: () => setIsContactOpen(false),
+        closeContact: () => {},
       }}
     >
       {children}

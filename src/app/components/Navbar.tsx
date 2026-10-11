@@ -1,3 +1,4 @@
+import imgHeadCut from "../../assets/head.webp";
 import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { ScoreHUD } from "./play/Score";
 import { useMode } from "./ModeContext";
@@ -91,7 +92,7 @@ function RollingHead({ size }: { size: number }) {
   const rotate = useTransform([roll, spin], ([r, s]: number[]) => r + s);
   return (
     <motion.div style={{ rotate, width: size, height: size * 1.2 }} className="relative overflow-hidden shrink-0">
-      <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgImage4} />
+      <img alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" src={imgHeadCut} />
     </motion.div>
   );
 }
@@ -257,7 +258,7 @@ export function Navbar() {
               animate={{ y: 0, rotate: [-6, 6, -6] }}
               transition={{ y: { delay: 0.3, type: "spring", stiffness: 140, damping: 14 }, rotate: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } }}
             >
-              <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgImage4} />
+              <img alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" src={imgHeadCut} />
             </motion.div>
           </motion.div>
         )}

@@ -1,4 +1,5 @@
-import imgBody from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
+import imgHeadCut from "../../assets/head.webp";
+import { Button } from "./ui/Kit";
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
 import { motion } from "motion/react";
@@ -51,27 +52,42 @@ export function FooterSection() {
 
   return (
     <>
-    {/* Ala'a peeking over the footer edge */}
-    <div className="relative h-0 w-full max-w-[1200px] mx-auto" aria-hidden>
+    {/* A round sticker of me, half over the footer edge, with text running around it */}
+    <div className="relative h-0 w-full max-w-[1200px] mx-auto z-10" aria-hidden>
       <motion.div
-        className="absolute bottom-0 left-6 md:left-16 w-[150px] md:w-[210px] h-[200px] md:h-[280px] z-0"
-        initial={{ y: "90%" }}
-        whileInView={{ y: "45%" }}
-        viewport={{ once: false, margin: "0px 0px -40px 0px" }}
-        transition={{ type: "spring", stiffness: 140, damping: 14 }}
+        className="absolute left-6 md:left-16 -top-[52px] md:-top-[70px] w-[104px] h-[104px] md:w-[140px] md:h-[140px]"
+        initial={{ scale: 0, rotate: -20 }}
+        whileInView={{ scale: 1, rotate: 0 }}
+        viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+        transition={{ type: "spring", stiffness: 200, damping: 14 }}
       >
-        <motion.div
-          className="absolute inset-0 overflow-hidden"
-          animate={{ rotate: [-4, 4, -4] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        <div className="absolute inset-0 rounded-full bg-[#fdecd0] border border-[#1d1a17] shadow-[3px_3px_0_0_#ff614c]" />
+        <motion.svg
+          viewBox="0 0 100 100"
+          className="absolute inset-0 w-full h-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         >
-          <img alt="" src={imgBody} className="absolute w-full h-auto max-w-none left-0 top-0" />
-        </motion.div>
+          <defs>
+            <path id="footer-ring" d="M50 50 m-39 0 a39 39 0 1 1 78 0 a39 39 0 1 1 -78 0" />
+          </defs>
+          <text fontFamily="Gochi Hand, cursive" fontSize="10.5" fill="#1d1a17" letterSpacing="1">
+            <textPath href="#footer-ring">{isProfessional ? "psst… hiring? · let's talk · psst… hiring? · " : "psst… hiring? · say hi · don't scroll away · "}</textPath>
+          </text>
+        </motion.svg>
+        <motion.img
+          src={imgHeadCut}
+          alt=""
+          className="absolute left-[24%] top-[24%] w-[52%] h-[52%] object-contain"
+          animate={{ rotate: [-5, 5, -5] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
         <motion.span
           initial={{ opacity: 0, scale: 0.4 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 14 }}
-          className="absolute top-[4%] left-[70%] whitespace-nowrap origin-bottom-left bg-white border border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 14 }}
+          className="absolute -top-3 left-[92%] whitespace-nowrap origin-bottom-left bg-white border border-black rounded-[16px] px-3 py-1 font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
         >
           {isProfessional ? "psst… hiring?" : "don't scroll away 🥺"}
         </motion.span>
@@ -129,12 +145,9 @@ export function FooterSection() {
               : "Whether it's a project, a workshop, or just a good design argument — I'm in. Bring snacks."}
           </p>
 
-          <button
-            onClick={openContact}
-            className="mt-2 bg-[#ff614c] text-white px-8 py-4 font-['Playfair_Display'] font-bold text-[18px] md:text-[20px] border-2 border-[#ff614c] shadow-[5px_5px_0px_0px_rgba(255,97,76,0.3)] hover:shadow-[3px_3px_0px_0px_rgba(255,97,76,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
-          >
+          <Button tone="coral" size="lg" onClick={openContact} className="mt-2 !border-[#fffaf1] !shadow-[4px_4px_0_0_#fffaf1] hover:!shadow-[2px_2px_0_0_#fffaf1]">
             {isProfessional ? "Get in Touch →" : "Say Hi 👋"}
-          </button>
+          </Button>
         </div>
 
         {/* Squiggly Divider */}

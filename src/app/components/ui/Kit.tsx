@@ -85,11 +85,12 @@ export function Button({
   size?: "md" | "lg";
 }) {
   const tones = {
-    paper: "bg-[#fffaf1] text-black",
+    paper: "bg-white text-black",
     ink: "bg-[#1d1a17] text-[#fffaf1]",
-    coral: "bg-[#ff614c] text-[#fffaf1]",
+    coral: "bg-[#ff614c] text-white",
   };
-  const cls = `inline-flex items-center justify-center gap-2 border border-black rounded-full font-['DM_Serif_Display'] ${size === "lg" ? "px-7 py-3.5 text-[19px] md:text-[21px]" : "px-5 py-2.5 text-[16px] md:text-[18px]"} shadow-[3px_3px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${tones[tone]} ${className}`;
+  // His original button: a rectangle with a 1px ink line and a hard 4px shadow that presses in.
+  const cls = `inline-flex items-center justify-center gap-2 border border-black rounded-[3px] font-['DM_Serif_Display'] ${size === "lg" ? "px-8 py-4 text-[18px] md:text-[20px]" : "px-6 py-3 text-[16px] md:text-[18px]"} shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${tones[tone]} ${className}`;
   if (to) return <Link to={to} className={cls}>{children}</Link>;
   if (href) return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>;
   return <button type="button" onClick={onClick} className={cls}>{children}</button>;

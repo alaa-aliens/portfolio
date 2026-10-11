@@ -1,3 +1,4 @@
+import imgHeadCut from "../../assets/head.webp";
 import { loseLife } from "../components/play/Score";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
@@ -17,7 +18,7 @@ import { SoundBoard } from "../components/story/SoundBoard";
 import { Journey } from "../components/story/Journey";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { StickerArt, type Kind } from "../components/play/Stickers";
-import { Scribble } from "../components/ui/Kit";
+import { Button, NextTiles, Scribble } from "../components/ui/Kit";
 import { Tsuzuku } from "../components/play/ToBeContinued";
 import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { usePageMeta } from "../usePageMeta";
@@ -35,16 +36,6 @@ function BackLink() {
   );
 }
 
-function CtaButton({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className="bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] md:text-[19px] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_black] transition-all"
-    >
-      {children}
-    </button>
-  );
-}
 
 /* ── Not found / not written yet ── */
 function NotReady({ project }: { project?: Project }) {
@@ -69,7 +60,7 @@ function NotReady({ project }: { project?: Project }) {
           : "This page doesn't exist. Maybe it's in a folder I forgot to name."}
       </p>
       <div className="flex flex-wrap gap-4 mt-10">
-        <CtaButton onClick={openContact}>{isProfessional ? "Ask me about it" : "Bug me about it"}</CtaButton>
+        <Button onClick={openContact}>{isProfessional ? "Ask me about it" : "Bug me about it"}</Button>
       </div>
     </section>
   );
@@ -407,7 +398,7 @@ export function CaseStudyPage() {
                 <p className="font-['Shantell_Sans',cursive] text-black text-[19px] md:text-[26px] leading-[1.55]">{cs.closing}</p>
                 <p className="font-display text-[26px] md:text-[32px] text-[#ff614c] mt-6 lowercase">— ala'a</p>
                 <span className="absolute -right-6 -bottom-7 w-[92px] h-[110px] overflow-hidden rotate-[8deg]" aria-hidden>
-                  <img alt="" className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" src={imgHead} />
+                  <img alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" src={imgHeadCut} />
                 </span>
               </div>
             </div>
@@ -418,32 +409,14 @@ export function CaseStudyPage() {
       {/* ── episode end ── */}
       <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 mt-16 flex justify-end"><Tsuzuku /></div>
 
-      {/* ── Footer CTA ── */}
-      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-10 md:mt-14 mb-8">
-        <div className="grid md:grid-cols-2 gap-6">
-          <Reveal className="border border-black rounded-[6px] p-8 md:p-10 flex flex-col gap-5 bg-white/50">
-            <p className="font-['Playfair_Display'] font-bold text-black text-[26px] md:text-[34px] leading-tight">
-              {isProfessional ? "Got a product that needs this treatment?" : "Want me to break (and fix) your product next?"}
-            </p>
-            <div>
-              <CtaButton onClick={openContact}>{isProfessional ? "Get in Touch" : "Say Hi"}</CtaButton>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Link
-              to={next ? `/work/${next.slug}` : "/work"}
-              className="group h-full border border-black rounded-[6px] p-8 md:p-10 flex flex-col justify-between gap-6 bg-black text-white hover:bg-[#ff614c] transition-colors"
-            >
-              <span className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[12px] text-white/60 group-hover:text-white/80">
-                {next ? (isProfessional ? "Next project" : "Next victim") : isProfessional ? "Keep exploring" : "There's more"}
-              </span>
-              <span className="font-['Playfair_Display'] font-bold text-[30px] md:text-[44px] leading-tight flex items-center justify-between gap-4">
-                {next ? next.name : isProfessional ? "See all projects" : "The Full Damage"}
-                <span className="transition-transform group-hover:translate-x-2">→</span>
-              </span>
-            </Link>
-          </Reveal>
-        </div>
+      {/* ── Footer: next episode + say hi ── */}
+      <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 mt-10 md:mt-14 mb-16">
+        <NextTiles
+          items={[
+            { to: next ? `/work/${next.slug}` : "/work", k: next ? (isProfessional ? "next episode" : "next victim") : isProfessional ? "keep exploring" : "there's more", t: next ? next.name : isProfessional ? "all projects" : "the full damage" },
+            { to: "/contact", k: isProfessional ? "got a product that needs this?" : "want me to break (and fix) yours?", t: isProfessional ? "send me a postcard" : "throw me a plane" },
+          ]}
+        />
       </div>
     </article>
   );

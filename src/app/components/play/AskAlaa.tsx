@@ -1,3 +1,4 @@
+import imgHeadCut from "../../../assets/head.webp";
 import { addScore } from "./Score";
 /*
  * "Ask Ala'a": his doodle head in the corner, now a tiny chat.
@@ -255,7 +256,7 @@ export function AskAlaa() {
           >
             <span aria-hidden className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[70%] h-2 rounded-full bg-black/15 blur-[1px]" />
             <span className="absolute inset-0 overflow-hidden">
-              <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+              <img alt="" src={imgHeadCut} className="absolute inset-0 w-full h-full object-contain max-w-none" />
             </span>
             {mood === "blush" && <span aria-hidden className="absolute left-[28%] top-[52%] w-3 h-2 rounded-full bg-[#ff614c]/60 blur-[1px]" />}
             {mood === "think" && <span aria-hidden className="absolute -top-3 right-0 font-['Shantell_Sans',cursive] text-[18px]">?</span>}

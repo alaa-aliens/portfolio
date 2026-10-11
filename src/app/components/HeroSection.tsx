@@ -213,7 +213,7 @@ export function HeroSection() {
               window.dispatchEvent(new CustomEvent("crowd:attract", { detail: { x: r.left + r.width / 2, y: r.bottom + 10 } }));
             }}
             onMouseLeave={() => window.dispatchEvent(new CustomEvent("crowd:attract", { detail: null }))}
-            className="pointer-events-auto self-center md:self-start bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] md:text-[19px] text-black relative hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_black] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all shadow-[4px_4px_0px_0px_black] border border-black"
+            className="pointer-events-auto self-center md:self-start inline-flex items-center justify-center gap-2 border border-black rounded-[3px] font-['DM_Serif_Display'] px-6 py-3 text-[16px] md:text-[18px] bg-white text-black shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
           >
             {isProfessional ? "Get in Touch" : "Say Hi"}
           </button>
