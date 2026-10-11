@@ -131,7 +131,7 @@ export function FindTheButton() {
         key={shake}
         animate={shake ? { x: [0, -8, 8, -5, 5, 0] } : undefined}
         transition={{ duration: 0.35 }}
-        className="relative rounded-[22px] border-2 border-black bg-[#fffaf1] shadow-[5px_6px_0_0_#1d1a17] overflow-hidden"
+        className="relative rounded-[22px] border border-black bg-[#fffaf1] shadow-[5px_6px_0_0_#1d1a17] overflow-hidden"
       >
         {/* window chrome */}
         <div className="flex items-center gap-2 px-4 py-2.5 border-b-2 border-black bg-[#FFE9C7]">
@@ -153,7 +153,7 @@ export function FindTheButton() {
                     ? "Five screens, each full of UX crimes. Find the one real button before the user runs out of patience."
                     : "Five cursed screens. One real button each. The user is losing patience. So am I."}
                 </p>
-                <button onClick={() => start(0)} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border-2 border-black rounded-full px-7 py-3 font-['DM_Serif_Display'] text-[19px] shadow-[4px_4px_0_0_#ff614c] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#ff614c] transition-all">
+                <button onClick={() => start(0)} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-7 py-3 font-['DM_Serif_Display'] text-[19px] shadow-[3px_3px_0_0_#ff614c] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#ff614c] transition-all">
                   Start →
                 </button>
               </motion.div>
@@ -185,18 +185,18 @@ export function FindTheButton() {
                   </motion.p>
                 )}
                 {state !== "play" && (
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-4 bottom-4 md:inset-x-8 bg-white border-2 border-black rounded-[16px] p-4 shadow-[4px_4px_0_0_#1d1a17]">
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-4 bottom-4 md:inset-x-8 bg-white border border-black rounded-[16px] p-4 shadow-[3px_3px_0_0_#1d1a17]">
                     <p className="font-display lowercase text-[24px] md:text-[30px] leading-none" style={{ color: state === "won" ? "#53B858" : "#ff614c" }}>
                       {state === "won" ? (isProfessional ? "found it!" : "finally!!") : isProfessional ? "they rage-quit." : "RAGE QUIT. classic."}
                     </p>
                     <p className="font-['IBM_Plex_Serif'] text-[14px] md:text-[15px] mt-1.5 leading-snug">{L.lesson}</p>
                     <div className="flex gap-2 mt-3">
                       {state === "won" ? (
-                        <button onClick={next} className="bg-[#1d1a17] text-[#fffaf1] border-2 border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">
+                        <button onClick={next} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">
                           {level + 1 < LEVELS.length ? "Next level →" : "See score →"}
                         </button>
                       ) : (
-                        <button onClick={() => start(level)} className="bg-[#1d1a17] text-[#fffaf1] border-2 border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">Try again ↻</button>
+                        <button onClick={() => start(level)} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">Try again ↻</button>
                       )}
                     </div>
                   </motion.div>
@@ -211,7 +211,7 @@ export function FindTheButton() {
                 <p className="font-['IBM_Plex_Serif'] text-[15px] md:text-[17px] max-w-[360px]">
                   {score > 45 ? (isProfessional ? "You'd pass my UX audit. Want a job?" : "Ok you're hired. Unpaid, but hired.") : score > 25 ? (isProfessional ? "Solid. Most real products do worse." : "Not bad. Most real apps do worse. Much worse.") : isProfessional ? "The screens were cursed. Try again." : "It's ok. The screens were evil. That's the point."}
                 </p>
-                <button onClick={() => { setScore(0); start(0); }} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border-2 border-black rounded-full px-6 py-2.5 font-['DM_Serif_Display'] text-[17px]">Play again ↻</button>
+                <button onClick={() => { setScore(0); start(0); }} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-6 py-2.5 font-['DM_Serif_Display'] text-[17px]">Play again ↻</button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -220,7 +220,7 @@ export function FindTheButton() {
 
       {/* Side: the user + patience */}
       <div className="flex flex-col gap-5">
-        <div className="rounded-[20px] border-2 border-black bg-[#fffaf1] p-5 shadow-[4px_5px_0_0_#1d1a17]">
+        <div className="rounded-[20px] border border-black bg-[#fffaf1] p-5 shadow-[3px_3px_0_0_#1d1a17]">
           <div className="flex items-center gap-4">
             <UserFace mood={face} />
             <div className="min-w-0">
@@ -234,7 +234,7 @@ export function FindTheButton() {
             <div className="flex justify-between font-['Work_Sans'] text-[11px] uppercase tracking-wider text-black/50 mb-1">
               <span>patience</span><span>{Math.ceil(patience)}s</span>
             </div>
-            <div className="h-4 rounded-full border-2 border-black bg-white overflow-hidden">
+            <div className="h-4 rounded-full border border-black bg-white overflow-hidden">
               <motion.div className="h-full" style={{ width: `${(patience / PATIENCE) * 100}%`, background: patience < 2.5 ? "#ff614c" : patience < 4.5 ? "#FFC53D" : "#53B858" }} transition={{ duration: 0.1 }} />
             </div>
           </div>
@@ -252,13 +252,13 @@ export function FindTheButton() {
 
 function styleOf(s: Item["style"]) {
   switch (s) {
-    case "btn": return "rounded-[10px] border-2 border-black bg-[#ff614c] text-white px-3 py-2.5 shadow-[3px_3px_0_0_#1d1a17] font-semibold";
+    case "btn": return "rounded-[10px] border border-black bg-[#ff614c] text-white px-3 py-2.5 shadow-[3px_3px_0_0_#1d1a17] font-semibold";
     case "ghost": return "rounded-[10px] border border-black/30 text-black/45 px-3 py-2.5 bg-white";
     case "link": return "underline underline-offset-4 decoration-2 text-[#0a84ff] px-1 py-2 font-semibold text-left";
     case "text": return "text-left px-1 py-2 text-black/80";
     case "banner": return "rounded bg-black text-white px-3 py-2";
-    case "toggle": return "rounded-full border-2 border-black bg-white px-3 py-2 text-left";
-    case "icon": return "w-9 h-9 rounded-full border-2 border-black bg-white text-[18px] font-bold flex items-center justify-center";
+    case "toggle": return "rounded-full border border-black bg-white px-3 py-2 text-left";
+    case "icon": return "w-9 h-9 rounded-full border border-black bg-white text-[18px] font-bold flex items-center justify-center";
   }
 }
 

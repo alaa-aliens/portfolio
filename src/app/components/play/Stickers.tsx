@@ -207,7 +207,7 @@ export function Stickers() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 380, damping: 28 }}
-              className="w-[268px] bg-[#fffaf1] border-2 border-black rounded-[14px] shadow-[5px_5px_0_0_black] p-3"
+              className="w-[268px] bg-[#fffaf1] border border-black rounded-[14px] shadow-[5px_5px_0_0_black] p-3"
             >
               <div className="flex items-center justify-between mb-2 px-1">
                 <span className="font-['Shantell_Sans',cursive] text-[14px] text-black">
@@ -245,7 +245,7 @@ export function Stickers() {
                   <svg width="18" height="18" viewBox="0 0 34 34" aria-hidden><path d="M3 31 L7 21 L24 4 L30 10 L13 27 Z" fill="#FFC53D" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" /><path d="M24 4 L30 10 L32 7 L27 2 Z" fill="#ff614c" stroke="#1d1a17" strokeWidth="2.4" strokeLinejoin="round" /></svg>
                   {isProfessional ? "pencil cursor" : "cursor → pencil"}
                 </span>
-                <span className={`w-9 h-5 rounded-full border-2 border-black relative transition-colors ${pencil ? "bg-[#ff614c]" : "bg-white"}`}>
+                <span className={`w-9 h-5 rounded-full border border-black relative transition-colors ${pencil ? "bg-[#ff614c]" : "bg-white"}`}>
                   <span className={`absolute top-[2px] w-3 h-3 rounded-full bg-black transition-all ${pencil ? "left-[18px]" : "left-[2px]"}`} />
                 </span>
               </button>
@@ -274,7 +274,7 @@ export function Stickers() {
               transition={{ delay: 1.2 }}
               onClick={() => setOpen(true)}
               whileHover={{ rotate: -3, scale: 1.04 }}
-              className="flex items-center gap-2 bg-[#fffaf1] border-2 border-black rounded-full shadow-[3px_3px_0_0_black] pl-2 pr-4 py-1.5 font-['Shantell_Sans',cursive] text-[14px] text-black"
+              className="flex items-center gap-2 bg-[#fffaf1] border border-black rounded-full shadow-[3px_3px_0_0_black] pl-2 pr-4 py-1.5 font-['Shantell_Sans',cursive] text-[14px] text-black"
             >
               <StickerArt kind="star" size={26} />
               {isProfessional ? "doodle on my site" : "deface my site"}

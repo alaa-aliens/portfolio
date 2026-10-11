@@ -24,7 +24,6 @@ import { AboutPage } from "./pages/AboutPage";
 import { SkillsPage } from "./pages/SkillsPage";
 import { ExperiencePage } from "./pages/ExperiencePage";
 import { ContactPage } from "./pages/ContactPage";
-import { PlayPage } from "./pages/PlayPage";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -76,7 +75,6 @@ function AppContent() {
               <Route path="/skills" element={<SkillsPage />} />
               <Route path="/experience" element={<ExperiencePage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/play" element={<PlayPage />} />
               <Route path="*" element={<CaseStudyPage />} />
             </Routes>
           </motion.div>

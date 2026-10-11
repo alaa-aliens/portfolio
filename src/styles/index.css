@@ -8,7 +8,7 @@ img.max-w-none { max-width: none !important; }
 body { font-size: 16px; line-height: 1.5; }
 
 /* ── Hand-lettered display face (matches the brush lettering in the OG design) ── */
-.font-display { font-family: "Bagel Fat One", "Playfair Display", system-ui, sans-serif; letter-spacing: -0.01em; }
+.font-display { font-family: "Playfair Display", Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
 
 /* ── Googly eyes in the hero headline ── */
 .eye { width: 0.62em; height: 0.62em; margin: 0 0.02em; transform-origin: center; vertical-align: -0.02em; }

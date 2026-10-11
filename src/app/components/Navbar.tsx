@@ -56,7 +56,6 @@ const ITEMS: Item[] = [
   { label: ["About", "Me"], to: "/about" },
   { label: ["Skills", "Table"], to: "/skills" },
   { label: ["Experience", "Lore"], to: "/experience" },
-  { label: ["Play", "Game"], to: "/play" },
   { label: ["Contact", "Say hi"], to: "/contact" },
 ];
 
@@ -75,10 +74,9 @@ function RollingHead({ size }: { size: number }) {
 }
 
 export function Navbar() {
-  const { mode, setMode, lang, setLang, isArabic, isProfessional } = useMode();
+  const { mode, setMode, lang, setLang, isProfessional } = useMode();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hoverItem, setHoverItem] = useState<number | null>(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -100,26 +98,24 @@ export function Navbar() {
     setMenuOpen(false);
     navigate(it.hash ? `${it.to}#${it.hash}` : it.to);
   };
-  const activeIndex = ITEMS.findIndex((it) => pathname === it.to || (it.to !== "/" && pathname.startsWith(it.to)));
-  const arrowAt = hoverItem ?? (activeIndex >= 0 ? activeIndex : null);
   const compact = scrolled;
 
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-4 md:px-8"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-8"
         animate={{ paddingTop: compact ? 10 : 18, paddingBottom: compact ? 10 : 14 }}
         transition={{ type: "spring", stiffness: 300, damping: 32 }}
       >
         <motion.div
           aria-hidden
-          className="absolute inset-0 bg-[#fdecd0]/90 backdrop-blur-md border-b-2 border-black"
+          className="absolute inset-0 bg-[#fdecd0]/90 backdrop-blur-md border-b border-black/60"
           initial={false}
           animate={{ opacity: compact ? 1 : 0 }}
         />
 
         {/* Logo + stacked menu */}
-        <div className="relative flex items-start gap-4 md:gap-7">
+        <div className="relative flex items-center">
           <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -128,53 +124,24 @@ export function Navbar() {
           >
             <RollingHead size={compact ? 36 : 44} />
             <motion.span
-              className="font-display text-[24px] md:text-[30px] text-black lowercase whitespace-nowrap overflow-hidden leading-none"
+              className="font-['Playfair_Display'] font-bold text-[20px] md:text-[24px] text-black whitespace-nowrap overflow-hidden leading-none"
               initial={false}
               animate={{ width: compact ? 0 : "auto", opacity: compact ? 0 : 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 30 }}
             >
-              ala'a ali
+              Ala'a Ali
             </motion.span>
           </Link>
 
-          <AnimatePresence initial={false}>
-            {!compact && !isArabic && (
-              <motion.ul
-                key="stack"
-                className="hidden lg:flex flex-col pt-1"
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                onMouseLeave={() => setHoverItem(null)}
-              >
-                {ITEMS.map((it, i) => (
-                  <li key={it.label[0]}>
-                    <button
-                      onClick={() => go(it)}
-                      onMouseEnter={() => setHoverItem(i)}
-                      className="relative flex items-center gap-2 font-['Work_Sans'] font-semibold uppercase tracking-[0.12em] text-[11.5px] leading-[1.55] text-black/80 hover:text-black"
-                    >
-                      {it.label[isProfessional ? 0 : 1]}
-                      {arrowAt === i && (
-                        <motion.span layoutId="nav-arrow" className="text-[#ff614c]" transition={{ type: "spring", stiffness: 500, damping: 30 }}>
-                          →
-                        </motion.span>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
         </div>
 
         {/* Mode toggle */}
-        <div className="relative hidden md:flex items-center rounded-full border-2 border-black/80 bg-[#fdecd0] p-[4px] w-[300px] lg:w-[340px]">
+        <div className="relative hidden md:flex items-center rounded-full border border-black/80 bg-[#fdecd0] p-[4px] w-[300px] lg:w-[340px]">
           <ModeToggle mode={mode} setMode={setMode} id="desktop" />
         </div>
 
         {/* Language + menu button */}
-        <div className="relative flex items-center gap-3 md:gap-4 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px] pt-1.5">
+        <div className="relative flex items-center gap-3 md:gap-4 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px]">
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => {
@@ -203,7 +170,7 @@ export function Navbar() {
                 onClick={() => setMenuOpen(true)}
                 aria-expanded={menuOpen}
                 aria-label="Open menu"
-                className={`${compact ? "flex" : "flex lg:hidden"} items-center gap-2 bg-black text-white rounded-full pl-3.5 pr-3 py-1.5 font-['Work_Sans'] font-semibold text-[13px] uppercase tracking-[0.1em]`}
+                className="flex items-center gap-2 bg-black text-white rounded-full pl-3.5 pr-3 py-1.5 font-['Work_Sans'] font-semibold text-[13px] uppercase tracking-[0.1em]"
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.6 }}
@@ -221,7 +188,7 @@ export function Navbar() {
       </motion.nav>
 
       {/* Mobile mode toggle */}
-      <div className="md:hidden fixed bottom-4 left-4 z-50 flex items-center rounded-full border-2 border-black bg-[#fdecd0] p-[4px] w-[220px] shadow-[3px_3px_0_0_black]">
+      <div className="md:hidden fixed bottom-4 left-4 z-50 flex items-center rounded-full border border-black bg-[#fdecd0] p-[4px] w-[220px] shadow-[3px_3px_0_0_black]">
         <ModeToggle mode={mode} setMode={setMode} id="mobile" compact />
       </div>
 
@@ -247,7 +214,7 @@ export function Navbar() {
                 <button
                   onClick={() => setMenuOpen(false)}
                   aria-label="Close menu"
-                  className="w-11 h-11 rounded-full bg-[#fffaf1] text-black text-[18px] border-2 border-black shadow-[3px_3px_0_0_black] hover:rotate-90 transition-transform"
+                  className="w-11 h-11 rounded-full bg-[#fffaf1] text-black text-[18px] border border-black shadow-[3px_3px_0_0_black] hover:rotate-90 transition-transform"
                 >
                   ✕
                 </button>
@@ -263,10 +230,10 @@ export function Navbar() {
                   >
                     <button onClick={() => go(it)} className="group flex items-baseline gap-4 md:gap-6 text-left">
                       <span className="font-['Work_Sans'] text-[13px] md:text-[15px] tabular-nums opacity-60">0{i + 1}</span>
-                      <span className="font-display lowercase text-[52px] md:text-[104px] leading-[0.95] transition-transform duration-300 group-hover:translate-x-3 group-hover:-rotate-2 group-hover:text-black">
+                      <span className="font-['Playfair_Display'] font-bold text-[48px] md:text-[96px] leading-[1] transition-transform duration-300 group-hover:translate-x-3 group-hover:-rotate-2 group-hover:text-black">
                         {it.label[isProfessional ? 0 : 1]}
                       </span>
-                      <span className="font-display text-[36px] md:text-[64px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-black">→</span>
+                      <span className="font-['Playfair_Display'] text-[36px] md:text-[64px] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-black">→</span>
                     </button>
                   </motion.li>
                 ))}

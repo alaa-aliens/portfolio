@@ -64,7 +64,7 @@ export function ContactPage() {
                     whileHover={{ y: -3, rotate: -1 }}
                     whileTap={{ scale: 0.96 }}
                     aria-pressed={on}
-                    className={`flex items-center gap-3 text-left rounded-[16px] border-2 p-3 transition-colors ${on ? "border-black bg-white shadow-[3px_3px_0_0_black]" : "border-black/20 bg-[#fffaf1] hover:border-black"}`}
+                    className={`flex items-center gap-3 text-left rounded-[16px] border p-3 transition-colors ${on ? "border-black bg-white shadow-[3px_3px_0_0_black]" : "border-black/20 bg-[#fffaf1] hover:border-black"}`}
                   >
                     <StickerArt kind={r.kind} size={30} />
                     <span className="font-['Work_Sans'] font-semibold text-[13.5px] md:text-[14.5px] leading-snug">{isProfessional ? r.pro : r.fun}</span>
@@ -106,7 +106,7 @@ export function ContactPage() {
             <p className="font-['Shantell_Sans',cursive] text-[15px] mt-3 text-center">{isProfessional ? "Amman, Jordan · GMT+3" : "Amman · fuelled by coffee"}</p>
           </PaperCard>
           <motion.span
-            className="absolute -top-4 -right-3 bg-white border-2 border-black rounded-[16px] px-3 py-1.5 font-['DM_Serif_Display'] text-[15px] shadow-[3px_3px_0_0_black] rotate-[6deg]"
+            className="absolute -top-4 -right-3 bg-white border border-black rounded-[16px] px-3 py-1.5 font-['DM_Serif_Display'] text-[15px] shadow-[3px_3px_0_0_black] rotate-[6deg]"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 12, delay: 0.9 }}

@@ -169,7 +169,7 @@ export function SkillsTable({ embedded = false }: { embedded?: boolean }) {
               ref={(el) => (chipRefs.current[i] = el)}
               type="button"
               onClick={() => touch && hop(i)}
-              className={`${reduce ? "relative" : "absolute left-0 top-0"} whitespace-nowrap rounded-full border-2 border-black px-4 py-2 font-['Work_Sans'] font-semibold text-[13px] md:text-[15px] text-black shadow-[2px_3px_0_0_black]`}
+              className={`${reduce ? "relative" : "absolute left-0 top-0"} whitespace-nowrap rounded-full border border-black px-4 py-2 font-['Work_Sans'] font-semibold text-[13px] md:text-[15px] text-black shadow-[2px_3px_0_0_black]`}
               style={{ background: COLORS[i % COLORS.length], opacity: reduce ? 1 : 0, willChange: "transform" }}
               tabIndex={-1}
             >

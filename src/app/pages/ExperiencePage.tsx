@@ -71,7 +71,7 @@ export function ExperiencePage() {
         <NextTiles
           items={[
             { to: "/work", k: isProfessional ? "Next" : "Keep going", t: isProfessional ? "See the work" : "The full damage" },
-            { to: "/play", k: isProfessional ? "Or" : "Or", t: isProfessional ? "Take a break" : "Play a game" },
+            { to: "/contact", k: isProfessional ? "Or" : "Or", t: isProfessional ? "Say hello" : "Say hi, I don't bite" },
           ]}
         />
       </div>

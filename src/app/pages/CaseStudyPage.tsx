@@ -5,7 +5,7 @@ import { useMode } from "../components/ModeContext";
 import { useContactForm } from "../components/ContactFormContext";
 import { BeforeAfter } from "../components/BeforeAfter";
 import { BeforeChat } from "../components/BeforeChat";
-import { PhoneFan, PhoneRow } from "../components/Phone";
+import { BrowserShowcase, PhoneFan, ScreenRow } from "../components/Phone";
 import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline, SectionTitle } from "../components/motion/Doodles";
 import { categories, getNextReady, getProject, type Project } from "../data/projects";
 import { ProblemSketch } from "../components/ProblemSketch";
@@ -89,7 +89,7 @@ function Steps({ steps }: { steps: NonNullable<NonNullable<Project["caseStudy"]>
               whileInView={{ scale: 1, rotate: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ type: "spring", stiffness: 300, damping: 14 }}
-              className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#fdecd0] border-2 border-black flex items-center justify-center font-['Playfair_Display'] italic font-bold text-[22px] md:text-[28px] text-[#ff614c]"
+              className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#fdecd0] border border-black flex items-center justify-center font-['Playfair_Display'] italic font-bold text-[22px] md:text-[28px] text-[#ff614c]"
             >
               {i + 1}
             </motion.span>
@@ -103,7 +103,7 @@ function Steps({ steps }: { steps: NonNullable<NonNullable<Project["caseStudy"]>
             </p>
             {s.phones && s.phones.length > 0 && (
               <div className="mt-5">
-                <PhoneRow shots={s.phones} />
+                <ScreenRow shots={s.phones} />
               </div>
             )}
             {s.image && (
@@ -112,7 +112,7 @@ function Steps({ steps }: { steps: NonNullable<NonNullable<Project["caseStudy"]>
                   src={s.image}
                   alt={s.title}
                   loading="lazy"
-                  className="w-full rounded-[6px] border border-black shadow-[6px_6px_0px_0px_black]"
+                  className="w-full rounded-[6px] border border-black shadow-[4px_4px_0px_0px_black]"
                 />
               </PenWipe>
             )}
@@ -205,7 +205,7 @@ export function CaseStudyPage() {
             initial={{ opacity: 0, scale: 0.85, rotate: -8 }}
             animate={{ opacity: 1, scale: 1, rotate: -3 }}
             transition={{ type: "spring", stiffness: 120, damping: 12, delay: 0.2 }}
-            className="hidden md:block w-[300px] lg:w-[340px] bg-[#fffaf1] border-2 border-black rounded-[20px] p-2.5 shadow-[6px_7px_0_0_#1d1a17]"
+            className="hidden md:block w-[300px] lg:w-[340px] bg-[#fffaf1] border border-black rounded-[20px] p-2.5 shadow-[4px_4px_0_0_#1d1a17]"
             onMouseEnter={() => setFolderOpen(true)}
           >
             <ProjectCover project={project} hovered={folderOpen} />
@@ -228,7 +228,7 @@ export function CaseStudyPage() {
 
       {cs.showcase && cs.showcase.length > 0 && (
         <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-10 md:mt-14">
-          <PhoneFan shots={cs.showcase} color={cat.color} />
+          {cs.device === "desktop" ? <BrowserShowcase shots={cs.showcase} color={cat.color} url={cs.url} /> : <PhoneFan shots={cs.showcase} color={cat.color} />}
         </div>
       )}
 

@@ -2,9 +2,9 @@
  * The site's design language, in one file. Every page builds from these.
  *
  *  Paper      #fdecd0 page · #fffaf1 card · ink #1d1a17 · coral #ff614c
- *  Type       display: Bagel Fat One (big lowercase moments) · headings: Playfair Display
+ *  Type       display: Playfair Display bold, coral (big moments) · headings: Playfair Display
  *             body: IBM Plex Serif · UI: Work Sans · handwriting: Shantell Sans
- *  Edges      2px ink border · radius 18–20 (cards) / full (pills) · hard offset shadow (4,5) in ink
+ *  Edges      1px ink line · radius 18–20 (cards) / full (pills) · small hard offset shadow (3,3) in ink
  *  Motion     springs (stiffness 200–400, damping 14–24), things tilt ±2° at rest and straighten on hover
  */
 import React from "react";
@@ -46,9 +46,9 @@ export function PaperCard({
   ...rest
 }: { children: React.ReactNode; className?: string; tilt?: number; hover?: boolean; tone?: "card" | "ink" | "coral" } & HTMLMotionProps<"div">) {
   const tones = {
-    card: "bg-[#fffaf1] text-black shadow-[4px_5px_0_0_#1d1a17]",
-    ink: "bg-[#1d1a17] text-[#fffaf1] shadow-[4px_5px_0_0_#ff614c]",
-    coral: "bg-[#ff614c] text-[#fffaf1] shadow-[4px_5px_0_0_#1d1a17]",
+    card: "bg-[#fffaf1] text-black shadow-[3px_3px_0_0_#1d1a17]",
+    ink: "bg-[#1d1a17] text-[#fffaf1] shadow-[3px_3px_0_0_#ff614c]",
+    coral: "bg-[#ff614c] text-[#fffaf1] shadow-[3px_3px_0_0_#1d1a17]",
   };
   return (
     <motion.div
@@ -57,7 +57,7 @@ export function PaperCard({
       viewport={{ once: true, margin: "-40px" }}
       whileHover={hover ? { rotate: 0, y: -4 } : undefined}
       transition={{ type: "spring", stiffness: 180, damping: 18 }}
-      className={`relative rounded-[20px] border-2 border-black ${tones[tone]} ${className}`}
+      className={`relative rounded-[20px] border border-black ${tones[tone]} ${className}`}
       {...rest}
     >
       {children}
@@ -88,7 +88,7 @@ export function Button({
     ink: "bg-[#1d1a17] text-[#fffaf1]",
     coral: "bg-[#ff614c] text-[#fffaf1]",
   };
-  const cls = `inline-flex items-center justify-center gap-2 border-2 border-black rounded-full font-['DM_Serif_Display'] ${size === "lg" ? "px-7 py-3.5 text-[19px] md:text-[21px]" : "px-5 py-2.5 text-[16px] md:text-[18px]"} shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${tones[tone]} ${className}`;
+  const cls = `inline-flex items-center justify-center gap-2 border border-black rounded-full font-['DM_Serif_Display'] ${size === "lg" ? "px-7 py-3.5 text-[19px] md:text-[21px]" : "px-5 py-2.5 text-[16px] md:text-[18px]"} shadow-[3px_3px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${tones[tone]} ${className}`;
   if (to) return <Link to={to} className={cls}>{children}</Link>;
   if (href) return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>;
   return <button type="button" onClick={onClick} className={cls}>{children}</button>;
@@ -107,7 +107,7 @@ export function NextTiles({ items }: { items: { to: string; k: string; t: string
   return (
     <section className="grid md:grid-cols-2 gap-6">
       {items.map((n) => (
-        <Link key={n.to} to={n.to} className="group border-2 border-black rounded-[20px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
+        <Link key={n.to} to={n.to} className="group border border-black rounded-[20px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
           <span className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[12px] text-white/60">{n.k}</span>
           <span className="font-['Playfair_Display'] font-bold text-[26px] md:text-[36px] leading-tight flex items-center justify-between gap-4">
             {n.t}<span className="transition-transform group-hover:translate-x-2">→</span>

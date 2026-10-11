@@ -37,7 +37,6 @@ const RULES: Rule[] = [
   { keys: ["workshop", "teach", "talk", "training", "course"], a: { pro: "I run UX/UI workshops for teams, universities and bootcamps: Zain, 42 Amman, HTU, and every government university in Jordan.", fun: "I stand in front of rooms and talk about UX. Sometimes they clap. Sometimes they just want the Figma shortcuts.", mood: "laugh", go: "/experience" } },
   { keys: ["joke", "funny", "laugh"], a: { pro: "A designer walks into a bar. It had no border-radius. He left.", fun: "How many designers does it take to change a lightbulb? Does it have to be a lightbulb?", mood: "laugh", chips: ["Another one", "Why the doodles?", "Show me your best work"] } },
   { keys: ["another"], a: { pro: "Client: 'Can you make the logo bigger?' Me: 'Can you make the budget bigger?' We're still friends.", fun: "My daughter asked what I do. I said 'I make buttons.' She said 'like, with a sewing machine?' Full circle.", mood: "laugh" } },
-  { keys: ["game", "play", "bored"], a: { pro: "There's a small game: find the one real button on a screen full of UX crimes.", fun: "Go play Find the Button. It's five cursed screens. Good luck.", mood: "laugh", go: "/play" } },
   { keys: ["cat", "diva"], a: { pro: "Diva, my cat. Attends every call, approves nothing.", fun: "Diva. Sits on the keyboard during design reviews. Harshest critic I have.", mood: "blush" } },
   { keys: ["coffee", "drink"], a: { pro: "Coffee is the real design tool.", fun: "Coffee number four. Don't ask about one to three.", mood: "laugh" } },
   { keys: ["game console", "playstation", "gamer", "pc"], a: { pro: "Longtime console gamer. I also built a PC for sim racing. It's research.", fun: "Five PlayStation generations survived. Built a sim-racing PC. It mostly runs Figma.", mood: "laugh" } },
@@ -58,7 +57,6 @@ const GREET: Record<string, [string, string]> = {
   "/skills": ["Throw the skills around. Poke the cat. Ask me about the desk.", "Poke the things on the desk. The cat bites. Ask me anything."],
   "/experience": ["Four timelines. Ask me about any of them.", "The lore. Ask about the PlayStation years."],
   "/contact": ["Pick a reason, or just ask me first.", "Ask me first if you're shy."],
-  "/play": ["Find the real button. I believe in you.", "Good luck. The screens are evil on purpose."],
 };
 
 function answer(q: string, isPro: boolean): Answer {
@@ -169,7 +167,7 @@ export function AskAlaa() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.85, y: 20 }}
                 transition={{ type: "spring", stiffness: 320, damping: 24 }}
-                className="mb-2 w-[min(92vw,340px)] bg-[#fffaf1] border-2 border-black rounded-[20px] shadow-[5px_6px_0_0_#1d1a17] flex flex-col overflow-hidden"
+                className="mb-2 w-[min(92vw,340px)] bg-[#fffaf1] border border-black rounded-[20px] shadow-[5px_6px_0_0_#1d1a17] flex flex-col overflow-hidden"
               >
                 <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-black bg-[#FFE9C7]">
                   <span className="font-['Playfair_Display'] font-bold text-[16px]">{isProfessional ? "Ask Ala'a" : "Ask the doodle"}</span>
@@ -215,9 +213,9 @@ export function AskAlaa() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder={isProfessional ? "Ask me anything…" : "go on, ask"}
-                    className="flex-1 min-w-0 rounded-full border-2 border-black/20 focus:border-black bg-white px-3 py-2 font-['Work_Sans'] text-[14px] outline-none"
+                    className="flex-1 min-w-0 rounded-full border border-black/20 focus:border-black bg-white px-3 py-2 font-['Work_Sans'] text-[14px] outline-none"
                   />
-                  <button type="submit" aria-label="Send" className="w-10 h-10 rounded-full bg-[#ff614c] border-2 border-black text-white font-bold shadow-[2px_2px_0_0_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
+                  <button type="submit" aria-label="Send" className="w-10 h-10 rounded-full bg-[#ff614c] border border-black text-white font-bold shadow-[2px_2px_0_0_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
                     ↑
                   </button>
                 </form>
@@ -235,7 +233,7 @@ export function AskAlaa() {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.7, x: 10 }}
                 transition={{ type: "spring", stiffness: 380, damping: 22 }}
-                className="mb-12 md:mb-14 max-w-[220px] md:max-w-[260px] text-left origin-bottom-right bg-white border-2 border-black rounded-[16px] rounded-br-[4px] px-3 py-2 shadow-[3px_3px_0_0_black] font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] leading-snug"
+                className="mb-12 md:mb-14 max-w-[220px] md:max-w-[260px] text-left origin-bottom-right bg-white border border-black rounded-[16px] rounded-br-[4px] px-3 py-2 shadow-[3px_3px_0_0_black] font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] leading-snug"
               >
                 {peek}
                 <span className="block mt-1 font-['Work_Sans'] text-[11px] uppercase tracking-wider text-[#ff614c]">ask me →</span>
@@ -260,7 +258,7 @@ export function AskAlaa() {
             {mood === "blush" && <span aria-hidden className="absolute left-[28%] top-[52%] w-3 h-2 rounded-full bg-[#ff614c]/60 blur-[1px]" />}
             {mood === "think" && <span aria-hidden className="absolute -top-3 right-0 font-['Shantell_Sans',cursive] text-[18px]">?</span>}
             {!open && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#ff614c] border-2 border-black text-[10px] font-bold text-white flex items-center justify-center" aria-hidden>?</span>
+              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#ff614c] border border-black text-[10px] font-bold text-white flex items-center justify-center" aria-hidden>?</span>
             )}
           </motion.button>
         </motion.div>

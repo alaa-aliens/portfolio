@@ -476,7 +476,7 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
             key={card.key}
             role="dialog"
             aria-label={`User persona: ${card.p.name}`}
-            className="absolute z-30 w-[230px] bg-[#fffaf1] border-2 border-black rounded-[14px] shadow-[4px_5px_0_0_#1d1a17] p-3.5 font-['Work_Sans'] text-[12.5px] leading-snug"
+            className="absolute z-30 w-[230px] bg-[#fffaf1] border border-black rounded-[14px] shadow-[3px_3px_0_0_#1d1a17] p-3.5 font-['Work_Sans'] text-[12.5px] leading-snug"
             style={{
               left: Math.max(8, Math.min(card.x - 115, (canvasRef.current?.clientWidth ?? 600) - 238)),
               top: card.y - 60 > 200 ? card.y - 200 : card.y + 14,

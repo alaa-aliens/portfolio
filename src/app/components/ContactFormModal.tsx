@@ -87,7 +87,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative bg-[#fdecd0] w-full max-w-[480px] max-h-[90vh] overflow-y-auto border-2 border-black shadow-[6px_6px_0px_0px_black] p-6 md:p-10"
+            className="relative bg-[#fdecd0] w-full max-w-[480px] max-h-[90vh] overflow-y-auto border border-black shadow-[4px_4px_0px_0px_black] p-6 md:p-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}

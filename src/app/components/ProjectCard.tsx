@@ -52,8 +52,8 @@ export function ProjectCard({
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
       aria-label={`${project.name}${ready ? ", read the case study" : ", case study coming soon"}`}
-      className={`group relative w-full text-left flex flex-col bg-[#fffaf1] border-2 border-black rounded-[20px] p-3 md:p-3.5 outline-none focus-visible:ring-4 focus-visible:ring-[#ff614c]/40 transition-shadow duration-300 ${
-        hovered ? "shadow-[7px_8px_0_0_#1d1a17]" : "shadow-[4px_5px_0_0_#1d1a17]"
+      className={`group relative w-full text-left flex flex-col bg-[#fffaf1] border border-black rounded-[20px] p-3 md:p-3.5 outline-none focus-visible:ring-4 focus-visible:ring-[#ff614c]/40 transition-shadow duration-300 ${
+        hovered ? "shadow-[7px_8px_0_0_#1d1a17]" : "shadow-[3px_3px_0_0_#1d1a17]"
       }`}
     >
       <ProjectCover project={project} hovered={hovered} big={big} />

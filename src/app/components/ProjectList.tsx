@@ -99,7 +99,7 @@ export function ProjectList({ items, onSoon, start = 1 }: { items: Project[]; on
             exit={{ opacity: 0, scale: 0.7, rotate: 6 }}
             transition={{ type: "spring", stiffness: 380, damping: 26 }}
           >
-            <div className="translate-x-6 -translate-y-1/2 bg-[#fffaf1] border-2 border-black rounded-[16px] p-2 shadow-[5px_6px_0_0_#1d1a17]">
+            <div className="translate-x-6 -translate-y-1/2 bg-[#fffaf1] border border-black rounded-[16px] p-2 shadow-[5px_6px_0_0_#1d1a17]">
               <ProjectCover key={active.slug} project={active} hovered />
             </div>
           </motion.div>

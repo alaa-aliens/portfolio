@@ -97,7 +97,7 @@ export function TourGuide() {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.7, x: 10 }}
                 transition={{ type: "spring", stiffness: 380, damping: 22 }}
-                className="relative mb-12 md:mb-14 max-w-[210px] md:max-w-[250px] origin-bottom-right bg-white border-2 border-black rounded-[16px] rounded-br-[4px] px-3 py-2 shadow-[3px_3px_0_0_black] font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] leading-snug text-black"
+                className="relative mb-12 md:mb-14 max-w-[210px] md:max-w-[250px] origin-bottom-right bg-white border border-black rounded-[16px] rounded-br-[4px] px-3 py-2 shadow-[3px_3px_0_0_black] font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] leading-snug text-black"
               >
                 {line}
                 <button

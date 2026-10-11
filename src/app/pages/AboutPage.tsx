@@ -99,7 +99,7 @@ export function AboutPage() {
                 viewport={{ once: true, margin: "-40px" }}
                 whileHover={{ rotate: 0, y: -4 }}
                 transition={{ delay: (i % 3) * 0.08 }}
-                className="flex items-start gap-4 rounded-[18px] border-2 border-black bg-[#fffaf1] p-4 shadow-[3px_4px_0_0_#1d1a17]"
+                className="flex items-start gap-4 rounded-[18px] border border-black bg-[#fffaf1] p-4 shadow-[3px_4px_0_0_#1d1a17]"
               >
                 <span className="shrink-0 mt-0.5"><StickerArt kind={f.kind} size={40} /></span>
                 <p className="font-['IBM_Plex_Serif'] text-[15.5px] md:text-[17px] leading-[1.5]">{isProfessional ? f.pro : f.fun}</p>
@@ -114,7 +114,7 @@ export function AboutPage() {
             { to: "/skills", k: isProfessional ? "Next" : "Keep going", t: isProfessional ? "What I bring to the table" : "The skills table" },
             { to: "/experience", k: isProfessional ? "Or" : "Or", t: isProfessional ? "Where I've worked" : "The work lore" },
           ].map((n) => (
-            <Link key={n.to} to={n.to} className="group border-2 border-black rounded-[18px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
+            <Link key={n.to} to={n.to} className="group border border-black rounded-[18px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
               <span className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[12px] text-white/60">{n.k}</span>
               <span className="font-['Playfair_Display'] font-bold text-[26px] md:text-[36px] leading-tight flex items-center justify-between gap-4">
                 {n.t}<span className="transition-transform group-hover:translate-x-2">→</span>

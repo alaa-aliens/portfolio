@@ -49,14 +49,14 @@ function ToneButton({ name, color }: { name: ToneName; color: string }) {
       }}
       whileTap={{ scale: 0.95 }}
       whileHover={{ y: -3 }}
-      className="group flex flex-col gap-2 items-start rounded-[16px] border-2 border-black bg-[#fffaf1] p-3 shadow-[3px_3px_0_0_black] text-left"
+      className="group flex flex-col gap-2 items-start rounded-[16px] border border-black bg-[#fffaf1] p-3 shadow-[3px_3px_0_0_black] text-left"
     >
       {/* the notes, drawn as dots on a little staff */}
       <span className="relative w-full h-10 rounded-[8px] overflow-hidden" style={{ background: `${color}22` }} aria-hidden>
         {t.notes.map((n, i) => (
           <motion.span
             key={`${i}-${k}`}
-            className="absolute w-3 h-3 rounded-full border-2 border-black"
+            className="absolute w-3 h-3 rounded-full border border-black"
             style={{ left: `${10 + (i / Math.max(1, t.notes.length - 1)) * 76}%`, bottom: `${8 + ((n - 250) / 1550) * 70}%`, background: color }}
             initial={k ? { scale: 0.4, y: 6 } : false}
             animate={{ scale: [1, 1.6, 1], y: 0 }}
@@ -104,7 +104,7 @@ export function SoundBoard({
                 <button
                   key={v.audio}
                   onClick={() => play(v.audio)}
-                  className={`flex items-center gap-3 text-left rounded-full border-2 border-black pl-2 pr-5 py-2 transition-colors ${on ? "bg-black text-white" : "bg-[#fffaf1] hover:bg-white"}`}
+                  className={`flex items-center gap-3 text-left rounded-full border border-black pl-2 pr-5 py-2 transition-colors ${on ? "bg-black text-white" : "bg-[#fffaf1] hover:bg-white"}`}
                 >
                   <span className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center ${on ? "bg-[#ff614c] text-white" : "bg-black text-white"}`}>
                     {on ? <EqBars /> : "▶"}

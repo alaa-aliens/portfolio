@@ -153,7 +153,7 @@ export function DeskThings({ deskPct, deskTop }: { deskPct: number; deskTop: str
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.7 }}
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                className="absolute z-30 left-1/2 -translate-x-1/2 -top-2 -translate-y-full whitespace-nowrap bg-white border-2 border-black rounded-[14px] px-3 py-1.5 font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] shadow-[3px_3px_0_0_black]"
+                className="absolute z-30 left-1/2 -translate-x-1/2 -top-2 -translate-y-full whitespace-nowrap bg-white border border-black rounded-[14px] px-3 py-1.5 font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] shadow-[3px_3px_0_0_black]"
               >
                 {isProfessional ? t.pro : t.fun}
               </motion.span>

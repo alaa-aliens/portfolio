@@ -52,7 +52,7 @@ export function ModeSwitchFX() {
       {burst?.mode === "professional" && (
         <motion.div
           key={burst.id}
-          className="pointer-events-none fixed top-[84px] left-1/2 z-[110] -translate-x-1/2 flex items-center gap-2 bg-[#fffaf1] border-2 border-black rounded-full pl-2 pr-4 py-1.5 shadow-[3px_3px_0_0_black]"
+          className="pointer-events-none fixed top-[84px] left-1/2 z-[110] -translate-x-1/2 flex items-center gap-2 bg-[#fffaf1] border border-black rounded-full pl-2 pr-4 py-1.5 shadow-[3px_3px_0_0_black]"
           initial={{ y: -30, opacity: 0, rotate: -6 }}
           animate={{ y: 0, opacity: 1, rotate: [6, -4, 0] }}
           exit={{ y: -20, opacity: 0 }}

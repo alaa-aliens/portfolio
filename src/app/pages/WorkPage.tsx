@@ -79,7 +79,7 @@ export function WorkPage() {
                 role="tab"
                 aria-selected={active}
                 onClick={() => setFilter(k)}
-                className={`relative shrink-0 rounded-full border-2 px-4 py-2 font-['Work_Sans'] font-medium text-[14px] md:text-[15px] transition-colors ${
+                className={`relative shrink-0 rounded-full border px-4 py-2 font-['Work_Sans'] font-medium text-[14px] md:text-[15px] transition-colors ${
                   active ? "border-black text-white" : "border-black/20 text-black hover:border-black bg-[#fffaf1]/60"
                 }`}
               >

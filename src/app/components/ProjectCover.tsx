@@ -37,10 +37,25 @@ export function ProjectCover({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[14px] border-2 border-black ${className}`}
+      className={`relative overflow-hidden rounded-[14px] border border-black ${className}`}
       style={{ background: bg, aspectRatio: big ? "16 / 10" : "4 / 3" }}
     >
-      {shots.length > 0 ? (
+      {shots.length > 0 && project.caseStudy?.device === "desktop" ? (
+        <div className="absolute inset-0 flex items-end justify-center px-[7%]">
+          <motion.div
+            className="relative w-full rounded-t-[10px] border border-b-0 border-[#1d1a17] bg-[#fffaf1] overflow-hidden shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)]"
+            animate={{ y: hovered ? "4%" : "12%", rotate: hovered ? -1 : 0 }}
+            transition={{ type: "spring", stiffness: 180, damping: 18 }}
+          >
+            <div className="flex items-center gap-1.5 px-2.5 h-5 border-b-2 border-[#1d1a17] bg-[#fdecd0]" aria-hidden>
+              <i className="block w-1.5 h-1.5 rounded-full bg-[#ff614c]" />
+              <i className="block w-1.5 h-1.5 rounded-full bg-[#FFC53D]" />
+              <i className="block w-1.5 h-1.5 rounded-full bg-[#53B858]" />
+            </div>
+            <img src={shots[0].src} alt="" loading="lazy" className="block w-full" />
+          </motion.div>
+        </div>
+      ) : shots.length > 0 ? (
         <div className="absolute inset-0 flex items-end justify-center gap-[3%] px-[8%]">
           {shots.slice(0, 3).map((s, i) => {
             const mid = i === 1;
@@ -50,7 +65,7 @@ export function ProjectCover({
                 src={s.src}
                 alt=""
                 loading="lazy"
-                className="block w-[30%] rounded-t-[14px] border-[3px] border-b-0 border-[#1d1a17] bg-white shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)]"
+                className="block w-[30%] rounded-t-[14px] border border-b-0 border-[#1d1a17] bg-white shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)]"
                 style={{ zIndex: mid ? 2 : 1 }}
                 animate={{
                   y: hovered ? (mid ? "6%" : "14%") : mid ? "18%" : "30%",

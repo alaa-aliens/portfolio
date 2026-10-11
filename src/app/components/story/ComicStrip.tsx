@@ -192,7 +192,7 @@ export function ComicStrip() {
             key={d}
             onClick={() => nudge(d)}
             aria-label={d < 0 ? "Previous panels" : "Next panels"}
-            className="w-10 h-10 rounded-full border-2 border-black bg-[#fffaf1] shadow-[2px_2px_0_0_black] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_black] transition-all font-bold"
+            className="w-10 h-10 rounded-full border border-black bg-[#fffaf1] shadow-[2px_2px_0_0_black] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_black] transition-all font-bold"
           >
             {d < 0 ? "←" : "→"}
           </button>

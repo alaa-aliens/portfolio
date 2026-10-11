@@ -22,7 +22,7 @@ export function ProjectsSection() {
         />
         <Link
           to="/work"
-          className="group self-start md:self-auto md:mb-6 inline-flex items-center gap-2 bg-[#fffaf1] border-2 border-black rounded-full px-4 py-2 shadow-[3px_3px_0_0_black] hover:shadow-[1px_1px_0_0_black] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-['DM_Serif_Display'] text-[17px]"
+          className="group self-start md:self-auto md:mb-6 inline-flex items-center gap-2 bg-[#fffaf1] border border-black rounded-full px-4 py-2 shadow-[3px_3px_0_0_black] hover:shadow-[1px_1px_0_0_black] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-['DM_Serif_Display'] text-[17px]"
         >
           {isProfessional ? `All ${projects.length} projects` : "The full damage"}
           <span className="transition-transform group-hover:translate-x-1">→</span>

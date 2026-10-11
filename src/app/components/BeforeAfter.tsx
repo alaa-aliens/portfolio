@@ -16,7 +16,7 @@ export function BeforeAfter({ before, after, alt = "" }: { before: string; after
   return (
     <div
       ref={ref}
-      className="relative select-none overflow-hidden rounded-[6px] border border-black shadow-[6px_6px_0px_0px_black] cursor-ew-resize touch-pan-y"
+      className="relative select-none overflow-hidden rounded-[6px] border border-black shadow-[4px_4px_0px_0px_black] cursor-ew-resize touch-pan-y"
       onPointerDown={(e) => {
         dragging.current = true;
         (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -48,7 +48,7 @@ export function BeforeAfter({ before, after, alt = "" }: { before: string; after
             if (e.key === "ArrowLeft") setPos((p) => Math.max(0, p - 5));
             if (e.key === "ArrowRight") setPos((p) => Math.min(100, p + 5));
           }}
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-white border-2 border-black flex items-center justify-center font-bold text-[14px]"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-white border border-black flex items-center justify-center font-bold text-[14px]"
         >
           ⇆
         </button>

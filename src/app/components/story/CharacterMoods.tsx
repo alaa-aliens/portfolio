@@ -45,7 +45,7 @@ export function CharacterMoods({ name, intro, moods, color }: { name: string; in
     <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-6 md:gap-10 items-stretch">
       {/* Stage */}
       <div
-        className="relative rounded-[22px] border-2 border-black overflow-hidden min-h-[360px] md:min-h-[440px] flex items-end justify-center"
+        className="relative rounded-[22px] border border-black overflow-hidden min-h-[360px] md:min-h-[440px] flex items-end justify-center"
         style={{ background: `radial-gradient(90% 80% at 50% 85%, ${color}55, ${color}18 70%, #fffaf1)` }}
       >
         <div aria-hidden className="absolute left-1/2 bottom-6 -translate-x-1/2 w-[55%] h-5 rounded-full bg-black/10 blur-[2px]" />
@@ -72,7 +72,7 @@ export function CharacterMoods({ name, intro, moods, color }: { name: string; in
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 380, damping: 20, delay: 0.1 }}
-              className="absolute z-20 top-5 left-4 right-4 md:left-6 md:right-auto md:max-w-[80%] bg-white border-2 border-black rounded-[18px] rounded-bl-[4px] px-4 py-2.5 shadow-[3px_3px_0_0_black]"
+              className="absolute z-20 top-5 left-4 right-4 md:left-6 md:right-auto md:max-w-[80%] bg-white border border-black rounded-[18px] rounded-bl-[4px] px-4 py-2.5 shadow-[3px_3px_0_0_black]"
             >
               <p className="font-['Shantell_Sans',cursive] text-[15px] md:text-[17px] leading-snug">“{m.line}”</p>
               {m.audio && (
@@ -103,7 +103,7 @@ export function CharacterMoods({ name, intro, moods, color }: { name: string; in
                 whileHover={{ y: -4, rotate: k % 2 ? 2 : -2 }}
                 whileTap={{ scale: 0.94 }}
                 aria-pressed={on}
-                className={`relative flex flex-col items-center gap-1 rounded-[14px] border-2 pt-2 pb-2 px-1 transition-colors ${
+                className={`relative flex flex-col items-center gap-1 rounded-[14px] border pt-2 pb-2 px-1 transition-colors ${
                   on ? "border-black bg-white shadow-[3px_3px_0_0_black]" : "border-black/15 bg-[#fffaf1] hover:border-black/50"
                 }`}
               >

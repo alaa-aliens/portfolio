@@ -45,7 +45,7 @@ export function MadeFor({ intro, people, closing }: { intro: string; people: Per
               >
                 <img src={p.img} alt={`${p.name}'s avatar`} className="absolute inset-0 w-full h-full object-contain object-bottom" draggable={false} />
                 {p.audio && (
-                  <span className={`absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 border-2 border-black font-['Work_Sans'] text-[12px] font-semibold ${on ? "bg-black text-white" : "bg-white"}`}>
+                  <span className={`absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 border border-black font-['Work_Sans'] text-[12px] font-semibold ${on ? "bg-black text-white" : "bg-white"}`}>
                     {on ? <EqBars /> : "▶"} {on ? "Siba's talking" : `Siba says hi to ${p.name}`}
                   </span>
                 )}

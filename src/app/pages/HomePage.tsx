@@ -45,8 +45,11 @@ export function HomePage() {
   const { isProfessional } = useMode();
   const [soon, setSoon] = useState(false);
   usePageMeta();
-  const lead = projects.find((p) => p.status === "ready");
-  const featured = projects.filter((p) => p.featured && p.slug !== lead?.slug).slice(0, 3);
+  const lead = projects.find((p) => p.slug === "siba") ?? projects.find((p) => p.status === "ready");
+  // ready case studies first, then the featured clients
+  const featured = [...projects.filter((p) => p.status === "ready"), ...projects.filter((p) => p.featured && p.status !== "ready")]
+    .filter((p) => p.slug !== lead?.slug)
+    .slice(0, 3);
 
   return (
     <main className="flex flex-col">
@@ -82,7 +85,7 @@ export function HomePage() {
 
       {/* Teasers */}
       <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-14 md:pt-20">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           <Teaser to="/about" tilt={-2} eyebrow={isProfessional ? "About" : "The lore"} title={isProfessional ? "From couches to pixels" : "Couch guy to pixel guy"} blurb={isProfessional ? "The story in six comic panels, plus what I actually do." : "A comic strip. Flip cards. Random facts. The cat."} cta={isProfessional ? "Read the story" : "Get the lore"}>
             <motion.span className="absolute left-4 bottom-0 w-[110px] h-[130px] overflow-hidden" animate={{ rotate: [-4, 4, -4] }} transition={{ duration: 3, repeat: Infinity }}>
               <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
@@ -96,7 +99,7 @@ export function HomePage() {
             <span className="absolute left-1/2 -translate-x-1/2 bottom-1"><Thing id="mac" size={0.78} /></span>
             <span className="absolute right-3 bottom-3"><Thing id="mug" size={0.9} /></span>
             {["UX", "RTL", "Figma"].map((s, i) => (
-              <motion.span key={s} className="absolute rounded-full border-2 border-black bg-white px-2.5 py-1 font-['Work_Sans'] font-semibold text-[11px] shadow-[2px_2px_0_0_black]" style={{ left: `${18 + i * 26}%`, top: 10 + (i % 2) * 14 }} animate={{ y: [0, -6, 0], rotate: [i * 4 - 4, -i * 3, i * 4 - 4] }} transition={{ duration: 2 + i * 0.3, repeat: Infinity }}>{s}</motion.span>
+              <motion.span key={s} className="absolute rounded-full border border-black bg-white px-2.5 py-1 font-['Work_Sans'] font-semibold text-[11px] shadow-[2px_2px_0_0_black]" style={{ left: `${18 + i * 26}%`, top: 10 + (i % 2) * 14 }} animate={{ y: [0, -6, 0], rotate: [i * 4 - 4, -i * 3, i * 4 - 4] }} transition={{ duration: 2 + i * 0.3, repeat: Infinity }}>{s}</motion.span>
             ))}
           </Teaser>
 
@@ -112,20 +115,6 @@ export function HomePage() {
             </svg>
           </Teaser>
 
-          <Teaser to="/play" tilt={1.5} tone="ink" eyebrow={isProfessional ? "Play" : "Procrastinate"} title={isProfessional ? "Find the button" : "Find the button, or else"} blurb={isProfessional ? "A tiny game about UX crimes. Five screens, one real button each." : "Five cursed screens. One real button. A user losing patience."} cta={isProfessional ? "Play" : "Suffer"}>
-            {(["Continue", "PAY NOW", "Place order", "✕"] as const).map((t, i) => (
-              <motion.span
-                key={t}
-                className={`absolute font-['Work_Sans'] text-[12px] px-3 py-1.5 rounded-[8px] border-2 ${i === 2 ? "bg-[#ff614c] text-white border-black shadow-[2px_2px_0_0_#fffaf1]" : "bg-[#fffaf1]/90 text-black/60 border-transparent"}`}
-                style={{ left: `${[8, 55, 22, 82][i]}%`, top: `${[18, 20, 60, 8][i]}%` }}
-                animate={i === 2 ? { scale: [1, 1.08, 1] } : { x: [0, i % 2 ? 4 : -4, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.2 }}
-              >
-                {t}
-              </motion.span>
-            ))}
-            <span className="absolute left-4 bottom-3"><StickerArt kind="bolt" size={36} /></span>
-          </Teaser>
         </div>
       </section>
 

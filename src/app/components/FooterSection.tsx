@@ -71,7 +71,7 @@ export function FooterSection() {
           initial={{ opacity: 0, scale: 0.4 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 14 }}
-          className="absolute -top-2 left-[85%] whitespace-nowrap origin-bottom-left bg-white border-2 border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
+          className="absolute -top-2 left-[85%] whitespace-nowrap origin-bottom-left bg-white border border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
         >
           {isProfessional ? "psst… hiring?" : "don't scroll away 🥺"}
         </motion.span>

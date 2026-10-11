@@ -148,7 +148,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.3, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: -6 }}
             transition={{ type: "spring", stiffness: 260, damping: 12, delay: pokes ? 0 : 1.1 }}
-            className="absolute z-20 -top-2 md:top-0 -right-10 md:-right-16 origin-bottom-left bg-white border-2 border-black rounded-[18px] px-3 py-1.5 font-['DM_Serif_Display'] text-[14px] md:text-[18px] text-black shadow-[3px_3px_0px_0px_black] whitespace-nowrap"
+            className="absolute z-20 -top-2 md:top-0 -right-10 md:-right-16 origin-bottom-left bg-white border border-black rounded-[18px] px-3 py-1.5 font-['DM_Serif_Display'] text-[14px] md:text-[18px] text-black shadow-[3px_3px_0px_0px_black] whitespace-nowrap"
           >
             {lines[pokes % lines.length]}
             <span aria-hidden className="absolute -bottom-[9px] left-4 w-4 h-4 bg-white border-b-2 border-r-2 border-black rotate-45" />
