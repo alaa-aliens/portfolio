@@ -4,6 +4,7 @@ import imgImage38 from "figma:asset/7d1c70ce8d978daa5db3cd98761c352b121d3ad8.png
 import imgImage39 from "figma:asset/252ea155a12647263e0584fcfb49c846a8ff727f.png";
 import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
+import { PenWipe, SectionTitle } from "./motion/Doodles";
 
 interface ServiceCard {
   title: string;
@@ -186,23 +187,28 @@ export function WhatIDoSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="font-['Playfair_Display'] font-bold text-black text-[30px] md:text-[42px] mb-8">
-          {isProfessional ? "What I Do" : "What I Actually Do"}
-        </h2>
+        <SectionTitle className="mb-8">{isProfessional ? "What I Do" : "What I Actually Do"}</SectionTitle>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {cards.map((card, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="flex flex-row sm:flex-col items-start gap-4 sm:gap-[17px]"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="group flex flex-row sm:flex-col items-start gap-4 sm:gap-[17px]"
             >
-              <div className="w-[100px] sm:w-[75%] shrink-0 overflow-clip">
-                <card.imageRenderer />
-              </div>
+              <PenWipe delay={0.15 + i * 0.12} duration={1} className="w-[100px] sm:w-[75%] shrink-0">
+                <motion.div
+                  className="overflow-clip"
+                  whileHover={{ rotate: [0, -3, 3, -2, 0], scale: 1.04 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <card.imageRenderer />
+                </motion.div>
+              </PenWipe>
               <div className="flex flex-col gap-[9px] min-w-0">
-                <h3 className="font-['IBM_Plex_Serif'] font-semibold text-black text-[16px] md:text-[24px] leading-[1.3] md:leading-[32px]">
+                <h3 className="font-['IBM_Plex_Serif'] font-semibold text-black group-hover:text-[#ff614c] transition-colors text-[16px] md:text-[24px] leading-[1.3] md:leading-[32px]">
                   {card.title}
                 </h3>
                 <p className="font-['Work_Sans'] font-light text-black text-[13px] md:text-[16px] leading-[1.5] md:leading-[24px]">

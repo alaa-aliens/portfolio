@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMode } from "./ModeContext";
 import { motion, AnimatePresence } from "motion/react";
 import squigglySvg from "../../imports/svg-zqq9sgn0jp";
+import { SectionTitle } from "./motion/Doodles";
 
 interface TimelineEntry {
   year: string;
@@ -150,9 +151,15 @@ function SquigglyUnderline({ color }: { color: string }) {
   );
 }
 
-function TimelineItem({ entry, isLast, accentColor }: { entry: TimelineEntry; isLast: boolean; accentColor: string }) {
+function TimelineItem({ entry, isLast, accentColor, index = 0 }: { entry: TimelineEntry; isLast: boolean; accentColor: string; index?: number }) {
   return (
-    <div className="flex gap-[8px]">
+    <motion.div
+      className="flex gap-[8px]"
+      initial={{ opacity: 0, x: -16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: Math.min(index, 3) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+    >
       {/* Year */}
       <span
         className="font-['IBM_Plex_Serif'] font-bold text-[18px] text-right w-[52px] shrink-0 whitespace-nowrap pt-[1px]"
@@ -163,12 +170,23 @@ function TimelineItem({ entry, isLast, accentColor }: { entry: TimelineEntry; is
 
       {/* Dot + Line — self-stretch ensures it fills the full row height for connected lines */}
       <div className="flex flex-col items-center gap-[3px] shrink-0 self-stretch">
-        <div
+        <motion.div
           className="w-[10.2px] h-[10.2px] rounded-full shrink-0 mt-[1px]"
           style={{ backgroundColor: accentColor }}
+          initial={{ scale: 0 }}
+          whileInView={{ scale: [0, 1.6, 1] }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         />
         {!isLast && (
-          <div className="w-[1px] bg-black/30 flex-1" />
+          <motion.div
+            className="w-[1.5px] flex-1 origin-top"
+            style={{ backgroundColor: accentColor, opacity: 0.45 }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.65, 0, 0.35, 1] }}
+          />
         )}
       </div>
 
@@ -192,7 +210,7 @@ function TimelineItem({ entry, isLast, accentColor }: { entry: TimelineEntry; is
           </a>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -213,9 +231,7 @@ export function WorkExperienceSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="font-['Playfair_Display'] font-bold text-black text-[30px] md:text-[40px] mb-[54px]">
-          Work Experience
-        </h2>
+        <SectionTitle className="mb-[40px] md:mb-[54px]">{isProfessional ? "Work Experience" : "How I Got Here"}</SectionTitle>
 
         {/* Tabs */}
         <div className="flex gap-6 md:gap-[50px] mb-8 md:mb-[54px] overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0">
@@ -233,11 +249,13 @@ export function WorkExperienceSection() {
                 >
                   {timelines[tab].label}
                 </span>
-                {activeTab === tab ? (
-                  <SquigglyUnderline color={tabColor} />
-                ) : (
-                  <div className="h-[12.5px]" />
-                )}
+                <div className="h-[12.5px] w-[97px]">
+                  {activeTab === tab && (
+                    <motion.div layoutId="tab-squiggle" transition={{ type: "spring", stiffness: 400, damping: 34 }}>
+                      <SquigglyUnderline color={tabColor} />
+                    </motion.div>
+                  )}
+                </div>
               </button>
             );
           })}
@@ -262,6 +280,7 @@ export function WorkExperienceSection() {
                     entry={entry}
                     isLast={i === currentTimeline.leftEntries.length - 1}
                     accentColor={accentColor}
+                    index={i}
                   />
                 ))}
               </div>
@@ -290,6 +309,7 @@ export function WorkExperienceSection() {
                     entry={entry}
                     isLast={i === arr.length - 1}
                     accentColor={accentColor}
+                    index={i}
                   />
                 ))}
             </div>

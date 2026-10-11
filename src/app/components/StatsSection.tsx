@@ -2,6 +2,7 @@ import svgPaths from "../../imports/svg-drsth3odo8";
 import svgPathsFun from "../../imports/svg-gw2llaquvl";
 import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
+import { PenWipe, Reveal } from "./motion/Doodles";
 
 function StatNumber({ children }: { children: React.ReactNode }) {
   return (
@@ -119,21 +120,31 @@ export function StatsSection() {
       >
         {isProfessional
           ? professionalStats.map((stat, i) => (
-              <div key={i} className="flex flex-col items-center gap-3 md:w-[200px]">
-                <StatNumber>{stat.number}</StatNumber>
+              <div key={i} className="group flex flex-col items-center gap-3 md:w-[200px]">
+                <StatNumber>
+                  <PenWipe delay={i * 0.18} duration={0.8} className="transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-110">
+                    {stat.number}
+                  </PenWipe>
+                </StatNumber>
+                <Reveal delay={0.3 + i * 0.18} y={10}>
                 <p className="font-['IBM_Plex_Serif'] text-black text-[14px] md:text-[20px] text-center">
                   {stat.label}
                 </p>
+                </Reveal>
               </div>
             ))
           : funStats.map((stat, i) => (
               <div key={i} className="flex flex-col items-center gap-[14px] shrink-0 md:w-[200px]">
-                <div className="flex flex-col items-center justify-center h-[80px] md:h-[114px]">
-                  {stat.number}
+                <div className="group flex flex-col items-center justify-center h-[80px] md:h-[114px]">
+                  <PenWipe delay={i * 0.18} duration={0.8} className="transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110">
+                    {stat.number}
+                  </PenWipe>
                 </div>
+                <Reveal delay={0.3 + i * 0.18} y={10}>
                 <p className="font-['IBM_Plex_Serif'] text-black text-[14px] md:text-[20px] text-center">
                   {stat.label}
                 </p>
+                </Reveal>
               </div>
             ))}
       </motion.div>

@@ -1,5 +1,6 @@
 import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
+import { Reveal, SectionTitle } from "./motion/Doodles";
 
 const professionalContent = {
   title: "About Me",
@@ -33,25 +34,23 @@ export function AboutSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="font-['Playfair_Display'] font-bold text-black text-[30px] md:text-[42px] mb-8">
-          {content.title}
-        </h2>
+        <SectionTitle className="mb-8">{content.title}</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
           <div className="flex flex-col gap-6">
-            <p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
+            <Reveal delay={0.0}><p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
               {content.paragraphs[0]}
-            </p>
-            <p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
+            </p></Reveal>
+            <Reveal delay={0.1}><p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
               {content.paragraphs[1]}
-            </p>
+            </p></Reveal>
           </div>
           <div className="flex flex-col gap-6">
-            <p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
+            <Reveal delay={0.2}><p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
               {content.paragraphs[2]}
-            </p>
-            <p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
+            </p></Reveal>
+            <Reveal delay={0.3}><p className="font-['IBM_Plex_Serif'] text-black text-[16px] md:text-[20px] leading-[1.6]">
               {content.paragraphs[3]}
-            </p>
+            </p></Reveal>
           </div>
         </div>
       </motion.div>

@@ -55,6 +55,29 @@ export function FooterSection() {
         backgroundSize: '30px 30px',
       }} />
 
+      {/* Marquee */}
+      <div aria-hidden className="relative border-b border-white/10 py-4 md:py-6 overflow-hidden">
+        <motion.div
+          className="flex w-max gap-10 whitespace-nowrap font-['Playfair_Display'] italic font-bold text-[28px] md:text-[44px]"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        >
+          {[0, 1].map((k) => (
+            <div key={k} className="flex gap-10">
+              {(isProfessional
+                ? ["UX/UI Design", "Design Systems", "UX Audits", "Workshops", "Illustration", "Dashboards", "Arabic & RTL"]
+                : ["Pixels", "Doodles", "Hot takes", "Coffee", "Border-radius debates", "More coffee", "Arabic & RTL"]
+              ).map((w, i) => (
+                <span key={i} className="flex items-center gap-10">
+                  <span className={i % 2 ? "text-white/25" : "text-white"}>{w}</span>
+                  <span className="text-[#ff614c] not-italic">✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
       <motion.div
         key={mode}
         initial={{ opacity: 0 }}
@@ -64,7 +87,7 @@ export function FooterSection() {
       >
         {/* Main CTA — centered */}
         <div className="flex flex-col items-center text-center gap-6 md:gap-8">
-          <h3 className="font-['Playfair_Display'] font-bold text-[32px] md:text-[48px] leading-tight">
+          <h3 className="font-['Playfair_Display'] font-bold text-[40px] md:text-[72px] leading-[1.05]">
             {isProfessional ? "Let's Work Together" : "Still Here? Let's Talk."}
           </h3>
 
