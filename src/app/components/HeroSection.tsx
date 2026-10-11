@@ -4,6 +4,8 @@ import { useContactForm } from "./ContactFormContext";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useEffect } from "react";
 import { Doodle } from "./motion/Doodles";
+import { UsersCrowd } from "./hero/UsersCrowd";
+import { EyeHeadline } from "./hero/EyeHeadline";
 
 /** Follows the cursor a little, so the character feels alive. */
 function useCursorTilt() {
@@ -30,17 +32,23 @@ export function HeroSection() {
   const { isProfessional, mode } = useMode();
   const { openContact } = useContactForm();
   const tilt = useCursorTilt();
-  const headline = isProfessional ? "hey, my name is ala'a ali" : "yooo, i'm ala'a ali";
+  const headline = isProfessional ? "hello, i'm ala'a ali" : "yooo, i'm ala'a ali";
 
   return (
-    <section id="hero" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 pt-[100px] md:pt-[150px]">
-      <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16">
+    <section id="hero" className="relative w-full pt-[100px] md:pt-[130px] pb-[150px] md:pb-[170px] overflow-hidden">
+      {/* The users — wander around behind everything */}
+      <div className="absolute inset-0 top-[70px] md:top-[90px]">
+        <UsersCrowd />
+      </div>
+
+      <div className="relative w-full max-w-[1200px] mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-6 md:gap-14 pointer-events-none">
         {/* Illustration */}
         <motion.div
           key={mode}
           initial={{ opacity: 0, x: -20, rotate: -4 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          data-crowd-avoid
           className="w-[160px] md:w-[270px] h-[280px] md:h-[477px] relative shrink-0"
         >
           <Doodle kind="sparkle" className="-left-6 md:-left-10 top-6" size={36} />
@@ -83,29 +91,14 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          data-crowd-avoid
           className="flex flex-col gap-6 md:gap-8 max-w-[600px] text-center md:text-left items-center md:items-start"
         >
           <div className="flex flex-col gap-3">
-            <h1
-              aria-label={headline}
-              className="font-['Playfair_Display'] font-bold text-[#ff614c] text-[24px] md:text-[42px] leading-tight lowercase"
-            >
-              {headline.split(" ").map((word, wi) => (
-                <span key={wi} aria-hidden className="inline-block whitespace-nowrap mr-[0.25em]">
-                  {word.split("").map((ch, ci) => (
-                    <motion.span
-                      key={ci}
-                      className="inline-block"
-                      initial={{ opacity: 0, y: 18, rotate: 8 }}
-                      animate={{ opacity: 1, y: 0, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 18, delay: 0.25 + (wi * 4 + ci) * 0.025 }}
-                    >
-                      {ch}
-                    </motion.span>
-                  ))}
-                </span>
-              ))}
-            </h1>
+            <EyeHeadline
+              text={headline}
+              className="font-display text-[#ff614c] text-[44px] md:text-[78px] lg:text-[88px] leading-[0.95] lowercase [text-wrap:balance]"
+            />
             <p className="font-['IBM_Plex_Serif'] text-black text-[18px] md:text-[36px] leading-tight">
               {isProfessional
                 ? "UX/UI Designer \u2022 Illustrator \u2022 Facilitator"
@@ -120,12 +113,25 @@ export function HeroSection() {
 
           <button
             onClick={openContact}
-            className="self-center md:self-start bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] md:text-[19px] text-black relative hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_black] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all shadow-[4px_4px_0px_0px_black] border border-black"
+            className="pointer-events-auto self-center md:self-start bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] md:text-[19px] text-black relative hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_black] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all shadow-[4px_4px_0px_0px_black] border border-black"
           >
             {isProfessional ? "Get in Touch" : "Say Hi"}
           </button>
         </motion.div>
       </div>
+
+      {/* Handwritten hint pointing at the crowd */}
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.2, duration: 0.6 }}
+        className="pointer-events-none absolute bottom-6 md:bottom-8 right-6 md:right-[8%] font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] text-black/55 rotate-[-3deg] flex items-center gap-2"
+      >
+        <svg width="34" height="22" viewBox="0 0 34 22" fill="none" aria-hidden className="-scale-x-100 rotate-[20deg]">
+          <path d="M2 18 C 10 6, 20 4, 31 8 M24 3 L32 8 L25 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {isProfessional ? "these are my users. say hi (click one)" : "my users. they have notes. poke one."}
+      </motion.p>
     </section>
   );
 }
