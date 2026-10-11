@@ -41,3 +41,29 @@ as `"/work/<slug>/screen-1.webp"`.
 
 It's a single-page app, so the host must send every route to `index.html`.
 `vercel.json` (Vercel) and `public/_redirects` (Netlify / Cloudflare Pages) already do that.
+
+
+## Design language (read before touching the look)
+
+Ala'a's own words, after one night of feedback:
+
+- **Not** thick black borders, hard offset shadows on cards, or chunky bubble fonts: that reads as an "AI template" to him.
+- **Yes**: cream `#fdecd0`, coral `#ff614c`, thin ink lines, lots of air, his doodle illustrations, hand-drawn (roughjs) frames (`src/app/components/ui/RoughBox.tsx`).
+- Display font: **Gochi Hand** (`.font-display`), lowercase. Body: IBM Plex Serif. UI: Work Sans. Handwriting: Shantell Sans.
+- One button: his original rectangle (`Button` in `ui/Kit.tsx`): white, 1px line, hard 4px shadow, DM Serif. Coral tone on dark.
+- Tags are his coral labels (`Chip tone="ink"`), "next page" links are big marker words (`NextTiles`), never black boxes.
+- Section titles use `DoodleTitle` with a `{token}` doodle.
+
+## The game layer
+
+`src/app/components/play/Score.tsx`: hearts (start with 1, fill at 30/80/150 points), points for pages (+5), case studies (+10), asking (+5), shuffling the sketchbook (+2), poking (+1), contact (+25 open, +50 copy, +100 send). Dead clicks (coming-soon projects, 404) cost a heart. Click the hearts for the rules card.
+
+## Generated assets
+
+- `src/assets/comic/*` six comic panels, `src/assets/covers/*` project covers, `src/assets/stickers/*` the sticker set: Magnific (gpt-2-mini) with his hero illustration as style reference. Prompts are in the session log; regenerate the same way for new projects.
+- `src/assets/sfx/*` UI sounds: ElevenLabs via Magnific. Off by default; toggle in the sticker tray.
+- `src/assets/head.webp` is the clean cut-out of his head. Use it instead of cropping the original PNG.
+
+## Contact
+
+No modal. Every "Get in Touch" goes to `/contact`, the postcard, which opens a `mailto:` with the stamped reason, the message and the signature.
