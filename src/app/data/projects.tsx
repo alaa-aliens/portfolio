@@ -24,6 +24,25 @@ import sibaParentHome from "../../assets/work/siba/parent-home.webp";
 import sibaParentReview from "../../assets/work/siba/parent-review.webp";
 import sibaParentHomeAr from "../../assets/work/siba/parent-home-ar.webp";
 import sibaParentChild from "../../assets/work/siba/parent-child.webp";
+import sibaPoseMug from "../../assets/work/siba/poses/siba-mug.webp";
+import sibaPoseWave from "../../assets/work/siba/poses/siba.webp";
+import sibaPoseThink from "../../assets/work/siba/poses/siba-think.webp";
+import sibaPoseGentle from "../../assets/work/siba/poses/siba-gentle.webp";
+import sibaPoseCheer from "../../assets/work/siba/poses/siba-cheer.webp";
+import sibaPoseCoin from "../../assets/work/siba/poses/siba-coin.webp";
+import sibaPoseBook from "../../assets/work/siba/poses/siba-book.webp";
+import sibaPoseWatch from "../../assets/work/siba/poses/siba-watch.webp";
+import sibaAlma from "../../assets/work/siba/poses/alma.webp";
+import sibaEleen from "../../assets/work/siba/poses/eleen.webp";
+import vStart from "../../assets/work/siba/audio/start.mp3";
+import vRight3 from "../../assets/work/siba/audio/right3.mp3";
+import vCombo3 from "../../assets/work/siba/audio/combo3.mp3";
+import vWrong2 from "../../assets/work/siba/audio/wrong2.mp3";
+import vFinishHigh from "../../assets/work/siba/audio/finishHigh.mp3";
+import vFixStart from "../../assets/work/siba/audio/fixStart.mp3";
+import vMe from "../../assets/work/siba/audio/me.mp3";
+import vEleenStart from "../../assets/work/siba/audio/eleen-start.mp3";
+import vEleenRight3 from "../../assets/work/siba/audio/eleen-right3.mp3";
 
 export type CategoryKey = "gov" | "saas" | "fintech" | "edtech" | "games" | "media" | "own";
 
@@ -53,6 +72,14 @@ export interface CaseStudy {
   problemSketch?: { frames: { icon: import("../components/ProblemSketch").SketchIcon; label: string; pain?: string }[]; loop?: string };
   /** Photos/scans of real sketches from the notebook or iPad, shown taped to the page */
   sketches?: { src: string; caption?: string }[];
+  /** Who it was really made for (taped-in pictures; tap to hear a greeting) */
+  madeFor?: { title?: string; intro: string; people: { name: string; img: string; note: string; audio?: string; line?: string; tint?: string }[]; closing?: string };
+  /** A character with moods you can tap through */
+  character?: { name: string; intro: string; moods: { img: string; label: string; when: string; line?: string; audio?: string }[] };
+  /** How the product sounds */
+  sounds?: { intro: string; tones?: ("right" | "wrong" | "combo" | "done" | "coin" | "flip")[]; voices?: { label: string; line: string; audio: string }[] };
+  /** The build journey, stop by stop */
+  journey?: { date: string; title: string; body: string; img?: string }[];
   /** Up to three screens fanned out under the hero */
   showcase?: { src: string; alt: string }[];
   /** The old way, as a chat, next to the product screen */
@@ -188,6 +215,49 @@ export const projects: Project[] = [
       problem: [
         "At home, studying ran on a manual loop: the kids photographed their textbook pages, I used AI to turn them into a summary and a quiz, sent it over iMessage, then marked every answer by hand.",
         "It worked, barely. Nothing was saved, nobody else could see progress, and every quiz cost me an evening. I wanted one place where each child studies, and where a parent stays in control of what the AI produces.",
+      ],
+      madeFor: {
+        title: "Made for Alma & Eleen",
+        intro:
+          "Siba exists because of two people: my daughters, Alma and Eleen. Every screen started as a question at home. Would Alma open this without being asked? Would Eleen get it before she can read every word on it?",
+        people: [
+          { name: "Alma", img: sibaAlma, tint: "#FFD6E0", audio: vStart, line: "Ready, Alma? Let's learn something new together!", note: "Plays the piano. Siba says her name in every lesson." },
+          { name: "Eleen", img: sibaEleen, tint: "#FFE9C7", audio: vEleenStart, line: "Ready, Eleen? Let's learn something new together!", note: "The youngest tester. She gets her own early-years mode, read aloud." },
+        ],
+        closing: "The toughest usability testers I've ever had don't care about UX at all. They just know when something's boring.",
+      },
+      character: {
+        name: "Siba",
+        intro:
+          "Siba is the girls' study buddy, never their teacher. I art-directed her as a 3D character with a pose for every moment, so the app can react like a friend would: coffee in the morning, thinking along during a lesson, and a gentle look when an answer is wrong. Never a red X.",
+        moods: [
+          { img: sibaPoseMug, label: "Morning", when: "greets her before noon", line: "Good morning, Alma! Ready?" },
+          { img: sibaPoseWave, label: "Let's go", when: "starting a lesson", line: "Ready, Alma? Let's learn something new together!", audio: vStart },
+          { img: sibaPoseThink, label: "Thinking", when: "during the lesson", line: "Quick check! Tap the right answer." },
+          { img: sibaPoseGentle, label: "Not quite", when: "a wrong answer", line: "Almost! Let's see why.", audio: vWrong2 },
+          { img: sibaPoseCoin, label: "On fire", when: "three right in a row", line: "Three in a row! You're on fire.", audio: vCombo3 },
+          { img: sibaPoseBook, label: "Fix it", when: "the mistakes round", line: "Let's fix the ones you missed, Alma.", audio: vFixStart },
+          { img: sibaPoseCheer, label: "Big win", when: "80% or more on a lesson", line: "Amazing, Alma! You nailed this lesson!", audio: vFinishHigh },
+          { img: sibaPoseWatch, label: "Evening", when: "greets her after 5 PM", line: "Still studying? Let's make it a quick one." },
+        ],
+      },
+      sounds: {
+        intro:
+          "Sound was designed like the character: to reward without startling. The UI sounds are tiny tones generated in code, so there's nothing to download, and a wrong answer gets a soft two-note \"hmm\", never a buzzer. Siba's voice is recorded once per line, and every line also shows as a caption.",
+        tones: ["right", "wrong", "combo", "done", "coin", "flip"],
+        voices: [
+          { label: "Her profile", line: "This is your space, Alma. Look how far you've come!", audio: vMe },
+          { label: "Right answer · Alma", line: "You got it, Alma!", audio: vRight3 },
+          { label: "Right answer · Eleen", line: "You got it, Eleen!", audio: vEleenRight3 },
+        ],
+      },
+      journey: [
+        { date: "Before", title: "The iMessage era", body: "Photos in a chat, an AI quiz, and me marking every answer by hand at night." },
+        { date: "Sep 2026", title: "First, a list", body: "Siba List: coding, a language, music and reading every day, tied to their allowance. Points instead of checkmarks, so one missed day doesn't wipe out the week." },
+        { date: "9 Sep 2026", title: "A name and a look", body: "Named Siba (سيبا), after Sibawayh, the grammarian of Arabic. Chunky buttons with real depth, and gold only ever means points. The first working app came together overnight.", img: sibaPoseWave },
+        { date: "Oct 2026", title: "Siba gets a face and a voice", body: "A 3D character with a pose for every mood, and a recorded voice that says each girl's name.", img: sibaPoseCheer },
+        { date: "Oct 2026", title: "A mode just for Eleen", body: "Younger kids get the summary read to them, tap-tile challenges, amber instead of red, and the word \"exam\" never appears.", img: sibaEleen },
+        { date: "10 Oct 2026", title: "Ready for other families", body: "Accounts for every family, cloud storage, installable on iPhone and iPad, and a splash screen where Siba says hi.", img: sibaPoseCoin },
       ],
       problemSketch: {
         frames: [

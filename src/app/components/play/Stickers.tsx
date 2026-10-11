@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 import { useMode } from "../ModeContext";
 import { Eye } from "../hero/EyeHeadline";
 
-export type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye";
+export type Kind = "star" | "heart" | "sparkle" | "swirl" | "bolt" | "wow" | "coffee" | "user" | "crown" | "eye" | "tie" | "popper";
 
 const INK = "#1d1a17";
 const sw = { stroke: INK, strokeWidth: 2.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -78,6 +78,24 @@ export function StickerArt({ kind, size = 56 }: { kind: Kind; size?: number }) {
         <svg width={size} height={size} viewBox="0 0 48 48">
           <path d="M6 16l9 9 9-15 9 15 9-9-4 22H10z" fill="#FFC53D" {...sw} />
           <circle cx="24" cy="30" r="2.6" fill="#ff614c" />
+        </svg>
+      );
+    case "tie":
+      return (
+        <svg width={size} height={size} viewBox="0 0 48 48">
+          <path d="M17 6h14l-3 7h-8z" fill="#1d1a17" {...sw} />
+          <path d="M20 13h8l5 22-9 9-9-9z" fill="#6A4CFF" {...sw} />
+          <path d="M21.5 20l6 4M20.5 27l7 4" stroke="#B9A8FF" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+        </svg>
+      );
+    case "popper":
+      return (
+        <svg width={size} height={size} viewBox="0 0 48 48">
+          <path d="M6 42l9-25 16 16z" fill="#FFC53D" {...sw} />
+          <path d="M11 29l8 8M13.5 22.5l12 12" stroke="#ff614c" strokeWidth="2.6" strokeLinecap="round" fill="none" />
+          <path d="M27 9c2 3 0 5 3 7M36 14l4-2M33 5l1 4M40 22c2-1 4 0 5 1" stroke="#1d1a17" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+          <circle cx="38" cy="7" r="2.2" fill="#02B5C9" stroke="#1d1a17" strokeWidth="1.6" />
+          <circle cx="43" cy="16" r="2" fill="#FF4C79" stroke="#1d1a17" strokeWidth="1.6" />
         </svg>
       );
     case "eye":

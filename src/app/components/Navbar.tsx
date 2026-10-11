@@ -3,6 +3,7 @@ import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
 import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
 import { useContactForm } from "./ContactFormContext";
+import { StickerArt } from "./play/Stickers";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "motion/react";
 
@@ -32,19 +33,16 @@ function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMod
               />
             )}
             <span className="relative z-10 inline-flex items-center gap-1.5">
-              {m === "professional" ? "Professional" : (
-                <>
-                  Fun
-                  <motion.span
-                    aria-hidden
-                    animate={active ? { rotate: [0, -15, 15, -10, 0], scale: [1, 1.25, 1] } : { rotate: 0, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    className="inline-block"
-                  >
-                    {active ? "🤪" : ""}
-                  </motion.span>
-                </>
-              )}
+              <motion.span
+                aria-hidden
+                className="inline-flex"
+                animate={active ? { rotate: [0, -18, 14, -8, 0], scale: [1, 1.3, 1] } : { rotate: 0, scale: 0.9 }}
+                transition={{ duration: 0.6 }}
+                style={{ filter: active ? "none" : "grayscale(1) opacity(.55)" }}
+              >
+                <StickerArt kind={m === "professional" ? "tie" : "popper"} size={compact ? 20 : 24} />
+              </motion.span>
+              {m === "professional" ? "Professional" : "Fun"}
             </span>
           </button>
         );

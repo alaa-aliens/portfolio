@@ -38,3 +38,8 @@ body::after {
 
 /* While a sticker is picked, the doodle itself is the cursor */
 body.sticker-armed, body.sticker-armed * { cursor: none !important; }
+
+/* Pencil cursor (mouse only; the component adds the class) */
+html.ink-cursor, html.ink-cursor * { cursor: none !important; }
+.ink-pen.pen-down svg { transform: translate(-2px, -29px) rotate(-6deg); }
+.ink-pen svg { transition: transform 120ms ease; }

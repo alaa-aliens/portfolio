@@ -10,6 +10,11 @@ import { CountUp, Doodle, PenWipe, Reveal, ScribbleUnderline, SectionTitle } fro
 import { categories, getNextReady, getProject, type Project } from "../data/projects";
 import { ProblemSketch } from "../components/ProblemSketch";
 import { ProjectCover } from "../components/ProjectCover";
+import { MadeFor } from "../components/story/MadeFor";
+import { CharacterMoods } from "../components/story/CharacterMoods";
+import { SoundBoard } from "../components/story/SoundBoard";
+import { Journey } from "../components/story/Journey";
+import { DoodleTitle } from "../components/play/DoodleTitle";
 import { usePageMeta } from "../usePageMeta";
 
 function BackLink() {
@@ -270,6 +275,16 @@ export function CaseStudyPage() {
           </section>
         )}
 
+        {/* ── Who it was made for ── */}
+        {cs.madeFor && (
+          <section>
+            <DoodleTitle text={(cs.madeFor.title ?? "Made for") .replace(" & ", " {heart} ")} className="text-[34px] md:text-[56px]" color={cat.color} />
+            <div className="mt-8">
+              <MadeFor intro={cs.madeFor.intro} people={cs.madeFor.people} closing={cs.madeFor.closing} />
+            </div>
+          </section>
+        )}
+
         {/* ── Before / after as a chat ── */}
         {cs.beforeChat && (
           <section>
@@ -294,6 +309,36 @@ export function CaseStudyPage() {
           <section>
             <SectionTitle color={cat.color}>{isProfessional ? "What I Did" : "How I Fixed It"}</SectionTitle>
             <Steps steps={cs.steps} />
+          </section>
+        )}
+
+        {/* ── The character ── */}
+        {cs.character && (
+          <section>
+            <SectionTitle color={cat.color}>{isProfessional ? `Meet ${cs.character.name}` : `${cs.character.name} has feelings`}</SectionTitle>
+            <div className="mt-8">
+              <CharacterMoods name={cs.character.name} intro={cs.character.intro} moods={cs.character.moods} color={cat.color} />
+            </div>
+          </section>
+        )}
+
+        {/* ── Sound ── */}
+        {cs.sounds && (
+          <section>
+            <SectionTitle color={cat.color}>{isProfessional ? "How it sounds" : "Turn your sound on"}</SectionTitle>
+            <div className="mt-8">
+              <SoundBoard intro={cs.sounds.intro} tones={cs.sounds.tones} voices={cs.sounds.voices} color={cat.color} />
+            </div>
+          </section>
+        )}
+
+        {/* ── Journey ── */}
+        {cs.journey && cs.journey.length > 0 && (
+          <section>
+            <SectionTitle color={cat.color}>{isProfessional ? "The journey" : "How it actually happened"}</SectionTitle>
+            <div className="mt-10">
+              <Journey stops={cs.journey} color={cat.color} />
+            </div>
           </section>
         )}
 

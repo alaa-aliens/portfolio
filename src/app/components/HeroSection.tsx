@@ -1,8 +1,8 @@
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useEffect } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { Doodle } from "./motion/Doodles";
 import { UsersCrowd } from "./hero/UsersCrowd";
 import { EyeHeadline } from "./hero/EyeHeadline";
@@ -28,11 +28,79 @@ function useCursorTilt() {
   };
 }
 
+/* Pupils drawn inside the sunglasses (positions measured from the drawing). They follow the cursor. */
+const LENSES = [
+  { cx: 34.3, cy: 17.9, w: 8.5, h: 4.0 },
+  { cx: 47.8, cy: 16.5, w: 8.1, h: 3.6 },
+];
+function LensPupils({ boxRef, surprised }: { boxRef: React.RefObject<HTMLDivElement>; surprised: boolean }) {
+  const refs = useRef<(HTMLSpanElement | null)[]>([]);
+  useEffect(() => {
+    let raf = 0;
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    const move = (e: PointerEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+    };
+    const tick = () => {
+      refs.current.forEach((el) => {
+        if (!el) return;
+        const r = el.parentElement!.getBoundingClientRect();
+        const dx = mx - (r.left + r.width / 2);
+        const dy = my - (r.top + r.height / 2);
+        const d = Math.hypot(dx, dy) || 1;
+        const k = Math.min(1, d / 220);
+        el.style.transform = `translate(calc(-50% + ${(dx / d) * r.width * 0.26 * k}px), calc(-50% + ${(dy / d) * r.height * 0.22 * k}px))`;
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", move);
+    };
+  }, [boxRef]);
+  return (
+    <>
+      {LENSES.map((l, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{ left: `${l.cx - l.w / 2}%`, top: `${l.cy - l.h / 2}%`, width: `${l.w}%`, height: `${l.h}%` }}
+        >
+          <span
+            ref={(el) => (refs.current[i] = el)}
+            className="absolute left-1/2 top-1/2 rounded-full bg-[#1d1a17] transition-[width,height] duration-150"
+            style={{ width: surprised ? "26%" : "38%", height: surprised ? "52%" : "70%" }}
+          />
+        </span>
+      ))}
+    </>
+  );
+}
+
+const POKES: Record<"pro" | "fun", string[]> = {
+  pro: ["hi there 👋", "that tickles", "yes, I'm clickable", "good UX, right?", "ok, I'm awake", "hire me? 👉👈"],
+  fun: ["sup? 🤘", "OI!", "personal space!", "do it again 😏", "I bruise easily", "that's my laptop!!"],
+};
+
 export function HeroSection() {
   const { isProfessional, mode } = useMode();
   const { openContact } = useContactForm();
   const tilt = useCursorTilt();
   const headline = isProfessional ? "hello, i'm ala'a ali" : "yooo, i'm ala'a ali";
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [pokes, setPokes] = useState(0);
+  const [surprised, setSurprised] = useState(false);
+  const lines = POKES[isProfessional ? "pro" : "fun"];
+  const poke = () => {
+    setPokes((n) => n + 1);
+    setSurprised(true);
+    window.setTimeout(() => setSurprised(false), 450);
+  };
 
   return (
     <section id="hero" className="relative w-full pt-[100px] md:pt-[130px] pb-[150px] md:pb-[170px] overflow-hidden">
@@ -51,19 +119,38 @@ export function HeroSection() {
           data-crowd-avoid
           className="w-[160px] md:w-[270px] h-[280px] md:h-[477px] relative shrink-0"
         >
+          {/* Click burst */}
+          <AnimatePresence>
+            {pokes > 0 && (
+              <motion.div key={pokes} className="absolute inset-0 pointer-events-none z-30" aria-hidden>
+                {[0, 1, 2, 3, 4, 5].map((i) => (
+                  <motion.span
+                    key={i}
+                    className="absolute left-[42%] top-[20%] text-[18px] md:text-[24px]"
+                    initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
+                    animate={{ x: Math.cos((i / 6) * Math.PI * 2) * 90, y: Math.sin((i / 6) * Math.PI * 2) * 70 - 20, scale: 1, opacity: 0, rotate: i * 40 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                  >
+                    {["✦", "★", "♥", "✺", "✦", "★"][i]}
+                  </motion.span>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
           <Doodle kind="sparkle" className="-left-6 md:-left-10 top-6" size={36} />
           <Doodle kind="star" className="-right-4 md:-right-8 top-16 md:top-24" size={32} color="#FF9F1C" delay={0.3} />
           <Doodle kind="swirl" className="-left-2 md:-left-6 bottom-10 md:bottom-16" size={34} color="#6A4CFF" delay={0.6} />
           {!isProfessional && <Doodle kind="heart" className="right-0 bottom-24" size={30} color="#FF4C79" delay={0.9} />}
 
-          {/* Speech bubble */}
+          {/* Speech bubble (changes every time you poke him) */}
           <motion.div
+            key={`bubble-${pokes}`}
             initial={{ opacity: 0, scale: 0.3, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: -6 }}
-            transition={{ type: "spring", stiffness: 260, damping: 12, delay: 1.1 }}
+            transition={{ type: "spring", stiffness: 260, damping: 12, delay: pokes ? 0 : 1.1 }}
             className="absolute z-20 -top-2 md:top-0 -right-10 md:-right-16 origin-bottom-left bg-white border-2 border-black rounded-[18px] px-3 py-1.5 font-['DM_Serif_Display'] text-[14px] md:text-[18px] text-black shadow-[3px_3px_0px_0px_black] whitespace-nowrap"
           >
-            {isProfessional ? "hi there 👋" : "sup? 🤘"}
+            {lines[pokes % lines.length]}
             <span aria-hidden className="absolute -bottom-[9px] left-4 w-4 h-4 bg-white border-b-2 border-r-2 border-black rotate-45" />
           </motion.div>
 
@@ -71,17 +158,23 @@ export function HeroSection() {
             style={{ rotate: tilt.rotate, x: tilt.tx, y: tilt.ty }}
             className="absolute inset-0"
           >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 overflow-hidden"
+            <motion.button
+              type="button"
+              ref={boxRef as unknown as React.Ref<HTMLButtonElement>}
+              onClick={poke}
+              aria-label="Poke Ala'a"
+              className="pointer-events-auto absolute inset-0 overflow-hidden origin-bottom cursor-pointer"
+              animate={pokes ? { y: [0, -26, 0, -6, 0], scaleY: [1, 0.88, 1.06, 0.97, 1], scaleX: [1, 1.08, 0.96, 1.02, 1] } : { y: [0, -8, 0] }}
+              transition={pokes ? { duration: 0.6, ease: "easeOut" } : { duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+              key={`body-${pokes}`}
             >
               <img
                 alt="Hand-drawn illustration of Ala'a Ali holding a laptop"
                 className="absolute h-[168%] left-[-96%] top-[-48%] w-[222%] max-w-none"
                 src={imgImage14}
               />
-            </motion.div>
+              <LensPupils boxRef={boxRef} surprised={surprised} />
+            </motion.button>
           </motion.div>
         </motion.div>
 

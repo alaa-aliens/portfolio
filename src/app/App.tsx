@@ -23,6 +23,8 @@ import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { usePageMeta } from "./usePageMeta";
 import { Stickers } from "./components/play/Stickers";
+import { InkCursor } from "./components/play/InkCursor";
+import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
 import { TourGuide } from "./components/play/TourGuide";
 import { SkillsTable } from "./components/play/SkillsTable";
 
@@ -63,6 +65,8 @@ function AppContent() {
   return (
     <div className="relative min-h-screen bg-[#fdecd0] flex flex-col">
       <ScrollProgress />
+      <InkCursor />
+      <ModeSwitchFX />
       {!isArabic && <Stickers />}
       {!isArabic && <TourGuide />}
       <Navbar />
