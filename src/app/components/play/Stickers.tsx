@@ -1,3 +1,4 @@
+import { isSoundOn, play, setSound } from "./sfx";
 /*
  * "Doodle on my site" — pick one of Ala'a's doodles and stamp it anywhere.
  * Stickers live per page for this visit only. Esc (or the ✕) puts the pen down.
@@ -149,6 +150,7 @@ export function Stickers() {
   const [placed, setPlaced] = useState<Placed[]>([]);
   const [cursor, setCursor] = useState({ x: -200, y: -200 });
   const [pencil, setPencilState] = useState(() => isPencilOn());
+  const [sound, setSoundState] = useState(() => isSoundOn());
   const togglePencil = () => {
     const n = !pencil;
     setPencilState(n);
@@ -168,6 +170,7 @@ export function Stickers() {
       // Place the sticker instead of clicking whatever is underneath.
       e.preventDefault();
       e.stopPropagation();
+      play("sticker", 0.5);
       setPlaced((p) => [
         ...p,
         { id: idRef.current++, kind: armed, x: e.pageX, y: e.pageY, rot: Math.round(Math.random() * 30 - 15), path: pathname },
@@ -269,6 +272,22 @@ export function Stickers() {
                 </span>
                 <span className={`w-9 h-5 rounded-full border border-black relative transition-colors ${pencil ? "bg-[#ff614c]" : "bg-white"}`}>
                   <span className={`absolute top-[2px] w-3 h-3 rounded-full bg-black transition-all ${pencil ? "left-[18px]" : "left-[2px]"}`} />
+                </span>
+              </button>
+              <button
+                onClick={() => {
+                  setSound(!sound);
+                  setSoundState(!sound);
+                }}
+                aria-pressed={sound}
+                className={`w-full mb-2 flex items-center justify-between rounded-[10px] border px-2.5 py-1.5 font-['Work_Sans'] text-[12.5px] transition-colors ${sound ? "border-black bg-[#FFE8C2]" : "border-black/15 hover:border-black/40"}`}
+              >
+                <span className="flex items-center gap-2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d1a17" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 10v4h4l5 4V6L8 10H4z" fill="#FFC53D" /><path d="M16 9a4 4 0 0 1 0 6" /><path d="M18.5 6.5a8 8 0 0 1 0 11" /></svg>
+                  {isProfessional ? "sound effects" : "bleeps & bloops"}
+                </span>
+                <span className={`w-9 h-5 rounded-full border border-black relative transition-colors ${sound ? "bg-[#ff614c]" : "bg-white"}`}>
+                  <span className={`absolute top-[2px] w-3 h-3 rounded-full bg-black transition-all ${sound ? "left-[18px]" : "left-[2px]"}`} />
                 </span>
               </button>
               <div className="grid grid-cols-6 gap-1.5">

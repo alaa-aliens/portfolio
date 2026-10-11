@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { SkillsTable } from "../components/play/SkillsTable";
-import { Doodle, Reveal, SectionTitle } from "../components/motion/Doodles";
+import { Doodle, Reveal } from "../components/motion/Doodles";
 import { Eyebrow, NextTiles, PaperCard, Prose, Scribble } from "../components/ui/Kit";
 import { StickerArt, type Kind } from "../components/play/Stickers";
 import { usePageMeta } from "../usePageMeta";
@@ -47,7 +47,7 @@ export function SkillsPage() {
 
         {/* Tools */}
         <section>
-          <SectionTitle className="mb-8">{isProfessional ? "Tools I reach for" : "My weapons"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "tools i {bolt} reach for" : "my {bolt} weapons"} className="text-[40px] md:text-[64px] mb-8" />
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {TOOLS.map((t, i) => (
               <PaperCard key={t.name} tilt={i % 2 ? 2 : -2} className="p-5 flex gap-4">
@@ -77,7 +77,7 @@ export function SkillsPage() {
 
         {/* How I work */}
         <section>
-          <SectionTitle className="mb-8">{isProfessional ? "How I work" : "House rules"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "how i {star} work" : "house {star} rules"} className="text-[40px] md:text-[64px] mb-8" />
           <ol className="grid md:grid-cols-2 gap-5 md:gap-6">
             {HOW.map((h, i) => (
               <PaperCard key={h.t} tilt={i % 2 ? -1.5 : 1.5} className="p-6 md:p-7 flex gap-5">

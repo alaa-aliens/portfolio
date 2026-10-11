@@ -60,7 +60,7 @@ export function PhoneFan({ shots, color }: { shots: { src: string; alt: string }
 /** A row of phones under a step, each with an optional caption. */
 export function PhoneRow({ shots }: { shots: { src: string; alt: string; caption?: string }[] }) {
   return (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 snap-x">
+    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 snap-x max-w-[calc(100%+3rem)] md:max-w-full">
       {shots.map((s, i) => (
         <motion.figure
           key={s.src}
@@ -147,7 +147,7 @@ export function BrowserShowcase({ shots, color, url }: { shots: { src: string; a
 export function ScreenRow({ shots }: { shots: { src: string; alt: string; caption?: string; kind?: "phone" | "desktop" }[] }) {
   if (shots.every((s) => s.kind !== "desktop")) return <PhoneRow shots={shots} />;
   return (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 snap-x">
+    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 snap-x max-w-[calc(100%+3rem)] md:max-w-full">
       {shots.map((s, i) => (
         <motion.figure
           key={s.src}

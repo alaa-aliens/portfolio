@@ -1,7 +1,8 @@
+import { motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { WorkExperienceSection } from "../components/WorkExperienceSection";
-import { Doodle, Reveal, SectionTitle } from "../components/motion/Doodles";
+import { Doodle, Reveal } from "../components/motion/Doodles";
 import { Eyebrow, NextTiles, PaperCard, Prose, Scribble } from "../components/ui/Kit";
 import { StickerArt } from "../components/play/Stickers";
 import { usePageMeta } from "../usePageMeta";
@@ -20,7 +21,7 @@ export function ExperiencePage() {
   usePageMeta({ title: "Experience · Ala'a Ali", description: "15+ years: Al Jazeera, TRT, Syntax, Sitech, freelance; teaching at Zain, 42 Amman, HTU; a top-10 podcast." });
 
   return (
-    <article className="w-full">
+    <article className="w-full overflow-x-clip">
       <section className="relative w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-[110px] md:pt-[160px]">
         <Doodle kind="zigzag" className="right-6 md:right-32 top-[100px]" size={40} color="#FF9F1C" />
         <Reveal y={12}><Eyebrow className="mb-3">{isProfessional ? "Experience" : "The lore"}</Eyebrow></Reveal>
@@ -39,13 +40,20 @@ export function ExperiencePage() {
 
         {/* Clients wall */}
         <section>
-          <SectionTitle className="mb-8">{isProfessional ? "People I've worked with" : "Who's paid me so far"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "people i've {heart} worked with" : "who's {heart} paid me so far"} className="text-[40px] md:text-[64px] mb-8" />
           <ul className="flex flex-wrap gap-2.5 md:gap-3">
             {CLIENTS.map((c, i) => (
               <li key={c}>
-                <PaperCard tilt={((i * 7) % 5) - 2} className="rounded-full px-4 py-2 !shadow-[2px_3px_0_0_#1d1a17]">
-                  <span className="font-['Work_Sans'] font-semibold text-[14px] md:text-[15px]">{c}</span>
-                </PaperCard>
+                <motion.span
+                  initial={{ opacity: 0, y: 8, rotate: ((i * 7) % 5) - 2 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i % 8) * 0.04 }}
+                  className="inline-block font-display text-[22px] md:text-[28px] lowercase text-black hover:text-[#ff614c] transition-colors"
+                  style={{ rotate: `${((i * 7) % 5) - 2}deg` }}
+                >
+                  {c}<span className="text-[#ff614c] mx-2">·</span>
+                </motion.span>
               </li>
             ))}
           </ul>
@@ -54,7 +62,7 @@ export function ExperiencePage() {
 
         {/* Talks + teaching */}
         <section>
-          <SectionTitle className="mb-8">{isProfessional ? "On stage and on air" : "Talking at people"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "on stage {sparkle} and on air" : "talking {sparkle} at people"} className="text-[40px] md:text-[64px] mb-8" />
           <ul className="grid md:grid-cols-2 gap-5">
             {TALKS.map((t, i) => (
               <PaperCard key={t.t} tilt={i % 2 ? 1.5 : -1.5} className="p-5 flex items-start gap-4">

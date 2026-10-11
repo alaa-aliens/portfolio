@@ -1,3 +1,4 @@
+import { play } from "./sfx";
 /*
  * What happens when you flip the mode:
  * Fun  → a burst of doodle confetti from the toggle.
@@ -22,6 +23,7 @@ export function ModeSwitchFX() {
       return;
     }
     setBurst({ id: Date.now(), mode });
+    play(mode === "fun" ? "party" : "scribble", 0.45);
     const t = window.setTimeout(() => setBurst(null), 1900);
     return () => window.clearTimeout(t);
   }, [mode]);

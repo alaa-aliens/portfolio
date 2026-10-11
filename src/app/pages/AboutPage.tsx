@@ -4,7 +4,8 @@ import { useMode } from "../components/ModeContext";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { ComicStrip } from "../components/story/ComicStrip";
 import { FlipCards } from "../components/story/FlipCards";
-import { Doodle, Reveal, SectionTitle, CountUp } from "../components/motion/Doodles";
+import { Doodle, Reveal, CountUp } from "../components/motion/Doodles";
+import { NextTiles } from "../components/ui/Kit";
 import { StickerArt, type Kind } from "../components/play/Stickers";
 import { usePageMeta } from "../usePageMeta";
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
@@ -57,14 +58,14 @@ export function AboutPage() {
       <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-16 md:mt-24">
         {/* Comic strip */}
         <section>
-          <SectionTitle className="mb-10 md:mb-14">{isProfessional ? "The story, in six panels" : "The origin story"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "the story, in {star} six panels" : "the origin {star} story"} className="text-[40px] md:text-[64px] mb-10 md:mb-14" />
           <ComicStrip />
         </section>
 
         {/* What I do */}
         <section>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8 md:mb-10">
-            <SectionTitle>{isProfessional ? "What I do" : "What I actually do"}</SectionTitle>
+            <DoodleTitle text={isProfessional ? "what i {sparkle} do" : "what i {sparkle} actually do"} className="text-[40px] md:text-[64px]" />
             <p className="font-['Shantell_Sans',cursive] text-[14px] text-black/55 md:mb-5">flip a card</p>
           </div>
           <FlipCards />
@@ -89,7 +90,7 @@ export function AboutPage() {
 
         {/* Facts */}
         <section>
-          <SectionTitle className="mb-8">{isProfessional ? "A few more things" : "Random facts"}</SectionTitle>
+          <DoodleTitle text={isProfessional ? "a few {heart} more things" : "random {heart} facts"} className="text-[40px] md:text-[64px] mb-8" />
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {FACTS.map((f, i) => (
               <motion.li
@@ -108,20 +109,12 @@ export function AboutPage() {
           </ul>
         </section>
 
-        {/* Next */}
-        <section className="grid md:grid-cols-2 gap-6 mb-4">
-          {[
-            { to: "/skills", k: isProfessional ? "Next" : "Keep going", t: isProfessional ? "What I bring to the table" : "The skills table" },
-            { to: "/experience", k: isProfessional ? "Or" : "Or", t: isProfessional ? "Where I've worked" : "The work lore" },
-          ].map((n) => (
-            <Link key={n.to} to={n.to} className="group border border-black rounded-[18px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
-              <span className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[12px] text-white/60">{n.k}</span>
-              <span className="font-['Playfair_Display'] font-bold text-[26px] md:text-[36px] leading-tight flex items-center justify-between gap-4">
-                {n.t}<span className="transition-transform group-hover:translate-x-2">→</span>
-              </span>
-            </Link>
-          ))}
-        </section>
+        <NextTiles
+          items={[
+            { to: "/skills", k: isProfessional ? "next" : "keep going", t: isProfessional ? "what I bring to the table" : "the skills table" },
+            { to: "/experience", k: isProfessional ? "or" : "or", t: isProfessional ? "where I've worked" : "the work lore" },
+          ]}
+        />
       </div>
     </article>
   );

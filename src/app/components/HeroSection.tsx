@@ -1,3 +1,4 @@
+import { play } from "./play/sfx";
 import { addScore } from "./play/Score";
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
 import { useMode } from "./ModeContext";
@@ -100,6 +101,7 @@ export function HeroSection() {
   const poke = () => {
     setPokes((n) => n + 1);
     addScore(1, "poked me", undefined);
+    play("boing", 0.4);
     setSurprised(true);
     window.setTimeout(() => setSurprised(false), 450);
   };

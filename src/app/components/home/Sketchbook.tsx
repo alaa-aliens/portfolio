@@ -1,3 +1,4 @@
+import { play } from "../play/sfx";
 /*
  * The sketchbook: a dashed board with doodles scattered on it.
  * Everything is draggable; whatever you grab comes to the front.
@@ -109,6 +110,7 @@ export function Sketchbook() {
         <button
           onClick={() => {
             setSeed((s) => s + 1);
+            play("scribble", 0.5);
             setStory((k) => (k + 1) % STORIES.length);
             setTop(null);
             setOrder(STORIES[(story + 1) % STORIES.length].items.map((_, i) => i));

@@ -1,3 +1,4 @@
+import { play } from "../components/play/sfx";
 import imgHeadCut from "../../assets/head.webp";
 /*
  * Contact as a postcard. You stamp what it's about, write on the lines,
@@ -77,6 +78,7 @@ export function ContactPage() {
   const send = () => {
     if (!ready || flying) return;
     setFlying(true);
+    play("whoosh", 0.5);
     addScore(100, "you actually wrote. jackpot!", "contact:sent", true);
     const subject = encodeURIComponent(chosen ? `About ${isProfessional ? chosen.pro : chosen.fun}` : "Hello from your website");
     const body = encodeURIComponent(`${msg.trim()}\n\n— ${name.trim() || "someone from your website"}`);

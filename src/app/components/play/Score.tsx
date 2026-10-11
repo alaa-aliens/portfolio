@@ -1,3 +1,4 @@
+import { play } from "./sfx";
 /*
  * The site as a tiny game: three lives and a score, kept in localStorage.
  *  - points for exploring (a page, a case study, poking the guy, asking Ala'a)
@@ -54,11 +55,16 @@ export function addScore(points: number, text: string, key?: string, bonus = fal
     s.lives = Math.min(3, s.lives + earned);
     save(s);
     toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
-    window.setTimeout(() => toast({ text: s.lives === 3 ? "all hearts full. show-off." : "heart earned", delta: 0, kind: "heart" }), 1500);
+    play(bonus ? "party" : "coin", 0.35);
+    window.setTimeout(() => {
+      toast({ text: s.lives === 3 ? "all hearts full. show-off." : "heart earned", delta: 0, kind: "heart" });
+      play("heart", 0.5);
+    }, 1500);
     return true;
   }
   save(s);
   toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
+  play(bonus ? "party" : "coin", bonus ? 0.5 : 0.35);
   return true;
 }
 
@@ -70,6 +76,7 @@ export function loseLife(text: string) {
     s.lives = 1;
     s.points = Math.max(0, s.points - 20);
   } else toast({ text, delta: -1, kind: "life" });
+  play("lose", 0.45);
   save(s);
 }
 

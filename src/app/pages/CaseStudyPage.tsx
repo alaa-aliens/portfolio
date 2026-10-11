@@ -171,15 +171,15 @@ export function CaseStudyPage() {
   ].filter((m) => m.v);
 
   return (
-    <article className="w-full">
+    <article className="w-full overflow-x-clip">
       {/* ── Hero ── */}
       <header className="w-full max-w-[1200px] mx-auto px-6 md:px-12 pt-[120px] md:pt-[170px] relative">
         <Doodle kind="star" className="right-6 md:right-20 top-[110px] md:top-[150px]" size={48} />
         <Doodle kind="zigzag" className="hidden md:block right-[260px] top-[330px]" color={cat.color} delay={0.3} />
         <BackLink />
 
-        <div className="grid md:grid-cols-[1fr_auto] gap-10 items-center mt-6 md:mt-10">
-          <div>
+        <div className="grid md:grid-cols-[minmax(0,1fr)_auto] gap-10 items-center mt-6 md:mt-10">
+          <div className="min-w-0">
             <Reveal y={12}>
               <span className="inline-flex items-center gap-2 font-['Work_Sans'] text-[13px] uppercase tracking-[0.18em] text-black/60">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: cat.color }} />
@@ -187,7 +187,7 @@ export function CaseStudyPage() {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h1 className="font-display lowercase text-[64px] md:text-[120px] leading-[0.9] mt-3" style={{ color: cat.color === "#1F1F1F" ? "#1d1a17" : cat.color }}>
+              <h1 className="font-display lowercase text-[56px] md:text-[88px] lg:text-[112px] leading-[0.9] mt-3 [overflow-wrap:anywhere]" style={{ color: cat.color === "#1F1F1F" ? "#1d1a17" : cat.color }}>
                 {project.name}
               </h1>
             </Reveal>
