@@ -13,108 +13,74 @@ import { WorkExperienceSection } from "./components/WorkExperienceSection";
 import { FooterSection } from "./components/FooterSection";
 import { ArabicPlaceholderPage } from "./components/ArabicPlaceholderPage";
 import { useEffect } from "react";
-import faviconImg from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
+import { WorkPage } from "./pages/WorkPage";
+import { CaseStudyPage } from "./pages/CaseStudyPage";
+import { ScrollProgress } from "./components/ScrollProgress";
+import { usePageMeta } from "./usePageMeta";
 
-function useFavicon() {
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    document.title = "Ala'a Ali — UX/UI Designer";
-
-    let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null;
-    if (!link) {
-      link = document.createElement("link");
-      link.rel = "icon";
-      document.head.appendChild(link);
+    if (hash) {
+      // wait a tick for the page to render, then jump to the section
+      const id = hash.slice(1);
+      const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 80);
+      return () => clearTimeout(t);
     }
-    link.href = faviconImg;
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
 
-    /* ── Open Graph & social sharing meta tags ── */
-    const ogTags: Record<string, string> = {
-      "og:title": "Hey, My Name is Ala'a Ali",
-      "og:description":
-        "UX/UI Designer • Illustrator • Facilitator — I design apps, platforms, and dashboards that people don't need a manual to use. That's the whole job, really.",
-      "og:image": faviconImg,
-      "og:type": "website",
-      "og:url": "https://alaa-ali.com",
-      "og:site_name": "Ala'a Ali — UX/UI Designer",
-    };
-
-    const twitterTags: Record<string, string> = {
-      "twitter:card": "summary_large_image",
-      "twitter:title": "Hey, My Name is Ala'a Ali",
-      "twitter:description":
-        "UX/UI Designer • Illustrator • Facilitator — I design apps, platforms, and dashboards that people don't need a manual to use. That's the whole job, really.",
-      "twitter:image": faviconImg,
-    };
-
-    // Set standard description meta
-    let descMeta = document.querySelector(
-      'meta[name="description"]'
-    ) as HTMLMetaElement | null;
-    if (!descMeta) {
-      descMeta = document.createElement("meta");
-      descMeta.name = "description";
-      document.head.appendChild(descMeta);
-    }
-    descMeta.content =
-      "UX/UI Designer • Illustrator • Facilitator — I design apps, platforms, and dashboards that people don't need a manual to use. That's the whole job, really.";
-
-    // Set OG meta tags
-    for (const [property, content] of Object.entries(ogTags)) {
-      let meta = document.querySelector(
-        `meta[property="${property}"]`
-      ) as HTMLMetaElement | null;
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.setAttribute("property", property);
-        document.head.appendChild(meta);
-      }
-      meta.content = content;
-    }
-
-    // Set Twitter card meta tags
-    for (const [name, content] of Object.entries(twitterTags)) {
-      let meta = document.querySelector(
-        `meta[name="${name}"]`
-      ) as HTMLMetaElement | null;
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = name;
-        document.head.appendChild(meta);
-      }
-      meta.content = content;
-    }
-  }, []);
+function HomePage() {
+  usePageMeta();
+  return (
+    <main className="flex flex-col gap-16 md:gap-24">
+      <HeroSection />
+      <StatsSection />
+      <AboutSection />
+      <WhatIDoSection />
+      <ProjectsSection />
+      <WorkExperienceSection />
+    </main>
+  );
 }
 
 function AppContent() {
   const { isContactOpen, closeContact } = useContactForm();
   const { isArabic } = useMode();
-  useFavicon();
-
-  if (isArabic) {
-    return (
-      <div className="min-h-screen bg-[#fdecd0] flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-          <ArabicPlaceholderPage />
-        </main>
-        <FooterSection />
-        <ContactFormModal isOpen={isContactOpen} onClose={closeContact} />
-      </div>
-    );
-  }
+  const location = useLocation();
 
   return (
     <div className="min-h-screen bg-[#fdecd0] flex flex-col">
+      <ScrollProgress />
       <Navbar />
-      <main className="flex flex-col gap-16 md:gap-24">
-        <HeroSection />
-        <StatsSection />
-        <AboutSection />
-        <WhatIDoSection />
-        <ProjectsSection />
-        <WorkExperienceSection />
-      </main>
+      <ScrollManager />
+      {isArabic ? (
+        <main className="flex-1">
+          <ArabicPlaceholderPage />
+        </main>
+      ) : (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            className="flex-1"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/work/:slug" element={<CaseStudyPage />} />
+              <Route path="*" element={<CaseStudyPage />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
+      )}
       <div className="mt-16 md:mt-24">
         <FooterSection />
       </div>
@@ -125,10 +91,14 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ModeProvider>
-      <ContactFormProvider>
-        <AppContent />
-      </ContactFormProvider>
-    </ModeProvider>
+    <BrowserRouter>
+      <MotionConfig reducedMotion="user">
+        <ModeProvider>
+          <ContactFormProvider>
+            <AppContent />
+          </ContactFormProvider>
+        </ModeProvider>
+      </MotionConfig>
+    </BrowserRouter>
   );
 }

@@ -22,7 +22,22 @@ const ModeContext = createContext<ModeContextType>({
 });
 
 export function ModeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setMode] = useState<Mode>("professional");
+  // Remember the visitor's mode between visits and pages.
+  const [mode, setModeState] = useState<Mode>(() => {
+    try {
+      return (localStorage.getItem("alaa-mode") as Mode) === "fun" ? "fun" : "professional";
+    } catch {
+      return "professional";
+    }
+  });
+  const setMode = (m: Mode) => {
+    setModeState(m);
+    try {
+      localStorage.setItem("alaa-mode", m);
+    } catch {
+      /* storage unavailable — fine */
+    }
+  };
   const [lang, setLang] = useState<Lang>("en");
   return (
     <ModeContext.Provider value={{
