@@ -4,7 +4,7 @@
  *  Paper      #fdecd0 page · #fffaf1 card · ink #1d1a17 · coral #ff614c
  *  Type       display: Gochi Hand (big moments, lowercase, coral or ink) · headings: Playfair Display
  *             body: IBM Plex Serif · UI: Work Sans · handwriting: Shantell Sans
- *  Edges      hand-drawn roughjs frames for cards (RoughBox); buttons keep his original 1px line + hard shadow; tags are his coral labels
+ *  Edges      hand-drawn roughjs frames for cards (RoughBox); buttons are hand-drawn pills (RoughBox) with marker text; tags are his coral labels
  *  Motion     springs (stiffness 200–400, damping 14–24), things tilt ±2° at rest and straighten on hover
  */
 import React from "react";
@@ -66,7 +66,7 @@ export function PaperCard({
   );
 }
 
-/** Primary button: white with hard shadow that presses in. */
+/** The button: a hand-drawn (roughjs) pill with marker text. Coral for the main action, paper otherwise. */
 export function Button({
   children,
   onClick,
@@ -84,16 +84,26 @@ export function Button({
   className?: string;
   size?: "md" | "lg";
 }) {
-  const tones = {
-    paper: "bg-white text-black",
-    ink: "bg-[#1d1a17] text-[#fffaf1]",
-    coral: "bg-[#ff614c] text-white",
-  };
-  // His original button: a rectangle with a 1px ink line and a hard 4px shadow that presses in.
-  const cls = `inline-flex items-center justify-center gap-2 border border-black rounded-[3px] font-['DM_Serif_Display'] ${size === "lg" ? "px-8 py-4 text-[18px] md:text-[20px]" : "px-6 py-3 text-[16px] md:text-[18px]"} shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${tones[tone]} ${className}`;
-  if (to) return <Link to={to} className={cls}>{children}</Link>;
-  if (href) return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>;
-  return <button type="button" onClick={onClick} className={cls}>{children}</button>;
+  const fill = { paper: "#fffaf1", ink: "#1d1a17", coral: "#ff614c" }[tone];
+  const text = { paper: "text-black", ink: "text-[#fffaf1]", coral: "text-white" }[tone];
+  const stroke = tone === "ink" ? "#fffaf1" : "#1d1a17";
+  const inner = (
+    <RoughBox
+      as="span"
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={1.6}
+      roughness={1.3}
+      radius={999}
+      className={`inline-flex items-center justify-center gap-2 font-display lowercase leading-none ${text} ${size === "lg" ? "px-8 py-4 text-[24px] md:text-[28px]" : "px-6 py-3 text-[20px] md:text-[23px]"}`}
+    >
+      {children}
+    </RoughBox>
+  );
+  const cls = `group inline-block select-none transition-transform hover:-rotate-1 hover:scale-[1.03] active:scale-[0.97] active:rotate-0 ${className}`;
+  if (to) return <Link to={to} className={cls}>{inner}</Link>;
+  if (href) return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>;
+  return <button type="button" onClick={onClick} className={cls}>{inner}</button>;
 }
 
 /** Tag: his original coral label (small filled rectangle), or a plain underlined word. */

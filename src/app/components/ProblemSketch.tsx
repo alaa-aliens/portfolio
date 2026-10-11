@@ -6,6 +6,7 @@
 import { useMemo } from "react";
 import { motion } from "motion/react";
 import rough from "roughjs";
+import { RoughBox } from "./ui/RoughBox";
 
 export type SketchIcon = "phone" | "robot" | "chat" | "pen" | "lost" | "clock" | "kids" | "eyes" | "doc" | "money" | "map";
 
@@ -162,16 +163,16 @@ export function ProblemSketch({ frames, loop }: { frames: SketchFrame[]; loop?: 
     <figure className="relative w-full rounded-[18px] border-2 border-dashed border-black/25 bg-[#fffaf1] px-4 md:px-8 py-8 md:py-10 overflow-hidden">
       {/* notebook lines */}
       <div aria-hidden className="absolute inset-0 pointer-events-none opacity-60" style={{ backgroundImage: "repeating-linear-gradient(transparent 0 31px, rgba(2,181,201,.18) 31px 32px)" }} />
-      <div className="relative flex flex-col md:flex-row md:flex-wrap items-center md:items-start justify-center gap-y-2 md:gap-y-10">
+      <div className="relative flex flex-col md:flex-row md:flex-nowrap items-center md:items-stretch justify-center gap-y-2">
         {frames.map((f, i) => {
           const d = i * 0.45;
           return (
-            <div key={i} className="flex flex-col md:flex-row items-center">
-              <div className="relative w-[200px] flex flex-col items-center">
-                <div className="relative w-[150px] h-[150px] md:w-[160px] md:h-[160px]">
+            <div key={i} className="flex flex-col md:flex-row items-center md:items-stretch md:flex-1 md:min-w-0">
+              <RoughBox fill="#ffffff" radius={10} strokeWidth={1.4} seed={i * 13 + 5} className="relative w-[220px] md:w-auto md:flex-1 md:min-w-0 px-3 pt-5 pb-4 flex flex-col items-center" style={{ rotate: `${i % 2 ? 0.8 : -0.8}deg` }}>
+                <div className="relative w-[130px] h-[130px] lg:w-[150px] lg:h-[150px]">
                   <Drawn list={boxes[i]} delay={d} viewBox="0 0 200 200" className="absolute inset-0 w-full h-full" />
                   <Drawn list={art[i]} delay={d + 0.25} className="absolute inset-[14%] w-[72%] h-[72%]" />
-                  {f.pain && <Drawn list={circles[i]} delay={d + 0.9} viewBox="0 0 200 200" className="absolute inset-[-14%] w-[128%] h-[128%]" />}
+                  {f.pain && <Drawn list={circles[i]} delay={d + 0.9} viewBox="0 0 200 200" className="absolute inset-[-5%] w-[110%] h-[110%]" />}
                   <span className="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-black text-white font-['Work_Sans'] font-semibold text-[12px] flex items-center justify-center">
                     {i + 1}
                   </span>
@@ -181,7 +182,7 @@ export function ProblemSketch({ frames, loop }: { frames: SketchFrame[]; loop?: 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ delay: d + 0.5 }}
-                  className="mt-3 text-center font-['Shantell_Sans',cursive] text-[15px] md:text-[16px] leading-snug text-black max-w-[190px]"
+                  className="mt-3 text-center font-['Shantell_Sans',cursive] text-[14px] md:text-[15px] leading-snug text-black max-w-[190px]"
                 >
                   {f.label}
                 </motion.p>
@@ -196,10 +197,10 @@ export function ProblemSketch({ frames, loop }: { frames: SketchFrame[]; loop?: 
                     ↑ {f.pain}
                   </motion.p>
                 )}
-              </div>
+              </RoughBox>
               {i < frames.length - 1 && (
                 <>
-                  <div className="hidden md:block md:mt-[62px] md:mx-[-8px]">
+                  <div className="hidden md:flex items-center shrink-0 md:mx-[-6px] z-10">
                     <Arrow seed={i * 7 + 3} delay={d + 0.4} />
                   </div>
                   <div className="md:hidden my-1">

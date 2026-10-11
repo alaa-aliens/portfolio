@@ -1,4 +1,4 @@
-import imgHeadCut from "../../assets/head.webp";
+import { HeadBadge } from "../components/play/HeadBadge";
 import { loseLife } from "../components/play/Score";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
@@ -56,7 +56,7 @@ function NotReady({ project }: { project?: Project }) {
         {project
           ? isProfessional
             ? `The ${project.name} case study isn't written up yet. The project is 100% real and I'd love to walk you through it.`
-            : `No seriously, AI did NOT design ${project.name}. I just haven't uploaded the case study yet.`
+            : `No seriously, ${project.name} is real. I just haven't written the case study yet.`
           : "This page doesn't exist. Maybe it's in a folder I forgot to name."}
       </p>
       <div className="flex flex-wrap gap-4 mt-10">
@@ -396,10 +396,10 @@ export function CaseStudyPage() {
               <span aria-hidden className="absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-[#FFE9C7]/90 rotate-[-3deg] border border-black/10 z-10" />
               <div className="relative rounded-[6px] bg-[#fffaf1] border border-black/70 shadow-[4px_4px_0_0_#1d1a17] px-7 md:px-12 py-9 md:py-12 rotate-[0.6deg]">
                 <p className="font-['Shantell_Sans',cursive] text-black text-[19px] md:text-[26px] leading-[1.55]">{cs.closing}</p>
-                <p className="font-display text-[26px] md:text-[32px] text-[#ff614c] mt-6 lowercase">— ala'a</p>
-                <span className="absolute -right-6 -bottom-7 w-[92px] h-[110px] overflow-hidden rotate-[8deg]" aria-hidden>
-                  <img alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" src={imgHeadCut} />
-                </span>
+                <p className="flex items-center gap-3 mt-6">
+                  <HeadBadge size={44} />
+                  <span className="font-display text-[26px] md:text-[32px] text-[#ff614c] lowercase">— ala'a</span>
+                </p>
               </div>
             </div>
           </Reveal>

@@ -96,7 +96,7 @@ const PANELS: Panel[] = [
   { scene: "screens", img: imgNews, year: "2018", text: ["Al Jazeera, then TRT: motion and visuals for news, at news speed.", "Designed things millions saw. Told nobody at dinner, or they'd ask me to fix their Wi-Fi."] },
   { scene: "class", img: imgTeach, year: "2020", text: ["Teaching UX at universities, bootcamps, Zain and 42 Amman.", "Convincing a new generation that Comic Sans is never the answer. Ok, maybe ironically."] },
   { scene: "home", img: imgFamily, year: "2026", text: ["Siba: a study app for Alma and Eleen. They review harder than any client.", "Built an app for my kids. They gave it 3 stars and asked for the iPad back."] },
-  { scene: "doodle", img: imgSite, year: "now", text: ["This website, at 2am, with a robot that draws. Hi.", "This website. 2am. Three coffees. A robot that draws. Hi."] },
+  { scene: "doodle", img: imgSite, year: "now", text: ["This website, at 2am, three coffees in. Hi.", "This website. 2am. Three coffees. The cat gave up. Hi."] },
 ];
 
 function Drawn({ list, delay = 0 }: { list: P[]; delay?: number }) {

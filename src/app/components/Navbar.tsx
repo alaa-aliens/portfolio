@@ -1,6 +1,7 @@
 import imgHeadCut from "../../assets/head.webp";
 import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { ScoreHUD } from "./play/Score";
+import { HeadBadge } from "./play/HeadBadge";
 import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
 import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
@@ -160,7 +161,7 @@ export function Navbar() {
         </div>
 
         {/* Mode toggle */}
-        <div className="relative hidden md:flex items-center rounded-full border border-black/80 bg-[#fdecd0] p-[4px] w-[300px] lg:w-[340px]">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:flex items-center rounded-full border border-black/80 bg-[#fdecd0] p-[4px] w-[300px] lg:w-[340px]">
           <ModeToggle mode={mode} setMode={setMode} id="desktop" />
         </div>
 
@@ -253,12 +254,12 @@ export function Navbar() {
             </div>
             <motion.div
               aria-hidden
-              className="absolute right-[6%] bottom-[12%] w-[120px] md:w-[220px] h-[144px] md:h-[264px] overflow-hidden pointer-events-none"
+              className="absolute right-[6%] bottom-[12%] pointer-events-none"
               initial={{ y: 200, rotate: 20 }}
               animate={{ y: 0, rotate: [-6, 6, -6] }}
               transition={{ y: { delay: 0.3, type: "spring", stiffness: 140, damping: 14 }, rotate: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } }}
             >
-              <img alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" src={imgHeadCut} />
+              <HeadBadge size={160} className="md:!w-[220px] md:!h-[220px] shadow-[4px_4px_0_0_#1d1a17]" />
             </motion.div>
           </motion.div>
         )}

@@ -74,9 +74,13 @@ export function RoughBox({
   }, [size, stroke, strokeWidth, roughness, radius, fill, fillStyle]);
 
   return (
-    <Tag ref={ref} className={`relative ${className}`} {...rest}>
+    <Tag ref={ref} className={`relative ${Tag === "span" ? "inline-block" : ""} ${className}`} {...rest}>
       <svg ref={svgRef} aria-hidden className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" style={{ zIndex: 0 }} />
-      <div className="relative w-full h-full" style={{ zIndex: 1 }}>{children}</div>
+      {Tag === "span" ? (
+        <span className="relative inline-flex items-center justify-center gap-2 w-full h-full" style={{ zIndex: 1 }}>{children}</span>
+      ) : (
+        <div className="relative w-full h-full" style={{ zIndex: 1 }}>{children}</div>
+      )}
     </Tag>
   );
 }

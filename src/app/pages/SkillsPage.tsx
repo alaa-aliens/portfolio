@@ -11,7 +11,7 @@ const TOOLS: { name: string; note: [string, string]; kind: Kind; level: number }
   { name: "Figma", note: ["Every day, since the beta.", "I dream in auto-layout."], kind: "star", level: 5 },
   { name: "Procreate", note: ["Where the doodles happen.", "iPad, Pencil, 2am."], kind: "heart", level: 5 },
   { name: "Illustrator & After Effects", note: ["Vector and motion, from the Al Jazeera days.", "Made news look pretty and move."], kind: "bolt", level: 4 },
-  { name: "Claude Code", note: ["How I now ship working apps without a dev team.", "My dev team. It never sleeps."], kind: "sparkle", level: 4 },
+  { name: "Code", note: ["Enough to ship my own apps, end to end.", "Enough to be dangerous. And to ship."], kind: "sparkle", level: 4 },
   { name: "Rive & Lottie", note: ["Little living things in interfaces.", "Making buttons wiggle, professionally."], kind: "swirl", level: 3 },
   { name: "Arabic typography & RTL", note: ["Mirroring is not localising.", "If your Arabic UI is just flipped, we need to talk."], kind: "crown", level: 5 },
 ];
@@ -25,7 +25,7 @@ const HOW: { t: string; pro: string; fun: string }[] = [
 
 export function SkillsPage() {
   const { isProfessional } = useMode();
-  usePageMeta({ title: "Skills · Ala'a Ali", description: "What Ala'a brings to the table: UX, UI, illustration, motion, workshops, and building with AI." });
+  usePageMeta({ title: "Skills · Ala'a Ali", description: "What Ala'a brings to the table: UX, UI, illustration, motion, workshops, and shipping my own apps." });
 
   return (
     <article className="w-full">

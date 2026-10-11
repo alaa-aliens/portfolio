@@ -59,7 +59,7 @@ export function ComingSoonPopup({ isOpen, onClose }: { isOpen: boolean; onClose:
                 <p className="font-['Work_Sans'] text-black text-[15px] md:text-[24px] lg:text-[28px] leading-[1.4]">
                   {isProfessional
                     ? "You caught me \u2014 this case study isn't ready yet. But the project is 100% real and I'd love to walk you through it."
-                    : "No seriously, AI did NOT design this project, but I still didn't upload the case study for it."}
+                    : "No seriously, this project is real. I just haven't written the case study yet."}
                 </p>
               </div>
 

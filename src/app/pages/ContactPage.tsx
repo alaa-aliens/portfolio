@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { Doodle, Reveal } from "../components/motion/Doodles";
-import { Eyebrow, Prose, Scribble } from "../components/ui/Kit";
+import { Button, Eyebrow, Prose, Scribble } from "../components/ui/Kit";
 import { RoughBox } from "../components/ui/RoughBox";
 import { StickerArt, type Kind } from "../components/play/Stickers";
 import { addScore } from "../components/play/Score";
@@ -84,7 +84,7 @@ export function ContactPage() {
     const body = encodeURIComponent(`${msg.trim()}\n\n— ${name.trim() || "someone from your website"}`);
     window.setTimeout(() => {
       setLanded(true);
-      window.open(`mailto:${EMAIL}?subject=${subject}&body=${body}`, "_blank");
+      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     }, 1400);
   };
 
@@ -179,22 +179,15 @@ export function ContactPage() {
                         className="w-full bg-transparent outline-none border-b border-black/40 focus:border-[#ff614c] font-['Shantell_Sans',cursive] text-[16px] md:text-[18px] text-black placeholder:text-black/30 py-1"
                       />
                     </label>
-                    <motion.button
-                      type="button"
-                      onClick={send}
-                      disabled={!ready}
-                      whileHover={ready ? { rotate: -3, scale: 1.04 } : {}}
-                      whileTap={ready ? { scale: 0.95 } : {}}
-                      className={`inline-flex items-center justify-center gap-2 border border-black rounded-[3px] font-['DM_Serif_Display'] px-6 py-3 text-[16px] md:text-[18px] transition-all ${
-                        ready ? "bg-[#ff614c] text-white shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17]" : "bg-white text-black/35 border-black/30 cursor-not-allowed"
-                      }`}
-                    >
-                      {isProfessional ? "send it" : "yeet it"}
-                      <svg width="26" height="22" viewBox="0 0 26 22" fill="none" aria-hidden>
-                        <path d="M2 11 L23 2 L16 20 L12 13 Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" fill={ready ? "#fffaf1" : "none"} />
-                        <path d="M12 13 L23 2" stroke="currentColor" strokeWidth="1.8" />
-                      </svg>
-                    </motion.button>
+                    <span className={ready ? "" : "opacity-40 pointer-events-none"}>
+                      <Button tone="coral" onClick={send}>
+                        {isProfessional ? "send it" : "yeet it"}
+                        <svg width="26" height="22" viewBox="0 0 26 22" fill="none" aria-hidden>
+                          <path d="M2 11 L23 2 L16 20 L12 13 Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" fill="#fffaf1" />
+                          <path d="M12 13 L23 2" stroke="currentColor" strokeWidth="1.8" />
+                        </svg>
+                      </Button>
+                    </span>
                   </div>
                 </RoughBox>
               </motion.div>

@@ -117,7 +117,7 @@ export interface CaseStudy {
   /** The build journey, stop by stop */
   journey?: { date: string; title: string; body: string; img?: string }[];
   /** Up to three screens fanned out under the hero */
-  showcase?: { src: string; alt: string }[];
+  showcase?: { src: string; alt: string; tab?: string }[];
   /** Desktop products get a browser frame instead of phones */
   device?: "phone" | "desktop";
   /** Fake address shown in the browser frame */
@@ -194,9 +194,10 @@ export const projects: Project[] = [
       url: "carseer.com",
       funTldr: "A VIN is 17 characters. The old site needed about 17 clicks after you typed it. We fixed the clicks.",
       showcase: [
-        { src: csHome, alt: "Carseer home: type a VIN or plate and get the report" },
-        { src: csReport, alt: "The redesigned vehicle history report" },
-        { src: csGarage, alt: "My Garage: the cars you've checked, in one place" },
+        { src: csHome, alt: "Carseer home: type a VIN or plate and get the report", tab: "home" },
+        { src: csReport, alt: "The redesigned vehicle history report", tab: "the report" },
+        { src: csGarage, alt: "My Garage: the cars you've checked, in one place", tab: "my garage" },
+        { src: csPricing, alt: "Packages and pricing", tab: "pricing" },
       ],
       problem: [
         "Carseer sells one thing: the truth about a used car. But the website buried that behind marketing pages, and the report itself read like a database dump, so buyers had to decode it instead of deciding.",
@@ -328,13 +329,13 @@ export const projects: Project[] = [
     category: "own",
     status: "ready",
     proHook: "A study app that turns textbook photos into parent-checked lessons, games and quizzes, in Arabic and English.",
-    funHook: "I got tired of marking quizzes over iMessage, so I built an app. Without knowing how to code.",
+    funHook: "I got tired of marking quizzes over iMessage, so I built an app. For two very demanding clients.",
     brand: "#DDF3E8",
     cover: sibaPoseCheer,
     tags: ["Side project", "AI", "Arabic & English"],
     caseStudy: {
       client: "My own product",
-      role: "Product design + build (with Claude Code)",
+      role: "Product design, character, sound, build",
       year: "2026",
       platform: "Web app you install on phone & iPad · Arabic & English",
       funTldr:
@@ -394,7 +395,7 @@ export const projects: Project[] = [
       problemSketch: {
         frames: [
           { icon: "phone", label: "The kids snap the textbook pages" },
-          { icon: "robot", label: "I ask an AI for a summary and a quiz" },
+          { icon: "doc", label: "I turn the pages into a summary and a quiz" },
           { icon: "chat", label: "I send it over iMessage", pain: "lost in the chat by Monday" },
           { icon: "pen", label: "They answer, I mark every one by hand", pain: "every. single. evening." },
           { icon: "eyes", label: "Nobody else can see how they're doing", pain: "not even their mom" },
@@ -460,9 +461,9 @@ export const projects: Project[] = [
           ],
         },
         {
-          title: "Built by a designer who doesn't code",
-          feeling: "terrified, then unreasonably proud.",
-          body: "I designed every interaction, then built the app by directing Claude Code. Two AI calls, two models: a strong one reads the phone photos, a cheaper one writes the questions. That keeps a 6-page chapter at a few cents.",
+          title: "Designed and built end to end",
+          feeling: "terrified, then unreasonably proud. it works. on their phones. with their names.",
+          body: "Every interaction, the character, the sounds and the app itself. Two models do the reading and the writing: a strong one reads the phone photos, a lighter one drafts the questions. That keeps a 6-page chapter at a few cents, and a parent always has the last word.",
           phones: [{ src: sibaKidPlay, alt: "Siba guiding a lesson", caption: "Siba, the guide" }],
         },
       ],
@@ -470,7 +471,7 @@ export const projects: Project[] = [
         { value: "7", label: "Ways to study one page" },
         { value: "4", label: "Checks before anything reaches her" },
         { value: "2", label: "Languages, RTL + LTR" },
-        { value: "0", label: "Lines of code written by hand" },
+        { value: "2", label: "Very demanding clients" },
       ],
       closing:
         "The rule I kept coming back to: a confident wrong answer is the dangerous kind. So the AI drafts, a parent decides, and the kid just gets to learn.",
@@ -489,7 +490,7 @@ export const projects: Project[] = [
     tags: ["Side project", "Family", "Mobile"],
     caseStudy: {
       client: "My own product (and my own household)",
-      role: "Product design, rules design, Figma design system + build",
+      role: "Product design, rules design, design system, build",
       year: "2026",
       platform: "Mobile app, one side for the kids, one for the parent",
       funTldr: "Two kids, one allowance, and a rule everyone agreed was unfair. So I designed thirty new ones.",
@@ -584,7 +585,7 @@ export const projects: Project[] = [
     name: "TrackTack",
     category: "own",
     status: "soon",
-    proHook: "A spending tracker for my own business, designed and built with AI.",
+    proHook: "A spending tracker for my own business, designed and built by me.",
     funHook: "Finally found out where the money goes. Didn't like the answer.",
   },
 
@@ -615,9 +616,11 @@ export const projects: Project[] = [
       url: "app.trackhawk-gps.com/live",
       funTldr: "The old live tracking was spread over many pages. The new one is one page. That's the case study. The rest is detail.",
       showcase: [
-        { src: thLiveFleet, alt: "Trackhawk live tracking: the whole fleet on one map with a unit list" },
-        { src: thAlerts, alt: "Alerts overview" },
-        { src: thReports, alt: "Reports" },
+        { src: thLiveFleet, alt: "Trackhawk live tracking: the whole fleet on one map with a unit list", tab: "live tracking" },
+        { src: thAlerts, alt: "Alerts overview", tab: "alerts" },
+        { src: thMaintenance, alt: "Maintenance overview", tab: "maintenance" },
+        { src: thReports, alt: "Reports", tab: "reports" },
+        { src: thLiveDark, alt: "Live tracking, dark theme", tab: "night shift" },
       ],
       problem: [
         "Trackhawk tracks fleets: trucks, trailers, generators, anything with a GPS unit on it. The people watching those dots are dispatchers and owners, not engineers, and the product talked to them like engineers.",

@@ -1,3 +1,4 @@
+import { Button } from "./ui/Kit";
 import { play } from "./play/sfx";
 import { addScore } from "./play/Score";
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
@@ -208,17 +209,16 @@ export function HeroSection() {
             </p>
           </div>
 
-          <button
-            onClick={openContact}
+          <span
+            className="pointer-events-auto self-center md:self-start"
             onMouseEnter={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               window.dispatchEvent(new CustomEvent("crowd:attract", { detail: { x: r.left + r.width / 2, y: r.bottom + 10 } }));
             }}
             onMouseLeave={() => window.dispatchEvent(new CustomEvent("crowd:attract", { detail: null }))}
-            className="pointer-events-auto self-center md:self-start inline-flex items-center justify-center gap-2 border border-black rounded-[3px] font-['DM_Serif_Display'] px-6 py-3 text-[16px] md:text-[18px] bg-white text-black shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
           >
-            {isProfessional ? "Get in Touch" : "Say Hi"}
-          </button>
+            <Button tone="coral" size="lg" onClick={openContact}>{isProfessional ? "get in touch" : "say hi"}</Button>
+          </span>
         </motion.div>
       </div>
 

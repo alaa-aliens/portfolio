@@ -37,7 +37,7 @@ const ROAD = {
     { date: "2018", title: "The news years", body: "Al Jazeera, then TRT. Learned to design while everything is breaking." },
     { date: "2021", title: "The lead designer arc", body: "Led a team. Debated border-radius like it was a life decision." },
     { date: "2025", title: "The director era", body: "Fancy title. Still googled flexbox." },
-    { date: "now", title: "Dad apps", body: "Built two apps for my kids without writing code. They still want to use iPad." },
+    { date: "now", title: "Dad apps", body: "Built two apps for my kids. Harshest product reviews of my career." },
   ],
 };
 

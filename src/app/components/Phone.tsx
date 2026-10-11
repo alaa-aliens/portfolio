@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 /** A simple phone frame around a screenshot. */
 export function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
@@ -105,66 +105,94 @@ export function Browser({ src, alt, className = "", url }: { src: string; alt: s
   );
 }
 
-/** One big browser screen with two leaning behind it; slides up as you scroll into it. */
-export function BrowserShowcase({ shots, color, url }: { shots: { src: string; alt: string }[]; color: string; url?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const lift = useTransform(scrollYProgress, [0, 0.5], [60, 0]);
-  const spread = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
-  const xL = useTransform(spread, (s) => `${-10 * s}%`);
-  const xR = useTransform(spread, (s) => `${10 * s}%`);
-  const rL = useTransform(spread, (s) => -3 * s);
-  const rR = useTransform(spread, (s) => 3 * s);
-  const [a, b, c] = shots;
+/** One hand-drawn browser with tabs: click a tab (or wait) and the screen slides in. */
+export function BrowserShowcase({ shots, color, url }: { shots: { src: string; alt: string; tab?: string }[]; color: string; url?: string }) {
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused || shots.length < 2) return;
+    const t = window.setInterval(() => setI((k) => (k + 1) % shots.length), 4200);
+    return () => window.clearInterval(t);
+  }, [paused, shots.length]);
+  const cur = shots[i];
+  const tabName = (s: { alt: string; tab?: string }, k: number) => s.tab ?? s.alt.split(":")[0].replace(/^[^ ]+ /, "").trim() ?? `screen ${k + 1}`;
   return (
     <div
-      ref={ref}
-      className="relative w-full overflow-hidden rounded-[10px] border border-black/10 pt-10 md:pt-16 px-4 md:px-10"
+      className="relative w-full rounded-[10px] pt-8 md:pt-12 px-3 md:px-10 pb-0"
       style={{ background: `radial-gradient(120% 90% at 50% 100%, ${color}40, ${color}12 60%, transparent)` }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
       <div className="relative mx-auto w-full max-w-[980px]">
-        {b && (
-          <motion.div style={{ x: xL, rotate: rL }} className="absolute left-0 bottom-0 w-[70%] origin-bottom-left opacity-90 hidden sm:block">
-            <Browser src={b.src} alt={b.alt} />
-          </motion.div>
-        )}
-        {c && (
-          <motion.div style={{ x: xR, rotate: rR }} className="absolute right-0 bottom-0 w-[70%] origin-bottom-right opacity-90 hidden sm:block">
-            <Browser src={c.src} alt={c.alt} />
-          </motion.div>
-        )}
-        {a && (
-          <motion.div style={{ y: lift }} className="relative z-10 mx-auto w-full sm:w-[84%] -mb-[2px]">
-            <Browser src={a.src} alt={a.alt} url={url} className="rounded-b-none shadow-none" />
-          </motion.div>
-        )}
+        {/* tabs */}
+        <div className="flex items-end gap-1 px-2 overflow-x-auto" role="tablist">
+          {shots.map((s, k) => (
+            <button
+              key={s.src}
+              role="tab"
+              aria-selected={k === i}
+              onClick={() => {
+                setI(k);
+                setPaused(true);
+              }}
+              className={`relative shrink-0 rounded-t-[10px] border border-b-0 border-[#1d1a17] px-3.5 md:px-4 py-1.5 font-['Shantell_Sans',cursive] text-[12.5px] md:text-[14px] transition-colors ${
+                k === i ? "bg-[#fffaf1] text-black -mb-px z-10" : "bg-[#fdecd0]/80 text-black/55 hover:text-black"
+              }`}
+              style={{ rotate: `${(k % 2 ? 0.6 : -0.6)}deg` }}
+            >
+              {tabName(s, k)}
+            </button>
+          ))}
+        </div>
+        <div className="relative rounded-[10px] md:rounded-[14px] rounded-b-none border border-b-0 border-[#1d1a17] bg-[#fffaf1] overflow-hidden">
+          <div className="flex items-center gap-2 px-3 h-8 md:h-9 border-b border-[#1d1a17] bg-[#fdecd0]">
+            <span className="flex gap-1.5" aria-hidden>
+              <i className="block w-2.5 h-2.5 rounded-full border-[1.5px] border-[#1d1a17] bg-[#ff614c]" />
+              <i className="block w-2.5 h-2.5 rounded-full border-[1.5px] border-[#1d1a17] bg-[#FFC53D]" />
+              <i className="block w-2.5 h-2.5 rounded-full border-[1.5px] border-[#1d1a17] bg-[#53B858]" />
+            </span>
+            {url && <span className="ml-2 flex-1 max-w-[340px] rounded-full border border-[#1d1a17]/40 bg-white/70 px-3 py-0.5 font-['Work_Sans'] text-[11px] text-black/55 truncate">{url}</span>}
+          </div>
+          <div className="relative w-full" style={{ aspectRatio: "1200 / 760" }}>
+            <AnimatePresence initial={false}>
+              <motion.img
+                key={cur.src}
+                src={cur.src}
+                alt={cur.alt}
+                className="absolute inset-0 w-full h-full object-cover object-top"
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -40 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-/** Screens under a step: phones stay narrow, desktop shots go wide. Mixed rows are fine. */
+/** Screens under a chapter: phones in a row, desktop shots stacked full-width. */
 export function ScreenRow({ shots }: { shots: { src: string; alt: string; caption?: string; kind?: "phone" | "desktop" }[] }) {
-  if (shots.every((s) => s.kind !== "desktop")) return <PhoneRow shots={shots} />;
+  const phones = shots.filter((s) => s.kind !== "desktop");
+  const desks = shots.filter((s) => s.kind === "desktop");
   return (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 snap-x max-w-[calc(100%+3rem)] md:max-w-full">
-      {shots.map((s, i) => (
+    <div className="flex flex-col gap-8">
+      {desks.map((s, i) => (
         <motion.figure
           key={s.src}
-          initial={{ opacity: 0, y: 30, rotate: i % 2 ? 1 : -1 }}
+          initial={{ opacity: 0, y: 30, rotate: i % 2 ? 0.8 : -0.8 }}
           whileInView={{ opacity: 1, y: 0, rotate: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className={`snap-start shrink-0 flex flex-col gap-3 ${s.kind === "desktop" ? "w-[92%] sm:w-[560px] md:w-[640px]" : "w-[62%] sm:w-[220px] md:w-[230px]"}`}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col gap-3"
         >
-          {s.kind === "desktop" ? <Browser src={s.src} alt={s.alt} /> : <Phone src={s.src} alt={s.alt} />}
-          {s.caption && (
-            <figcaption className="font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] text-black/60 text-center rotate-[-1deg]">
-              {s.caption}
-            </figcaption>
-          )}
+          <Browser src={s.src} alt={s.alt} />
+          {s.caption && <figcaption className="font-['Shantell_Sans',cursive] text-[13px] md:text-[14px] text-black/60 text-center rotate-[-1deg]">{s.caption}</figcaption>}
         </motion.figure>
       ))}
+      {phones.length > 0 && <PhoneRow shots={phones} />}
     </div>
   );
 }

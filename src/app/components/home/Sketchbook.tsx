@@ -15,7 +15,7 @@ import { useMode } from "../ModeContext";
 import { DoodleTitle } from "../play/DoodleTitle";
 import { StickerArt, type Kind } from "../play/Stickers";
 import { Thing } from "../play/DeskThings";
-import { Scribble } from "../ui/Kit";
+import { Button, Scribble } from "../ui/Kit";
 import { addScore } from "../play/Score";
 
 type Item =
@@ -107,19 +107,20 @@ export function Sketchbook() {
           <DoodleTitle text={isProfessional ? "the {pencil} sketchbook" : "my {pencil} mess"} className="text-[44px] md:text-[72px]" />
           <Scribble className="mt-1">{isProfessional ? "drag things around. nothing breaks." : "drag it. shuffle it. make it worse."}</Scribble>
         </div>
-        <button
-          onClick={() => {
-            setSeed((s) => s + 1);
-            play("scribble", 0.5);
-            setStory((k) => (k + 1) % STORIES.length);
-            setTop(null);
-            setOrder(STORIES[(story + 1) % STORIES.length].items.map((_, i) => i));
-            addScore(2, "shuffled the sketchbook", "sketch:shuffle");
-          }}
-          className="self-start md:self-auto md:mb-4 inline-flex items-center justify-center gap-2 border border-black rounded-[3px] bg-white px-6 py-3 font-['DM_Serif_Display'] text-[16px] md:text-[18px] shadow-[4px_4px_0_0_#1d1a17] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#1d1a17] transition-all"
-        >
-          <StickerArt kind="swirl" size={18} /> {isProfessional ? "another story" : "shuffle"}
-        </button>
+        <div className="self-start md:self-auto md:mb-4">
+          <Button
+            onClick={() => {
+              setSeed((s) => s + 1);
+              play("scribble", 0.5);
+              setStory((k) => (k + 1) % STORIES.length);
+              setTop(null);
+              setOrder(STORIES[(story + 1) % STORIES.length].items.map((_, i) => i));
+              addScore(2, "shuffled the sketchbook", "sketch:shuffle");
+            }}
+          >
+            <StickerArt kind="swirl" size={20} /> {isProfessional ? "another story" : "shuffle"}
+          </Button>
+        </div>
       </div>
 
       <div
