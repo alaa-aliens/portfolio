@@ -47,7 +47,7 @@ function startLoop() {
   requestAnimationFrame(tick);
 }
 
-function Eye({ delay }: { delay: number }) {
+export function Eye({ delay }: { delay: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const reduce = useReducedMotion();
   useEffect(() => {

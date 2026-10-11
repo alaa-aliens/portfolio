@@ -22,6 +22,9 @@ import { WorkPage } from "./pages/WorkPage";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { usePageMeta } from "./usePageMeta";
+import { Stickers } from "./components/play/Stickers";
+import { TourGuide } from "./components/play/TourGuide";
+import { SkillsTable } from "./components/play/SkillsTable";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -45,6 +48,7 @@ function HomePage() {
       <StatsSection />
       <AboutSection />
       <WhatIDoSection />
+      <SkillsTable />
       <ProjectsSection />
       <WorkExperienceSection />
     </main>
@@ -57,8 +61,10 @@ function AppContent() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[#fdecd0] flex flex-col">
+    <div className="relative min-h-screen bg-[#fdecd0] flex flex-col">
       <ScrollProgress />
+      {!isArabic && <Stickers />}
+      {!isArabic && <TourGuide />}
       <Navbar />
       <ScrollManager />
       {isArabic ? (
