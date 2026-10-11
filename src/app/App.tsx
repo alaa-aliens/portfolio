@@ -13,7 +13,10 @@ import { WorkExperienceSection } from "./components/WorkExperienceSection";
 import { FooterSection } from "./components/FooterSection";
 import { ArabicPlaceholderPage } from "./components/ArabicPlaceholderPage";
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { BrowserRouter, HashRouter, Route, Routes, useLocation } from "react-router";
+
+// The single-file preview build uses #/ URLs because it has no server to route paths.
+const Router = import.meta.env.MODE === "preview" ? HashRouter : BrowserRouter;
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { WorkPage } from "./pages/WorkPage";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
@@ -91,7 +94,7 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <MotionConfig reducedMotion="user">
         <ModeProvider>
           <ContactFormProvider>
@@ -99,6 +102,6 @@ export default function App() {
           </ContactFormProvider>
         </ModeProvider>
       </MotionConfig>
-    </BrowserRouter>
+    </Router>
   );
 }
