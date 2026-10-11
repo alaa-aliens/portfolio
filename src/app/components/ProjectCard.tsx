@@ -24,6 +24,8 @@ export function ProjectCard({
   const hook = isProfessional ? project.proHook : project.funHook ?? project.proHook;
 
   const open = () => (ready ? navigate(`/work/${project.slug}`) : onSoon());
+  // Pinned-sketchbook look on the Work page: each card gets its own slight tilt + a strip of tape.
+  const tilt = showCategory ? (((index * 37) % 7) - 3) * 0.45 : 0;
 
   return (
     <motion.button
@@ -34,15 +36,31 @@ export function ProjectCard({
       viewport={{ once: true, margin: "-40px" }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4, rotate: index % 2 ? 0.6 : -0.6 }}
+      style={{ rotate: tilt }}
+      whileHover={{ y: -6, rotate: 0, scale: 1.02 }}
       onClick={open}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
       aria-label={`${project.name}${ready ? " — read case study" : " — case study coming soon"}`}
-      className="group text-left flex flex-col gap-4 p-6 md:p-8 cursor-pointer hover:bg-[#F5E1C0] focus-visible:bg-[#F5E1C0] rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-black"
+      className={`group relative text-left flex flex-col gap-4 p-6 md:p-8 cursor-pointer rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-black ${
+        showCategory
+          ? "bg-[#fff8ec] border border-black/10 shadow-[0_1px_0_rgba(0,0,0,0.04),0_10px_24px_-14px_rgba(80,50,20,0.35)] hover:shadow-[0_18px_36px_-16px_rgba(80,50,20,0.45)]"
+          : "hover:bg-[#F5E1C0] focus-visible:bg-[#F5E1C0]"
+      }`}
     >
+      {showCategory && (
+        <span
+          aria-hidden
+          className="absolute -top-3 left-1/2 w-20 h-6 -translate-x-1/2 opacity-80"
+          style={{
+            rotate: `${-tilt * 2 - 3}deg`,
+            background: `repeating-linear-gradient(45deg, ${cat.color}55 0 6px, ${cat.color}33 6px 12px)`,
+            clipPath: "polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%)",
+          }}
+        />
+      )}
       <div className="flex justify-start">{renderFolder(project, hovered)}</div>
 
       <div className="flex flex-col gap-2 w-full">

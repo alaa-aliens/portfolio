@@ -1,6 +1,8 @@
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
 import { motion } from "motion/react";
+import { EyeHeadline } from "./hero/EyeHeadline";
+import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import squigglySvg from "../../imports/svg-zqq9sgn0jp";
 
 function SquigglyDivider({ color = "#ff614c" }: { color?: string }) {
@@ -48,7 +50,34 @@ export function FooterSection() {
   const { openContact } = useContactForm();
 
   return (
-    <footer id="contact" className="w-full bg-black text-white relative overflow-hidden">
+    <>
+    {/* Ala'a peeking over the footer edge */}
+    <div className="relative h-0 w-full max-w-[1200px] mx-auto" aria-hidden>
+      <motion.div
+        className="absolute bottom-0 left-6 md:left-16 w-[96px] md:w-[130px] h-[115px] md:h-[156px] z-0"
+        initial={{ y: "85%" }}
+        whileInView={{ y: "22%" }}
+        viewport={{ once: false, margin: "0px 0px -40px 0px" }}
+        transition={{ type: "spring", stiffness: 140, damping: 14 }}
+      >
+        <motion.div
+          className="absolute inset-0 overflow-hidden"
+          animate={{ rotate: [-4, 4, -4] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+        </motion.div>
+        <motion.span
+          initial={{ opacity: 0, scale: 0.4 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 14 }}
+          className="absolute -top-2 left-[85%] whitespace-nowrap origin-bottom-left bg-white border-2 border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
+        >
+          {isProfessional ? "psst… hiring?" : "don't scroll away 🥺"}
+        </motion.span>
+      </motion.div>
+    </div>
+    <footer id="contact" className="w-full bg-black text-white relative z-10 overflow-hidden">
       {/* Subtle doodle dots in background */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`,
@@ -87,13 +116,16 @@ export function FooterSection() {
       >
         {/* Main CTA — centered */}
         <div className="flex flex-col items-center text-center gap-6 md:gap-8">
-          <h3 className="font-['Playfair_Display'] font-bold text-[40px] md:text-[72px] leading-[1.05]">
-            {isProfessional ? "Let's Work Together" : "Still Here? Let's Talk."}
-          </h3>
+          <EyeHeadline
+            as="h3"
+            key={mode}
+            text={isProfessional ? "got a project? let's talk." : "still here? good. let's talk."}
+            className="font-display text-white text-[44px] md:text-[96px] leading-[0.95] lowercase [text-wrap:balance] max-w-[1000px]"
+          />
 
           <p className="font-['Work_Sans'] font-light text-[15px] md:text-[18px] leading-[1.7] text-white/70 max-w-[500px]">
             {isProfessional
-              ? "Have a project in mind? I'd love to hear about it. Let's make something great."
+              ? "Apps, dashboards, workshops, or a second opinion on your UX. I'd love to hear about it."
               : "Whether it's a project, a workshop, or just a good design argument — I'm in. Bring snacks."}
           </p>
 
@@ -208,5 +240,6 @@ export function FooterSection() {
         </div>
       </motion.div>
     </footer>
+    </>
   );
 }

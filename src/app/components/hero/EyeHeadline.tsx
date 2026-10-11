@@ -75,11 +75,12 @@ function Eye({ delay }: { delay: number }) {
   );
 }
 
-export function EyeHeadline({ text, className = "" }: { text: string; className?: string }) {
+export function EyeHeadline({ text, className = "", as = "h1" }: { text: string; className?: string; as?: "h1" | "h2" | "h3" }) {
+  const H = as;
   const words = text.split(" ");
   let i = 0;
   return (
-    <h1 aria-label={text} className={className}>
+    <H aria-label={text} className={className}>
       {words.map((word, wi) => (
         <span key={`${text}-${wi}`} aria-hidden className="inline-block whitespace-nowrap mr-[0.22em]">
           {word.split("").map((ch, ci) => {
@@ -99,6 +100,6 @@ export function EyeHeadline({ text, className = "" }: { text: string; className?
           })}
         </span>
       ))}
-    </h1>
+    </H>
   );
 }
