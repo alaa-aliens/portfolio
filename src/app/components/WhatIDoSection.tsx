@@ -6,6 +6,7 @@ import { useMode } from "./ModeContext";
 import { motion } from "motion/react";
 import { PenWipe } from "./motion/Doodles";
 import { DoodleTitle } from "./play/DoodleTitle";
+import { FlipCards } from "./story/FlipCards";
 
 export interface ServiceCard {
   title: string;
@@ -178,7 +179,6 @@ export const funCards: ServiceCard[] = [
 
 export function WhatIDoSection() {
   const { isProfessional, mode } = useMode();
-  const cards = isProfessional ? professionalCards : funCards;
 
   return (
     <section id="services" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-12">
@@ -188,37 +188,9 @@ export function WhatIDoSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <DoodleTitle text={isProfessional ? "what i {hand} do" : "what i {hand} actually do"} className="text-[44px] md:text-[72px] mb-10" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {cards.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex flex-row sm:flex-col items-start gap-4 sm:gap-[17px]"
-            >
-              <PenWipe delay={0.15 + i * 0.12} duration={1} className="w-[100px] sm:w-[75%] shrink-0">
-                <motion.div
-                  className="overflow-clip"
-                  whileHover={{ rotate: [0, -3, 3, -2, 0], scale: 1.04 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <card.imageRenderer />
-                </motion.div>
-              </PenWipe>
-              <div className="flex flex-col gap-[9px] min-w-0">
-                <h3 className="font-['IBM_Plex_Serif'] font-semibold text-black group-hover:text-[#ff614c] transition-colors text-[16px] md:text-[24px] leading-[1.3] md:leading-[32px]">
-                  {card.title}
-                </h3>
-                <p className="font-['Work_Sans'] font-light text-black text-[13px] md:text-[16px] leading-[1.5] md:leading-[24px]">
-                  {card.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <DoodleTitle text={isProfessional ? "what i {sparkle} do" : "what i {sparkle} actually do"} className="text-[44px] md:text-[72px] mb-2" />
+        <p className="font-['Shantell_Sans',cursive] text-[14px] text-black/55 rotate-[-1deg] mb-8">{isProfessional ? "what clients ask for, and what I actually do. flip them." : "front: what you ask for. back: what you get. flip them."}</p>
+        <FlipCards />
       </motion.div>
     </section>
   );

@@ -1,8 +1,8 @@
+import imgBody from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
 import { useMode } from "./ModeContext";
 import { useContactForm } from "./ContactFormContext";
 import { motion } from "motion/react";
 import { EyeHeadline } from "./hero/EyeHeadline";
-import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import squigglySvg from "../../imports/svg-zqq9sgn0jp";
 
 function SquigglyDivider({ color = "#ff614c" }: { color?: string }) {
@@ -54,9 +54,9 @@ export function FooterSection() {
     {/* Ala'a peeking over the footer edge */}
     <div className="relative h-0 w-full max-w-[1200px] mx-auto" aria-hidden>
       <motion.div
-        className="absolute bottom-0 left-6 md:left-16 w-[96px] md:w-[130px] h-[115px] md:h-[156px] z-0"
-        initial={{ y: "85%" }}
-        whileInView={{ y: "22%" }}
+        className="absolute bottom-0 left-6 md:left-16 w-[150px] md:w-[210px] h-[200px] md:h-[280px] z-0"
+        initial={{ y: "90%" }}
+        whileInView={{ y: "45%" }}
         viewport={{ once: false, margin: "0px 0px -40px 0px" }}
         transition={{ type: "spring", stiffness: 140, damping: 14 }}
       >
@@ -65,13 +65,13 @@ export function FooterSection() {
           animate={{ rotate: [-4, 4, -4] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img alt="" src={imgHead} className="absolute h-[121%] left-[-27%] top-[-7%] w-[142%] max-w-none" />
+          <img alt="" src={imgBody} className="absolute w-full h-auto max-w-none left-0 top-0" />
         </motion.div>
         <motion.span
           initial={{ opacity: 0, scale: 0.4 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 14 }}
-          className="absolute -top-2 left-[85%] whitespace-nowrap origin-bottom-left bg-white border border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
+          className="absolute top-[4%] left-[70%] whitespace-nowrap origin-bottom-left bg-white border border-black rounded-[16px] px-3 py-1 font-['DM_Serif_Display'] text-[14px] md:text-[17px] text-black shadow-[3px_3px_0_0_black] rotate-[-4deg]"
         >
           {isProfessional ? "psst… hiring?" : "don't scroll away 🥺"}
         </motion.span>
@@ -94,8 +94,8 @@ export function FooterSection() {
           {[0, 1].map((k) => (
             <div key={k} className="flex gap-10">
               {(isProfessional
-                ? ["UX/UI Design", "Design Systems", "UX Audits", "Workshops", "Illustration", "Dashboards", "Arabic & RTL"]
-                : ["Pixels", "Doodles", "Hot takes", "Coffee", "Border-radius debates", "More coffee", "Arabic & RTL"]
+                ? ["UX/UI Design", "Design Systems", "UX Audits", "Workshops", "Illustration", "Dashboards", "Motion"]
+                : ["Pixels", "Doodles", "Hot takes", "Coffee", "Border-radius debates", "More coffee", "Doodles again"]
               ).map((w, i) => (
                 <span key={i} className="flex items-center gap-10">
                   <span className={i % 2 ? "text-white/25" : "text-white"}>{w}</span>

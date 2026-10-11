@@ -75,6 +75,10 @@ import csGarageMobile from "../../assets/work/carseer/garage-mobile.webp";
 import csGetReportMobile from "../../assets/work/carseer/get-report-mobile.webp";
 import csMenuMobile from "../../assets/work/carseer/menu-mobile.webp";
 import csPricing from "../../assets/work/carseer/packages-pricing-desktop.webp";
+// Covers (hand-drawn)
+import coverTrackhawk from "../../assets/covers/trackhawk.webp";
+import coverCarseer from "../../assets/covers/carseer.webp";
+import coverSibaList from "../../assets/covers/siba-list.webp";
 
 export type CategoryKey = "gov" | "saas" | "fintech" | "edtech" | "games" | "media" | "own";
 
@@ -148,6 +152,8 @@ export interface Project {
   mark?: React.ReactNode;
   /** Brand colour behind the mark. Defaults to the category colour. */
   brand?: string;
+  /** Hand-drawn cover illustration (preferred over screens on cards). */
+  cover?: string;
   /** Short tags shown as chips on the card. */
   tags?: string[];
   caseStudy?: CaseStudy;
@@ -177,6 +183,7 @@ export const projects: Project[] = [
     funHook: "Made car history reports actually readable. Turns out \"ACCIDENT: YES\" in 9pt is not UX.",
     brand: "#FFE1C7",
     mark: <CarseerMark className="w-[34%] h-auto" />,
+    cover: coverCarseer,
     tags: ["Website", "Report design", "Desktop + mobile"],
     caseStudy: {
       client: "Carseer",
@@ -323,6 +330,7 @@ export const projects: Project[] = [
     proHook: "A study app that turns textbook photos into parent-checked lessons, games and quizzes, in Arabic and English.",
     funHook: "I got tired of marking quizzes over iMessage, so I built an app. Without knowing how to code.",
     brand: "#DDF3E8",
+    cover: sibaPoseCheer,
     tags: ["Side project", "AI", "Arabic & English"],
     caseStudy: {
       client: "My own product",
@@ -477,6 +485,7 @@ export const projects: Project[] = [
     proHook: "A daily learning list for my daughters, tied to their allowance, with points instead of checkmarks and a parent who approves every proof.",
     funHook: "Replaced \"did you practise piano?\" \"yes\" \"prove it\" with an app. The app also says prove it, but nicely.",
     brand: "#CFEFD9",
+    cover: coverSibaList,
     tags: ["Side project", "Family", "Mobile"],
     caseStudy: {
       client: "My own product (and my own household)",
@@ -595,6 +604,7 @@ export const projects: Project[] = [
     proHook: "Fleet & asset tracking, redesigned for people who aren't tech people.",
     funHook: "Made tracking 100 trucks feel calmer than tracking one pizza.",
     brand: "#012030",
+    cover: coverTrackhawk,
     tags: ["Web app", "Dashboard", "Live map"],
     caseStudy: {
       client: "Trackhawk GPS",

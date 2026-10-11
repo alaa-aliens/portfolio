@@ -75,6 +75,16 @@ export function useGame() {
 export function ScoreTracker() {
   const { pathname } = useLocation();
   useEffect(() => {
+    try {
+      if (localStorage.getItem("alaa-game-hello")) return;
+      localStorage.setItem("alaa-game-hello", "1");
+    } catch {
+      /* ignore */
+    }
+    const t = setTimeout(() => toast({ text: "3 lives. explore to earn points. tap ❤ to see how", delta: 0, kind: "point" }), 2500);
+    return () => clearTimeout(t);
+  }, []);
+  useEffect(() => {
     const t = setTimeout(() => {
       if (pathname.startsWith("/work/")) addScore(10, "case study read", `cs:${pathname}`);
       else if (pathname === "/contact") addScore(5, "found the contact page", "page:/contact");
@@ -94,9 +104,83 @@ function Heart({ on }: { on: boolean }) {
 }
 
 /** Lives + score in the navbar, with a little toast when something happens. */
-export function ScoreHUD({ compact = false }: { compact?: boolean }) {
-  const { points, lives } = useGame();
+const RULES = {
+  earn: [
+    { k: "page:", pts: 5, pro: "open a page you haven't seen", fun: "wander into a new page" },
+    { k: "cs:", pts: 10, pro: "read a case study", fun: "actually read a case study" },
+    { k: "ask:first", pts: 5, pro: "ask me something (bottom right)", fun: "talk to the floating head" },
+    { k: "sketch:shuffle", pts: 2, pro: "shuffle the sketchbook", fun: "make a mess of the sketchbook" },
+    { k: "poke", pts: 1, pro: "poke me on the home page (repeatable)", fun: "poke me. again. (repeatable)" },
+    { k: "contact:open", pts: 25, pro: "open the contact form", fun: "open the contact form (bonus)" },
+    { k: "contact:copy", pts: 50, pro: "copy my email", fun: "copy my email (bigger bonus)" },
+    { k: "contact:sent", pts: 100, pro: "actually write to me", fun: "actually write to me (jackpot)" },
+  ],
+  lose: [
+    { pro: "click a project whose case study isn't written yet", fun: "click a project I haven't written up yet" },
+    { pro: "land on a page that doesn't exist", fun: "find a 404" },
+  ],
+};
+
+function Rules({ onClose, done }: { onClose: () => void; done: string[] }) {
   const { isProfessional } = useMode();
+  const got = (k: string) => (k === "poke" ? false : done.some((d) => d.startsWith(k)));
+  return (
+    <motion.div
+      role="dialog"
+      aria-label="How the points work"
+      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 380, damping: 26 }}
+      className="absolute top-full right-0 mt-3 w-[min(92vw,360px)] rounded-[16px] border border-black bg-[#fffaf1] shadow-[4px_4px_0_0_#1d1a17] p-5 text-left z-[90] cursor-auto"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <p className="font-display text-[26px] leading-none text-[#ff614c] lowercase">{isProfessional ? "how this works" : "yes, it's a game"}</p>
+        <button onClick={onClose} aria-label="Close" className="w-7 h-7 rounded-full border border-black text-[13px] leading-none hover:rotate-90 transition-transform">✕</button>
+      </div>
+      <p className="font-['Shantell_Sans',cursive] text-[13px] text-black/60 mt-1">
+        {isProfessional ? "You start with 3 lives. Explore to earn points. Ticks are things you've already done." : "3 lives. points for snooping around. ticks = already done, show-off."}
+      </p>
+      <p className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[10px] text-black/45 mt-4 mb-1.5">{isProfessional ? "Earn" : "Get points"}</p>
+      <ul className="flex flex-col gap-1">
+        {RULES.earn.map((r) => (
+          <li key={r.k} className={`flex items-center gap-2 font-['Work_Sans'] text-[13px] ${got(r.k) ? "text-black/45 line-through decoration-[#ff614c]" : "text-black"}`}>
+            <span className={`w-9 shrink-0 font-display text-[16px] ${r.pts >= 25 ? "text-[#E9A21B]" : "text-[#ff614c]"}`}>+{r.pts}</span>
+            <span className="flex-1">{isProfessional ? r.pro : r.fun}</span>
+            {got(r.k) && <span className="text-[#53B858]">✓</span>}
+          </li>
+        ))}
+      </ul>
+      <p className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[10px] text-black/45 mt-4 mb-1.5">{isProfessional ? "Lose a life" : "Lose a heart"}</p>
+      <ul className="flex flex-col gap-1">
+        {RULES.lose.map((r, i) => (
+          <li key={i} className="flex items-center gap-2 font-['Work_Sans'] text-[13px] text-black">
+            <span className="w-9 shrink-0"><Heart on /></span>
+            <span>{isProfessional ? r.pro : r.fun}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="font-['Shantell_Sans',cursive] text-[12px] text-black/50 mt-3">{isProfessional ? "Lose all three and you respawn, minus 20 points. No real consequences. It's a portfolio." : "lose all three → respawn, −20 pts. it's a portfolio, not dark souls."}</p>
+    </motion.div>
+  );
+}
+
+export function ScoreHUD({ compact = false }: { compact?: boolean }) {
+  const { points, lives, done } = useGame();
+  const { isProfessional } = useMode();
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onClick = () => setOpen(false);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("click", onClick);
+    };
+  }, [open]);
   const [msg, setMsg] = useState<typeof last>(null);
   const [bump, setBump] = useState(0);
   const timer = useRef<number | undefined>(undefined);
@@ -131,7 +215,17 @@ export function ScoreHUD({ compact = false }: { compact?: boolean }) {
   }, [points]);
 
   return (
-    <div className="relative flex items-center gap-2.5" title={isProfessional ? "Points for exploring. Lives for clicking things that aren't there yet." : "it's a game now. deal with it."}>
+    <div className="relative">
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        setOpen((o) => !o);
+      }}
+      aria-expanded={open}
+      className="relative flex items-center gap-2.5 rounded-full px-2 py-1 -mx-2 hover:bg-[#fffaf1]/70 transition-colors"
+      title={isProfessional ? "How the points work" : "what is this?"}
+    >
       <span className="flex items-center gap-0.5" aria-label={`${lives} lives`}>
         {[0, 1, 2].map((i) => (
           <Heart key={i} on={i < lives} />
@@ -148,6 +242,8 @@ export function ScoreHUD({ compact = false }: { compact?: boolean }) {
         {display}
         <span className="font-['Work_Sans'] text-[10px] uppercase tracking-[0.15em] text-black/50 ml-1">pts</span>
       </motion.span>
+      <span className="hidden md:inline-flex w-4 h-4 rounded-full border border-black/60 text-[10px] items-center justify-center font-['Work_Sans'] text-black/60" aria-hidden>?</span>
+    </button>
 
       <AnimatePresence>
         {msg && (
@@ -166,6 +262,7 @@ export function ScoreHUD({ compact = false }: { compact?: boolean }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <AnimatePresence>{open && <Rules onClose={() => setOpen(false)} done={done} />}</AnimatePresence>
     </div>
   );
 }

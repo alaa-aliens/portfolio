@@ -15,6 +15,7 @@ import { ComicStrip } from "../components/story/ComicStrip";
 import { Journey } from "../components/story/Journey";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { Reveal } from "../components/motion/Doodles";
+import { ToBeContinued } from "../components/play/ToBeContinued";
 import { Button, Prose, Scribble } from "../components/ui/Kit";
 import { usePageMeta } from "../usePageMeta";
 import imgImage14 from "figma:asset/48b24d576823e0c5848a509aca20ff871581ad60.png";
@@ -100,9 +101,7 @@ export function HomePage() {
           <Scribble className="mt-1">{isProfessional ? "scroll and it draws itself" : "it's a road. it draws. you scroll."}</Scribble>
         </div>
         <Journey stops={isProfessional ? ROAD.pro : ROAD.fun} color="#ff614c" />
-        <div className="mt-10">
-          <Button to="/experience">{isProfessional ? "full experience, four timelines" : "all four timelines"} →</Button>
-        </div>
+        <ToBeContinued to="/experience" label={isProfessional ? "the road continues" : "next episode"} note={isProfessional ? "four timelines, all the detours" : "four timelines. the PlayStation years count."} />
       </section>
 
       <div className="h-16 md:h-24" />

@@ -8,6 +8,12 @@ import { motion, useMotionValue, useDragControls } from "motion/react";
 import rough from "roughjs";
 import { useMode } from "../ModeContext";
 import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
+import imgCouch from "../../../assets/comic/couch1.webp";
+import imgBooks from "../../../assets/comic/books.webp";
+import imgNews from "../../../assets/comic/news.webp";
+import imgTeach from "../../../assets/comic/teach.webp";
+import imgFamily from "../../../assets/comic/family.webp";
+import imgSite from "../../../assets/comic/site.webp";
 
 const gen = rough.generator();
 const INK = "#1d1a17";
@@ -84,12 +90,12 @@ function scene(kind: Scene, s: number): P[] {
 
 interface Panel { scene: Scene; year: string; text: [pro: string, fun: string]; caption?: string }
 const PANELS: Panel[] = [
-  { scene: "couch", year: "2007", text: ["I started out stitching couches. Really.", "Started stitching couches. Both jobs are about making things people sit with comfortably."] },
-  { scene: "pencil", year: "2012", text: ["300+ illustrated stories for children's books. My hand still remembers.", "Drew 300+ kids' book illustrations. My hand still hurts."] },
-  { scene: "screens", year: "2018", text: ["Al Jazeera, TRT, then apps, dashboards and platforms across MENA.", "Designed things millions saw. Told nobody at dinner, or they'd ask me to fix their Wi-Fi."] },
-  { scene: "class", year: "2020", text: ["Teaching UX at universities, bootcamps, Zain and 42 Amman.", "Convincing a new generation that Comic Sans is never the answer. Ok, maybe ironically."] },
-  { scene: "doodle", year: "2022", text: ["@alaa_aliens: hand-drawn doodles that explain UX.", "Doodles that explain UX. Design education meets sleep-deprived cartoons. It's therapy, for me."] },
-  { scene: "home", year: "now", text: ["Building my own products, starting with one for my daughters.", "Now I build apps for my kids and they review them harder than any client."] },
+  { scene: "couch", img: imgCouch, year: "2007", text: ["I started out stitching couches. Really. PlayStation after work.", "Stitched couches by day, PlayStation by night. Peak multitasking."] },
+  { scene: "pencil", img: imgBooks, year: "2012", text: ["300+ illustrated stories for children's books. My hand still remembers.", "Drew 300+ kids' book illustrations. My hand still hurts."] },
+  { scene: "screens", img: imgNews, year: "2018", text: ["Al Jazeera, then TRT: motion and visuals for news, at news speed.", "Designed things millions saw. Told nobody at dinner, or they'd ask me to fix their Wi-Fi."] },
+  { scene: "class", img: imgTeach, year: "2020", text: ["Teaching UX at universities, bootcamps, Zain and 42 Amman.", "Convincing a new generation that Comic Sans is never the answer. Ok, maybe ironically."] },
+  { scene: "home", img: imgFamily, year: "2026", text: ["Siba: a study app for Alma and Eleen. They review harder than any client.", "Built an app for my kids. They gave it 3 stars and asked for the iPad back."] },
+  { scene: "doodle", img: imgSite, year: "now", text: ["This website, at 2am, with a robot that draws. Hi.", "This website. 2am. Three coffees. A robot that draws. Hi."] },
 ];
 
 function Drawn({ list, delay = 0 }: { list: P[]; delay?: number }) {
@@ -169,9 +175,15 @@ export function ComicStrip() {
                   ))}
                 </svg>
                 <span className="absolute top-3 left-3 font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.14em] bg-black text-white px-2 py-0.5">{p.year}</span>
-                <div className="absolute left-[14%] right-[14%] top-[13%] h-[46%]">
-                  <Drawn list={art[i]} delay={0.25} />
-                </div>
+                <motion.div
+                  className="absolute left-[6%] right-[6%] top-[11%] h-[52%] flex items-center justify-center"
+                  initial={{ clipPath: "inset(0 100% 0 0)" }}
+                  whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+                  viewport={{ once: true, margin: "0px -10% 0px -10%" }}
+                  transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <img src={p.img} alt="" draggable={false} className="max-w-full max-h-full w-auto h-auto" />
+                </motion.div>
                 <p className="absolute left-5 right-5 bottom-5 font-['Shantell_Sans',cursive] text-[14px] md:text-[15px] leading-snug text-black">
                   {p.text[isProfessional ? 0 : 1]}
                 </p>

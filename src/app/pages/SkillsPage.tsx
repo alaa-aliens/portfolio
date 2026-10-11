@@ -25,7 +25,7 @@ const HOW: { t: string; pro: string; fun: string }[] = [
 
 export function SkillsPage() {
   const { isProfessional } = useMode();
-  usePageMeta({ title: "Skills · Ala'a Ali", description: "What Ala'a brings to the table: UX, UI, illustration, Arabic & RTL, workshops, and building with AI." });
+  usePageMeta({ title: "Skills · Ala'a Ali", description: "What Ala'a brings to the table: UX, UI, illustration, motion, workshops, and building with AI." });
 
   return (
     <article className="w-full">

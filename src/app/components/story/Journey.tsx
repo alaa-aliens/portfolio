@@ -21,8 +21,8 @@ export function Journey({ stops, color }: { stops: Stop[]; color: string }) {
     <div ref={ref} className="relative">
       {/* the road */}
       <svg aria-hidden className="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 top-0 h-full w-[40px] overflow-visible" viewBox="0 0 40 1000" preserveAspectRatio="none" fill="none">
-        <path d="M20 0 C 34 80, 6 160, 20 250 S 36 420, 20 500 S 4 680, 20 760 S 34 920, 20 1000" stroke="#1d1a17" strokeOpacity="0.12" strokeWidth="3" strokeDasharray="2 10" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        <motion.path d="M20 0 C 34 80, 6 160, 20 250 S 36 420, 20 500 S 4 680, 20 760 S 34 920, 20 1000" stroke={color} strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: draw }} />
+        <path d="M20 0 C 25 80, 15 160, 20 250 S 25 420, 20 500 S 15 680, 20 760 S 25 920, 20 1000" stroke="#1d1a17" strokeOpacity="0.12" strokeWidth="3" strokeDasharray="2 10" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        <motion.path d="M20 0 C 25 80, 15 160, 20 250 S 25 420, 20 500 S 15 680, 20 760 S 25 920, 20 1000" stroke={color} strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: draw }} />
       </svg>
 
       <ol className="relative flex flex-col gap-10 md:gap-4">

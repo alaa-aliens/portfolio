@@ -11,7 +11,7 @@ import { SectionTitle } from "../motion/Doodles";
 import { DeskThings } from "./DeskThings";
 
 const PRO = [
-  "UX Research", "UI Design", "Design Systems", "Arabic & RTL", "Prototyping", "UX Audits",
+  "UX Research", "UI Design", "Design Systems", "Motion", "Prototyping", "UX Audits",
   "Workshops", "Illustration", "Motion", "Figma", "Product Strategy", "Building with AI",
 ];
 const FUN_EXTRA = ["Strong opinions", "Coffee", "2am energy", "Border-radius debates"];

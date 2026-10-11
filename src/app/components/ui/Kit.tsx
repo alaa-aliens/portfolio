@@ -4,12 +4,14 @@
  *  Paper      #fdecd0 page · #fffaf1 card · ink #1d1a17 · coral #ff614c
  *  Type       display: Gochi Hand (big moments, lowercase, coral or ink) · headings: Playfair Display
  *             body: IBM Plex Serif · UI: Work Sans · handwriting: Shantell Sans
- *  Edges      1px ink line · radius 18–20 (cards) / full (pills) · small hard offset shadow (3,3) in ink
+ *  Edges      hand-drawn roughjs frames for cards (RoughBox); buttons keep his original 1px line + hard shadow; tags are his coral labels
  *  Motion     springs (stiffness 200–400, damping 14–24), things tilt ±2° at rest and straighten on hover
  */
 import React from "react";
 import { motion, type HTMLMotionProps } from "motion/react";
 import { Link } from "react-router";
+import { RoughBox } from "./RoughBox";
+export { RoughBox };
 
 export const ink = "#1d1a17";
 export const coral = "#ff614c";
@@ -36,7 +38,7 @@ export function Prose({ children, className = "", lead = false }: { children: Re
   );
 }
 
-/** The paper card: 2px ink border, hard shadow, slight tilt that straightens on hover. */
+/** The paper card: a hand-drawn (roughjs) frame on paper, slight tilt that straightens on hover. */
 export function PaperCard({
   children,
   className = "",
@@ -45,11 +47,8 @@ export function PaperCard({
   tone = "card",
   ...rest
 }: { children: React.ReactNode; className?: string; tilt?: number; hover?: boolean; tone?: "card" | "ink" | "coral" } & HTMLMotionProps<"div">) {
-  const tones = {
-    card: "bg-[#fffaf1] text-black shadow-[3px_3px_0_0_#1d1a17]",
-    ink: "bg-[#1d1a17] text-[#fffaf1] shadow-[3px_3px_0_0_#ff614c]",
-    coral: "bg-[#ff614c] text-[#fffaf1] shadow-[3px_3px_0_0_#1d1a17]",
-  };
+  const fills = { card: "#fffaf1", ink: "#1d1a17", coral: "#ff614c" };
+  const text = { card: "text-black", ink: "text-[#fffaf1]", coral: "text-[#fffaf1]" };
   return (
     <motion.div
       initial={{ opacity: 0, y: 24, rotate: tilt }}
@@ -57,10 +56,12 @@ export function PaperCard({
       viewport={{ once: true, margin: "-40px" }}
       whileHover={hover ? { rotate: 0, y: -4 } : undefined}
       transition={{ type: "spring", stiffness: 180, damping: 18 }}
-      className={`relative rounded-[20px] border border-black ${tones[tone]} ${className}`}
+      className={`relative ${text[tone]}`}
       {...rest}
     >
-      {children}
+      <RoughBox fill={fills[tone]} stroke={tone === "ink" ? "#fffaf1" : "#1d1a17"} radius={18} className={className}>
+        {children}
+      </RoughBox>
     </motion.div>
   );
 }
@@ -94,24 +95,28 @@ export function Button({
   return <button type="button" onClick={onClick} className={cls}>{children}</button>;
 }
 
-/** Tag chip. */
+/** Tag: his original coral label (small filled rectangle), or a plain underlined word. */
 export function Chip({ children, tone = "line", color }: { children: React.ReactNode; tone?: "line" | "ink" | "color"; color?: string }) {
-  const base = "inline-flex items-center gap-1.5 font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.08em] px-2 py-[3px] rounded-[6px] border";
-  if (tone === "ink") return <span className={`${base} bg-black text-white border-black`}>{children}</span>;
-  if (tone === "color") return <span className={`${base} border-black/25 text-black/80`}><span className="w-2 h-2 rounded-full" style={{ background: color }} />{children}</span>;
-  return <span className={`${base} border-black/25 text-black/70`}>{children}</span>;
+  const base = "inline-flex items-center gap-1.5 font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-[3px]";
+  if (tone === "ink") return <span className={`${base} bg-[#ff614c] text-white rounded-[2px]`}>{children}</span>;
+  if (tone === "color") return <span className={`${base} text-black/75`}><span className="w-2 h-2 rounded-full" style={{ background: color }} />{children}</span>;
+  return <span className={`${base} text-black/60 border-b border-black/30`}>{children}</span>;
 }
 
-/** Big "next page" tile pair used at the bottom of every page. */
+/** "Next page" links: big marker words with a scribble underline, no boxes. */
 export function NextTiles({ items }: { items: { to: string; k: string; t: string }[] }) {
   return (
-    <section className="grid md:grid-cols-2 gap-6">
-      {items.map((n) => (
-        <Link key={n.to} to={n.to} className="group border border-black rounded-[20px] p-7 md:p-9 flex flex-col gap-5 bg-black text-white hover:bg-[#ff614c] transition-colors">
-          <span className="font-['Work_Sans'] uppercase tracking-[0.18em] text-[12px] text-white/60">{n.k}</span>
-          <span className="font-['Playfair_Display'] font-bold text-[26px] md:text-[36px] leading-tight flex items-center justify-between gap-4">
-            {n.t}<span className="transition-transform group-hover:translate-x-2">→</span>
+    <section className="grid md:grid-cols-2 gap-8 md:gap-12 border-t border-black/20 pt-10">
+      {items.map((n, i) => (
+        <Link key={n.to} to={n.to} className="group flex flex-col gap-2">
+          <span className="font-['Shantell_Sans',cursive] text-[14px] text-black/50">{n.k}</span>
+          <span className="font-display lowercase text-[38px] md:text-[56px] leading-[1] text-black group-hover:text-[#ff614c] transition-colors flex items-center gap-4">
+            {n.t}
+            <span className="transition-transform group-hover:translate-x-2 text-[#ff614c]">→</span>
           </span>
+          <svg width="160" height="10" viewBox="0 0 160 10" fill="none" aria-hidden className="mt-1">
+            <path d={i % 2 ? "M2 6 C 30 2, 60 9, 90 5 S 140 2, 158 6" : "M2 5 C 40 9, 70 2, 100 6 S 140 8, 158 4"} stroke="#ff614c" strokeWidth="2.2" strokeLinecap="round" className="opacity-60 group-hover:opacity-100 transition-opacity" />
+          </svg>
         </Link>
       ))}
     </section>

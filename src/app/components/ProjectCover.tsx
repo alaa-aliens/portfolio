@@ -40,7 +40,15 @@ export function ProjectCover({
       className={`relative overflow-hidden rounded-[14px] border border-black ${className}`}
       style={{ background: bg, aspectRatio: big ? "16 / 10" : "4 / 3" }}
     >
-      {shots.length > 0 && project.caseStudy?.device === "desktop" ? (
+      {project.cover ? (
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center p-[7%]"
+          animate={{ scale: hovered ? 1.06 : 1, rotate: hovered ? -2 : 0, y: hovered ? -4 : 0 }}
+          transition={{ type: "spring", stiffness: 220, damping: 16 }}
+        >
+          <img src={project.cover} alt="" loading="lazy" className="max-w-full max-h-full w-auto h-auto object-contain" />
+        </motion.div>
+      ) : shots.length > 0 && project.caseStudy?.device === "desktop" ? (
         <div className="absolute inset-0 flex items-end justify-center px-[7%]">
           <motion.div
             className="relative w-full rounded-t-[10px] border border-b-0 border-[#1d1a17] bg-[#fffaf1] overflow-hidden shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)]"

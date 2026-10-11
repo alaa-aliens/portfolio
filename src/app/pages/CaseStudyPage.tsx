@@ -18,6 +18,7 @@ import { Journey } from "../components/story/Journey";
 import { DoodleTitle } from "../components/play/DoodleTitle";
 import { StickerArt, type Kind } from "../components/play/Stickers";
 import { Scribble } from "../components/ui/Kit";
+import { Tsuzuku } from "../components/play/ToBeContinued";
 import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { usePageMeta } from "../usePageMeta";
 
@@ -320,7 +321,7 @@ export function CaseStudyPage() {
         {/* ── What I did ── */}
         {cs.steps && cs.steps.length > 0 && (
           <section>
-            <DoodleTitle text={isProfessional ? "how we {hand} got there" : "how i {hand} fixed it"} className="text-[40px] md:text-[64px]" />
+            <DoodleTitle text={isProfessional ? "how we {star} got there" : "how i {star} fixed it"} className="text-[40px] md:text-[64px]" />
             <Scribble className="mt-2">{isProfessional ? "chapter by chapter, with how it felt at the time" : "the chapters. with moods. because there were moods."}</Scribble>
             <Chapters steps={cs.steps} color={cat.color} />
           </section>
@@ -414,8 +415,11 @@ export function CaseStudyPage() {
         )}
       </div>
 
+      {/* ── episode end ── */}
+      <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 mt-16 flex justify-end"><Tsuzuku /></div>
+
       {/* ── Footer CTA ── */}
-      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-24 md:mt-32 mb-8">
+      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-10 md:mt-14 mb-8">
         <div className="grid md:grid-cols-2 gap-6">
           <Reveal className="border border-black rounded-[6px] p-8 md:p-10 flex flex-col gap-5 bg-white/50">
             <p className="font-['Playfair_Display'] font-bold text-black text-[26px] md:text-[34px] leading-tight">

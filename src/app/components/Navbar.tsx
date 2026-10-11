@@ -3,27 +3,29 @@ import { ScoreHUD } from "./play/Score";
 import { useMode } from "./ModeContext";
 import { useState, useEffect } from "react";
 import { AnimatePresence, useScroll, useSpring, useTransform, useVelocity } from "motion/react";
-import { StickerArt } from "./play/Stickers";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "motion/react";
 
 type Mode = "professional" | "fun";
 
-/** Professional / Fun switch with a pill that slides between the two. */
+/** Professional / Fun switch: his original pill, the active word in its own font (serif for pro, marker for fun). */
 function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMode: (m: Mode) => void; id: string; compact?: boolean }) {
   return (
     <div role="radiogroup" aria-label="Site mode" className="relative flex items-center w-full">
       {(["professional", "fun"] as Mode[]).map((m) => {
         const active = mode === m;
+        const fun = m === "fun";
         return (
           <button
             key={m}
             role="radio"
             aria-checked={active}
             onClick={() => setMode(m)}
-            className={`relative flex-1 rounded-full font-['DM_Serif_Display'] transition-colors duration-300 ${
-              compact ? "py-2 px-3 text-[15px]" : "py-2 px-4 text-[17px] md:text-[19px]"
-            } ${active ? "text-black" : "text-[#979797] hover:text-black/70"}`}
+            className={`relative flex-1 rounded-full transition-colors duration-300 ${
+              fun ? "font-display" : "font-['DM_Serif_Display']"
+            } ${compact ? "py-2 px-3 text-[15px]" : "py-2 px-4 text-[17px] md:text-[19px]"} ${
+              active ? (fun ? "text-[#ff614c]" : "text-black") : "text-[#979797] hover:text-black/70"
+            }`}
           >
             {active && (
               <motion.span
@@ -32,18 +34,13 @@ function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMod
                 transition={{ type: "spring", stiffness: 500, damping: 35 }}
               />
             )}
-            <span className="relative z-10 inline-flex items-center gap-1.5">
-              <motion.span
-                aria-hidden
-                className="inline-flex"
-                animate={active ? { rotate: [0, -18, 14, -8, 0], scale: [1, 1.3, 1] } : { rotate: 0, scale: 0.9 }}
-                transition={{ duration: 0.6 }}
-                style={{ filter: active ? "none" : "grayscale(1) opacity(.55)" }}
-              >
-                <StickerArt kind={m === "professional" ? "tie" : "popper"} size={compact ? 20 : 24} />
-              </motion.span>
-              {m === "professional" ? "Professional" : "Fun"}
-            </span>
+            <motion.span
+              className="relative z-10 inline-block"
+              animate={active ? { rotate: fun ? [0, -6, 4, 0] : 0, scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={{ duration: 0.45 }}
+            >
+              {fun ? "fun!" : "Professional"}
+            </motion.span>
           </button>
         );
       })}
@@ -51,7 +48,6 @@ function ModeToggle({ mode, setMode, id, compact = false }: { mode: Mode; setMod
   );
 }
 
-type Item = { label: [string, string]; to: string; hash?: string };
 const ITEMS: Item[] = [
   { label: ["Work", "Stuff"], to: "/work" },
   { label: ["About", "Me"], to: "/about" },
@@ -149,7 +145,7 @@ export function Navbar() {
             className="group flex items-center gap-2"
             aria-label="Ala'a Ali, home"
           >
-            <RollingHead size={compact ? 36 : 44} />
+            <RollingHead size={compact ? 40 : 64} />
             <motion.span
               className="font-display text-[24px] md:text-[30px] text-black lowercase whitespace-nowrap overflow-hidden leading-none"
               initial={false}

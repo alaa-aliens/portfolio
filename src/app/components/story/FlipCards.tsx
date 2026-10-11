@@ -36,20 +36,20 @@ export function FlipCards() {
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
             >
               {/* front */}
-              <div className="absolute inset-0 [backface-visibility:hidden] rounded-[20px] border border-black bg-[#fffaf1] shadow-[3px_3px_0_0_#1d1a17] p-5 flex flex-col">
+              <div className="absolute inset-0 [backface-visibility:hidden] rounded-[18px] border border-black bg-[#fffaf1] p-5 flex flex-col" style={{ borderRadius: "255px 18px 225px 18px / 18px 225px 18px 255px" }}>
                 <span className="font-['Work_Sans'] text-[10.5px] uppercase tracking-[0.16em] text-black/45">what clients ask for</span>
                 <div className="w-[70%] mx-auto mt-3 mb-2 shrink-0">
                   <c.imageRenderer />
                 </div>
-                <h3 className="font-['Playfair_Display'] font-bold text-[22px] leading-tight mt-auto">“{ACTUALLY[i].front}”</h3>
+                <h3 className="font-display lowercase text-[26px] leading-tight mt-auto">“{ACTUALLY[i].front}”</h3>
                 <span className="mt-2 font-['Shantell_Sans',cursive] text-[13px] text-black/50">{c.title} · flip me ↻</span>
               </div>
               {/* back */}
-              <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[20px] border border-black bg-[#1d1a17] text-[#fffaf1] shadow-[3px_3px_0_0_#ff614c] p-5 flex flex-col">
+              <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[18px] border border-black bg-[#ff614c] text-[#fffaf1] p-5 flex flex-col" style={{ borderRadius: "18px 225px 18px 255px / 255px 18px 225px 18px" }}>
                 <span className="font-['Work_Sans'] text-[10.5px] uppercase tracking-[0.16em] text-[#fffaf1]/50">what I actually do</span>
-                <h3 className="font-display lowercase text-[#ff614c] text-[30px] leading-[1] mt-4">{fun.title}</h3>
+                <h3 className="font-display lowercase text-[#1d1a17] text-[30px] leading-[1] mt-4">{fun.title}</h3>
                 <p className="font-['IBM_Plex_Serif'] text-[16px] leading-[1.55] mt-4">{ACTUALLY[i].back}</p>
-                <p className="font-['Work_Sans'] text-[13.5px] leading-snug text-[#fffaf1]/70 mt-auto">{c.description}</p>
+                <p className="font-['Work_Sans'] text-[13.5px] leading-snug text-[#fffaf1]/85 mt-auto">{c.description}</p>
               </div>
             </motion.div>
           </button>

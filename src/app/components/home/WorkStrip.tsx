@@ -11,6 +11,7 @@ import { useMode } from "../ModeContext";
 import { DoodleTitle } from "../play/DoodleTitle";
 import { Scribble, Button } from "../ui/Kit";
 import { ComingSoonPopup } from "../ComingSoonPopup";
+import { RoughBox } from "../ui/RoughBox";
 
 function Frame({ p, i, onOpen }: { p: Project; i: number; onOpen: (p: Project) => void }) {
   const { isProfessional } = useMode();
@@ -29,11 +30,20 @@ function Frame({ p, i, onOpen }: { p: Project; i: number; onOpen: (p: Project) =
       transition={{ type: "spring", stiffness: 160, damping: 18 }}
     >
       <button onClick={() => onOpen(p)} className="block w-full text-left" draggable={false}>
-        <div
-          className="relative overflow-hidden rounded-[16px] border border-black shadow-[4px_4px_0_0_#1d1a17] aspect-[4/3]"
-          style={{ background: bg }}
-        >
-          {shot ? (
+        <RoughBox fill={bg} radius={10} strokeWidth={1.6} seed={i * 17 + 3} className="aspect-[4/3]">
+        <div className="absolute inset-0 overflow-hidden rounded-[10px]">
+          {p.cover ? (
+            <motion.img
+              src={p.cover}
+              alt=""
+              draggable={false}
+              loading="lazy"
+              className="absolute inset-0 m-auto max-w-[86%] max-h-[84%] w-auto h-auto"
+              initial={false}
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          ) : shot ? (
             desktop ? (
               <img src={shot.src} alt={shot.alt} draggable={false} loading="lazy" className="absolute left-[6%] right-[6%] bottom-0 w-[88%] rounded-t-[10px] border border-b-0 border-[#1d1a17] bg-white translate-y-[8%] group-hover:translate-y-[2%] transition-transform duration-500" />
             ) : (
@@ -68,6 +78,7 @@ function Frame({ p, i, onOpen }: { p: Project; i: number; onOpen: (p: Project) =
             </span>
           )}
         </div>
+        </RoughBox>
         <div className="mt-4 flex items-start justify-between gap-4">
           <div>
             <h3 className="font-display text-[30px] md:text-[36px] leading-none lowercase">{p.name}</h3>
