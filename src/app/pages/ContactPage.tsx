@@ -216,7 +216,6 @@ export function ContactPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.2 }}
         >
-          <span aria-hidden className="absolute inset-x-[6%] bottom-[4%] top-[18%] rounded-[50%] bg-[#fdecd0] border border-[#1d1a17]/15" />
           <motion.img
             src={imgContact}
             alt="Ala'a sitting on the floor, throwing a paper plane, with his cat"
