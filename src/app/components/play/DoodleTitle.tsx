@@ -10,9 +10,10 @@ import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import imgHand from "figma:asset/e1bc33a6eca046916183a4821600eb03ec70fd26.png";
 import imgBoard from "figma:asset/7d1c70ce8d978daa5db3cd98761c352b121d3ad8.png";
 import { StickerArt, type Kind } from "./Stickers";
+import artMug from "../../../assets/stickers/mug.webp";
 
 const ART: Record<string, React.ReactNode> = {
-  coffee: <StickerArt kind="mug" size={52} />,
+  coffee: <span className="inline-block w-[1.15em] h-[1.15em] align-[-0.2em]"><img src={artMug} alt="" className="w-full h-full object-contain max-w-none" /></span>,
   head: (
     <span className="relative inline-block w-[0.9em] h-[1.05em] overflow-hidden align-[-0.15em]">
       <img src={imgHeadCut} alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" />
@@ -67,7 +68,7 @@ export function DoodleTitle({
           {parts.map((p, i) => {
             const m = p.match(/^\{([a-z]+)\}$/);
             if (!m) return <span key={i} aria-hidden>{p}</span>;
-            const node = ART[m[1]] ?? <StickerArt kind={m[1] as Kind} size={40} />;
+            const node = ART[m[1]] ?? <span className="inline-flex w-[0.85em] h-[0.85em] align-[-0.1em] items-center justify-center [&>*]:w-full [&>*]:h-full"><StickerArt kind={m[1] as Kind} size={40} /></span>;
             return (
               <motion.span
                 key={i}

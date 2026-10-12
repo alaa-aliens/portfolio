@@ -1,4 +1,3 @@
-import imgHeadCut from "../../../assets/head.webp";
 /*
  * The About section as a comic strip: hand-drawn panels (rough.js) you scroll
  * through sideways. Each panel draws itself the first time it shows up.
@@ -15,6 +14,19 @@ import imgNews from "../../../assets/comic/news.webp";
 import imgTeach from "../../../assets/comic/teach.webp";
 import imgFamily from "../../../assets/comic/family.webp";
 import imgSite from "../../../assets/comic/site.webp";
+import imgCouchB from "../../../assets/comic/couch-b.webp";
+import imgCouchC from "../../../assets/comic/couch-c.webp";
+import imgBooksB from "../../../assets/comic/books-b.webp";
+import imgBooksC from "../../../assets/comic/books-c.webp";
+import imgNewsB from "../../../assets/comic/news-b.webp";
+import imgNewsC from "../../../assets/comic/news-c.webp";
+import imgTeachB from "../../../assets/comic/teach-b.webp";
+import imgTeachC from "../../../assets/comic/teach-c.webp";
+import imgFamilyB from "../../../assets/comic/family-b.webp";
+import imgFamilyC from "../../../assets/comic/family-c.webp";
+import imgSiteB from "../../../assets/comic/site-b.webp";
+import imgSiteC from "../../../assets/comic/site-c.webp";
+
 
 const gen = rough.generator();
 const INK = "#1d1a17";
@@ -92,7 +104,7 @@ function scene(kind: Scene, s: number): P[] {
 interface Panel { scene: Scene; year: string; text: [pro: string, fun: string]; caption?: string }
 const PANELS: Panel[] = [
   {
-    scene: "couch", img: imgCouch, year: "2007",
+    scene: "couch", img: imgCouch, more: [imgCouchB, imgCouchC], year: "2007",
     title: ["the upholstery years", "the couch era"],
     text: ["I started out stitching couches. Really. PlayStation after work.", "Stitched couches by day, PlayStation by night. Peak multitasking."],
     bubble: ["one more stitch…", "respawn in 3, 2, 1"],
@@ -110,7 +122,7 @@ const PANELS: Panel[] = [
     ],
   },
   {
-    scene: "pencil", img: imgBooks, year: "2012",
+    scene: "pencil", img: imgBooks, more: [imgBooksB, imgBooksC], year: "2012",
     title: ["300 drawings later", "my hand still hurts"],
     text: ["300+ illustrated stories for children's books. My hand still remembers.", "Drew 300+ kids' book illustrations. My hand still hurts."],
     bubble: ["page 212…", "the dragon needs friends"],
@@ -128,7 +140,7 @@ const PANELS: Panel[] = [
     ],
   },
   {
-    scene: "screens", img: imgNews, year: "2018",
+    scene: "screens", img: imgNews, more: [imgNewsB, imgNewsC], year: "2018",
     title: ["news speed", "the news years"],
     text: ["Al Jazeera, then TRT: motion and visuals for news, at news speed.", "Designed things millions saw. Told nobody at dinner, or they'd ask me to fix their Wi-Fi."],
     bubble: ["we're live in 4 minutes", "no pressure"],
@@ -146,7 +158,7 @@ const PANELS: Panel[] = [
     ],
   },
   {
-    scene: "class", img: imgTeach, year: "2020",
+    scene: "class", img: imgTeach, more: [imgTeachB, imgTeachC], year: "2020",
     title: ["talking at people", "the teaching arc"],
     text: ["Teaching UX at universities, bootcamps, Zain and 42 Amman.", "Convincing a new generation that Comic Sans is never the answer. Ok, maybe ironically."],
     bubble: ["what's the user's goal?", "any questions? no? ok, pizza"],
@@ -164,7 +176,7 @@ const PANELS: Panel[] = [
     ],
   },
   {
-    scene: "home", img: imgFamily, year: "2026",
+    scene: "home", img: imgFamily, more: [imgFamilyB, imgFamilyC], year: "2026",
     title: ["made for alma & eleen", "my two toughest clients"],
     text: ["Siba: a study app for Alma and Eleen. They review harder than any client.", "Built an app for my kids. They gave it 3 stars and asked for the iPad back."],
     bubble: ["can it say my name?", "no red X. ever."],
@@ -182,7 +194,7 @@ const PANELS: Panel[] = [
     ],
   },
   {
-    scene: "doodle", img: imgSite, year: "now",
+    scene: "doodle", img: imgSite, more: [imgSiteB, imgSiteC], year: "now",
     title: ["this website", "2am, three coffees"],
     text: ["This website, at 2am, three coffees in. Hi.", "This website. 2am. Three coffees. The cat gave up. Hi."],
     bubble: ["one more section…", "diva: go to sleep"],
@@ -314,11 +326,6 @@ export function ComicStrip() {
                 <p className="absolute left-5 right-5 bottom-5 font-['Shantell_Sans',cursive] text-[14px] md:text-[15px] leading-snug text-black">
                   {p.text[isProfessional ? 0 : 1]}
                 </p>
-                {i === PANELS.length - 1 && (
-                  <span className="absolute -right-5 -bottom-4 w-[74px] h-[88px] overflow-hidden rotate-[8deg]" aria-hidden>
-                    <img src={imgHeadCut} alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" />
-                  </span>
-                )}
               </div>
             </motion.figure>
           ))}
@@ -363,52 +370,56 @@ export function ComicStrip() {
                   animate={{ scale: 1, rotate: 0, y: 0, opacity: 1 }}
                   exit={{ scale: 0.9, rotate: 2, y: 20, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                  className="relative w-full max-w-[1000px] max-h-[92vh] overflow-y-auto bg-[#fffaf1] border-[3px] border-[#1d1a17] shadow-[8px_8px_0_0_#1d1a17] p-5 md:p-8"
+                  className="relative w-full max-w-[1080px] max-h-[92vh] overflow-y-auto bg-[#fffaf1] border-[3px] border-[#1d1a17] shadow-[8px_8px_0_0_#1d1a17] p-5 md:p-8"
                   style={{ borderRadius: "255px 15px 225px 15px / 15px 225px 15px 255px" }}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.16em] bg-black text-white px-2 py-0.5">{p.year} · page {open + 1} of {PANELS.length}</span>
                     <button onClick={() => setOpen(null)} aria-label="Close" className="w-10 h-10 rounded-full border border-black bg-[#fffaf1] hover:rotate-90 transition-transform">✕</button>
                   </div>
-                  <div className="grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-10 mt-5 items-start">
-                    {/* big panel with a speech bubble */}
-                    <div className="relative border-[3px] border-[#1d1a17] bg-[#fdecd0] p-4 md:p-6" style={{ borderRadius: "12px 180px 12px 200px / 200px 12px 180px 12px" }}>
-                      <motion.img
-                        src={p.img}
-                        alt=""
-                        className="w-full h-auto"
-                        initial={{ clipPath: "inset(0 100% 0 0)" }}
-                        animate={{ clipPath: "inset(0 0% 0 0)" }}
-                        transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                      />
-                      {p.bubble && (
-                        <motion.span
-                          initial={{ scale: 0, rotate: -10 }}
-                          animate={{ scale: 1, rotate: -4 }}
-                          transition={{ delay: 0.9, type: "spring", stiffness: 320, damping: 14 }}
-                          className="absolute top-3 right-3 md:top-5 md:right-5 max-w-[60%] rounded-[18px] border-2 border-[#1d1a17] bg-white px-3.5 py-2 font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] leading-snug shadow-[3px_3px_0_0_#1d1a17]"
-                        >
-                          {p.bubble[k]}
-                          <span aria-hidden className="absolute -bottom-2.5 left-6 w-4 h-4 bg-white border-b-2 border-r-2 border-[#1d1a17] rotate-45" />
-                        </motion.span>
-                      )}
-                    </div>
-                    {/* the page text, in caption boxes */}
-                    <div className="flex flex-col gap-4">
-                      <h3 className="font-display lowercase text-[36px] md:text-[52px] leading-[0.95] text-[#ff614c]">{p.title[k]}</h3>
-                      {p.story[k].map((para, j) => (
+                  <h3 className="font-display lowercase text-[36px] md:text-[56px] leading-[0.95] text-[#ff614c] mt-4">{p.title[k]}</h3>
+                  {/* three comic panels, each with its caption box */}
+                  <div className="grid md:grid-cols-6 gap-4 md:gap-5 mt-5">
+                    {[p.img, p.more[0], p.more[1]].map((src, j) => (
+                      <motion.div
+                        key={src}
+                        initial={{ opacity: 0, y: 20, rotate: j % 2 ? 1 : -1 }}
+                        animate={{ opacity: 1, y: 0, rotate: 0 }}
+                        transition={{ delay: 0.15 + j * 0.18, type: "spring", stiffness: 220, damping: 20 }}
+                        className={`relative border-[3px] border-[#1d1a17] bg-[#fdecd0] overflow-hidden flex ${j === 2 ? "md:col-span-6 flex-col md:flex-row md:items-center" : "flex-col"} ${j === 0 ? "md:col-span-4" : j === 1 ? "md:col-span-2" : ""}`}
+                        style={{ borderRadius: j === 0 ? "12px 120px 12px 140px / 140px 12px 120px 12px" : j === 1 ? "90px 12px 110px 12px / 12px 110px 12px 90px" : "12px 160px 12px 140px / 140px 12px 160px 12px" }}
+                      >
                         <motion.p
-                          key={j}
-                          initial={{ opacity: 0, x: 16 }}
+                          initial={{ opacity: 0, x: -12 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 + j * 0.15 }}
-                          className="font-['Shantell_Sans',cursive] text-[15px] md:text-[17px] leading-[1.55] text-black bg-[#FFF3B0]/70 border border-[#1d1a17]/60 px-4 py-3"
-                          style={{ rotate: `${j % 2 ? 0.5 : -0.5}deg` }}
+                          transition={{ delay: 0.5 + j * 0.18 }}
+                          className={`m-3 md:m-4 bg-[#FFF3B0] border-2 border-[#1d1a17] px-3 py-2 font-['Shantell_Sans',cursive] text-[13px] md:text-[14.5px] leading-[1.45] text-black self-start ${j === 2 ? "md:max-w-[40%] shrink-0" : ""}`}
                         >
-                          {para}
+                          {p.story[k][j]}
                         </motion.p>
-                      ))}
-                    </div>
+                        <div className={`relative flex-1 ${j === 2 ? "min-h-[220px] md:min-h-[260px]" : "min-h-[220px] md:min-h-[280px]"}`}>
+                          <motion.img
+                            src={src}
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-contain p-3 md:p-5"
+                            initial={{ clipPath: "inset(0 100% 0 0)" }}
+                            animate={{ clipPath: "inset(0 0% 0 0)" }}
+                            transition={{ duration: 0.8, delay: 0.3 + j * 0.18, ease: [0.22, 1, 0.36, 1] }}
+                          />
+                          {j === 0 && p.bubble && (
+                            <motion.span
+                              initial={{ scale: 0, rotate: -10 }}
+                              animate={{ scale: 1, rotate: -4 }}
+                              transition={{ delay: 1, type: "spring", stiffness: 320, damping: 14 }}
+                              className="absolute top-2 right-4 max-w-[50%] rounded-[18px] border-2 border-[#1d1a17] bg-white px-3.5 py-2 font-['Shantell_Sans',cursive] text-[13px] md:text-[15px] leading-snug shadow-[3px_3px_0_0_#1d1a17]"
+                            >
+                              {p.bubble[k]}
+                              <span aria-hidden className="absolute -bottom-2.5 left-6 w-4 h-4 bg-white border-b-2 border-r-2 border-[#1d1a17] rotate-45" />
+                            </motion.span>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
                   <div className="flex items-center justify-between mt-6">
                     <button onClick={() => setOpen((open - 1 + PANELS.length) % PANELS.length)} className="font-display text-[22px] lowercase text-black hover:text-[#ff614c]">← previous</button>

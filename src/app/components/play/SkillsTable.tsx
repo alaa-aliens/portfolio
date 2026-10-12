@@ -12,7 +12,7 @@ import { DeskThings } from "./DeskThings";
 
 const PRO = [
   "UX Research", "UI Design", "Design Systems", "Motion", "Prototyping", "UX Audits",
-  "Workshops", "Illustration", "Motion", "Figma", "Product Strategy", "Building with AI",
+  "Workshops", "Illustration", "Arabic typography", "Figma", "Product Strategy", "Shipping my own apps",
 ];
 const FUN_EXTRA = ["Strong opinions", "Coffee", "2am energy", "Border-radius debates"];
 const COLORS = ["#fffaf1", "#FFE1D9", "#E6E0FF", "#D6F4F7", "#FFE9C7", "#DDF3DF"];

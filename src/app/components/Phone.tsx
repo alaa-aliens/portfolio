@@ -131,14 +131,14 @@ export function BrowserShowcase({ shots, color, url }: { shots: { src: string; a
   const tabName = (s: { alt: string; tab?: string }, k: number) => s.tab ?? s.alt.split(":")[0].replace(/^[^ ]+ /, "").trim() ?? `screen ${k + 1}`;
   return (
     <div
-      className="relative w-full rounded-[18px] border border-dashed border-black/30 border-b-0 bg-[#fffaf1]/60 pt-8 md:pt-12 px-3 md:px-10 pb-0 overflow-hidden"
+      className="relative w-full rounded-[18px] border border-dashed border-black/30 bg-[#fffaf1]/60 pt-8 md:pt-12 px-3 md:px-10 pb-8 md:pb-12 overflow-hidden"
       style={{ backgroundImage: "repeating-linear-gradient(transparent 0 31px, rgba(29,26,23,.08) 31px 32px)" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div className="relative mx-auto w-full max-w-[980px]">
         {/* tabs */}
-        <div className="flex items-end gap-1 px-2 overflow-x-auto" role="tablist">
+        <div className="flex flex-wrap items-end gap-1 px-2" role="tablist">
           {shots.map((s, k) => (
             <button
               key={s.src}
@@ -157,7 +157,7 @@ export function BrowserShowcase({ shots, color, url }: { shots: { src: string; a
             </button>
           ))}
         </div>
-        <div className="relative rounded-[10px] md:rounded-[14px] rounded-b-none border border-b-0 border-[#1d1a17] bg-[#fffaf1] overflow-hidden">
+        <div className="relative rounded-[10px] md:rounded-[14px] border border-[#1d1a17] bg-[#fffaf1] overflow-hidden">
           <div className="flex items-center gap-2 px-3 h-8 md:h-9 border-b border-[#1d1a17] bg-[#fdecd0]">
             <span className="flex gap-1.5" aria-hidden>
               <i className="block w-2.5 h-2.5 rounded-full border-[1.5px] border-[#1d1a17] bg-[#ff614c]" />

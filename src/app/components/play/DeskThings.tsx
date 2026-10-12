@@ -14,17 +14,29 @@ const sw = { stroke: INK, strokeWidth: 2.4, strokeLinecap: "round" as const, str
 export type ThingId = "mac" | "ipad" | "controller" | "mug" | "cat" | "plant" | "pc" | "car";
 
 export const THINGS: { id: ThingId; w: number; h: number; pro: string; fun: string; left: number /* % of desk */; solid?: boolean }[] = [
-  { id: "mac", w: 150, h: 112, left: 44, pro: "Where everything gets designed. Siba lives on this screen.", fun: "Where I pretend to work. Siba lives here now.", solid: true },
-  { id: "ipad", w: 84, h: 62, left: 22, pro: "iPad + Pencil: every @alaa_aliens doodle starts here.", fun: "The 2am doodle machine.", solid: true },
-  { id: "controller", w: 70, h: 48, left: 78, pro: "Longtime console gamer. It's research.", fun: "5 PlayStation generations. It's research, ok?", solid: true },
-  { id: "mug", w: 44, h: 46, left: 66, pro: "Coffee. The real design tool.", fun: "Coffee #4. Don't ask about #1–3.", solid: true },
-  { id: "plant", w: 40, h: 58, left: 6, pro: "Still alive. Unlike my inbox.", fun: "Alive on day 212. Personal record." },
-  { id: "pc", w: 54, h: 74, left: 91, pro: "Ryzen 9800X3D + RTX 5080, built for sim racing.", fun: "Built a PC for \"sim racing\". Mostly runs Figma.", solid: true },
-  { id: "cat", w: 72, h: 60, left: 2, pro: "Diva. Attends every call. Approves nothing.", fun: "Diva. Sits on the keyboard during reviews. Great feedback." },
+  { id: "mac", w: 170, h: 150, left: 44, pro: "Where everything gets designed. Siba lives on this screen.", fun: "Where I pretend to work. Siba lives here now.", solid: true },
+  { id: "ipad", w: 110, h: 80, left: 22, pro: "iPad + Pencil: every @alaa_aliens doodle starts here.", fun: "The 2am doodle machine.", solid: true },
+  { id: "controller", w: 80, h: 70, left: 78, pro: "Longtime console gamer. It's research.", fun: "5 PlayStation generations. It's research, ok?", solid: true },
+  { id: "mug", w: 54, h: 54, left: 66, pro: "Coffee. The real design tool.", fun: "Coffee #4. Don't ask about #1–3.", solid: true },
+  { id: "plant", w: 56, h: 62, left: 6, pro: "Still alive. Unlike my inbox.", fun: "Alive on day 212. Personal record." },
+  { id: "pc", w: 70, h: 92, left: 91, pro: "Ryzen 9800X3D + RTX 5080, built for sim racing.", fun: "Built a PC for \"sim racing\". Mostly runs Figma.", solid: true },
+  { id: "cat", w: 84, h: 72, left: 2, pro: "Diva. Attends every call. Approves nothing.", fun: "Diva. Sits on the keyboard during reviews. Great feedback." },
 ];
 
+import stMac from "../../../assets/stickers/mac.webp";
+import stIpad from "../../../assets/stickers/ipad.webp";
+import stPc from "../../../assets/stickers/pc.webp";
+import stMug from "../../../assets/stickers/mug.webp";
+import stController from "../../../assets/stickers/controller.webp";
+import stPlant from "../../../assets/stickers/plant.webp";
+import stCat from "../../../assets/stickers/cat.webp";
+const DRAWN: Partial<Record<ThingId, string>> = { mac: stMac, ipad: stIpad, pc: stPc, mug: stMug, controller: stController, plant: stPlant, cat: stCat };
 export function Thing({ id, size = 1 }: { id: ThingId; size?: number }) {
   const S = (w: number, h: number) => ({ width: w * size, height: h * size });
+  const t = THINGS.find((x) => x.id === id);
+  if (DRAWN[id] && t) {
+    return <img src={DRAWN[id]} alt="" draggable={false} style={{ width: t.w * size, height: t.h * size, objectFit: "contain" }} className="block max-w-none select-none pointer-events-none" aria-hidden />;
+  }
   switch (id) {
     case "mac":
       return (
