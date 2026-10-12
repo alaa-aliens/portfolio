@@ -44,6 +44,22 @@
         "sameAs": ["https://www.instagram.com/alaa_aliens", "https://www.linkedin.com/in/alaa-aliens", "https://open.spotify.com/show/0zuVyPYDvZaJKwo5cTXbmg", "https://github.com/alaa-aliens"]
       }
     </script>
+    <!-- Google Analytics 4: the ID comes from VITE_GA_ID at build time; nothing loads when it's empty -->
+    <script>
+      (function () {
+        var id = "%VITE_GA_ID%";
+        if (!id || id.indexOf("%") === 0) return;
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", id, { send_page_view: false, anonymize_ip: true });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

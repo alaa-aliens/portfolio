@@ -115,23 +115,37 @@ export function Sketchbook() {
   const board = useRef<HTMLDivElement>(null);
   const [seed, setSeed] = useState(7);
   const [story, setStory] = useState(0);
-  const ITEMS = STORIES[story].items;
+  const EXTRA: Kind[] = ["star", "heart", "sparkle", "bolt", "sun", "bubble", "plane", "note", "bulb", "headphones", "plant", "swirl", "crown", "wow"];
+  const ITEMS = useMemo(() => {
+    const r = rnd(seed * 13 + story * 5 + 1);
+    const extras = Array.from({ length: 4 + Math.floor(r() * 4) }, () => st(EXTRA[Math.floor(r() * EXTRA.length)], 44 + Math.floor(r() * 50)));
+    return [...STORIES[story].items, ...extras];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seed, story]);
   const [top, setTop] = useState<number | null>(null);
   const [order, setOrder] = useState<number[]>(() => ITEMS.map((_, i) => i));
 
   const layout = useMemo(() => {
-    const r = rnd(seed + story * 31);
-    let n = 0;
+    const r = rnd(seed * 7 + story * 31);
     const notes = ITEMS.filter((it) => it.kind === "note").length;
-    const perRow = Math.ceil(notes / 2);
+    // a different reading path every shuffle: rows, zigzag, arc, or diagonal
+    const pattern = Math.floor(r() * 4);
+    const notePos = (i: number) => {
+      const t = notes <= 1 ? 0 : i / (notes - 1);
+      switch (pattern) {
+        case 0: { const perRow = Math.ceil(notes / 2); const row = Math.floor(i / perRow); const col = i % perRow; return { x: 5 + (col * 82) / Math.max(1, perRow - 1) * ((perRow - 1) / perRow) + 2, y: 8 + row * 42 }; }
+        case 1: return { x: 5 + t * 80, y: i % 2 ? 50 : 10 };
+        case 2: return { x: 5 + t * 80, y: 12 + Math.sin(t * Math.PI) * 42 };
+        default: return { x: 5 + t * 78, y: 8 + t * 52 };
+      }
+    };
+    let n = 0;
     return ITEMS.map((it) => {
       if (it.kind === "note") {
-        const i = n++;
-        const row = Math.floor(i / perRow);
-        const col = i % perRow;
-        return { x: 6 + (col * 86) / perRow + (r() - 0.5) * 5, y: 10 + row * 40 + (r() - 0.5) * 10, rot: -5 + r() * 10 };
+        const p = notePos(n++);
+        return { x: Math.min(80, p.x + (r() - 0.5) * 6), y: Math.min(74, p.y + (r() - 0.5) * 8), rot: -6 + r() * 12 };
       }
-      return { x: 6 + r() * 74, y: 6 + r() * 64, rot: -14 + r() * 28 };
+      return { x: 4 + r() * 80, y: 4 + r() * 70, rot: -18 + r() * 36 };
     });
   }, [seed, story, ITEMS]);
 
@@ -154,7 +168,7 @@ export function Sketchbook() {
               play("scribble", 0.5);
               setStory((k) => (k + 1) % STORIES.length);
               setTop(null);
-              setOrder(STORIES[(story + 1) % STORIES.length].items.map((_, i) => i));
+              setOrder([]);
               addScore(2, "shuffled the sketchbook", "sketch:shuffle");
             }}
           >
@@ -190,7 +204,7 @@ export function Sketchbook() {
         <div className="absolute inset-0 overflow-hidden rounded-[20px]">
         {ITEMS.map((it, i) => {
           const l = layout[i];
-          const z = order.indexOf(i) + 1;
+          const z = order.length ? order.indexOf(i) + 1 : i + 1;
           const scale = typeof window !== "undefined" && window.innerWidth < 640 ? 0.62 : 1;
           return (
             <motion.div
