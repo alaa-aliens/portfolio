@@ -36,7 +36,7 @@ export function FlipCards() {
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
             >
               {/* front */}
-              <div className="absolute inset-0 [backface-visibility:hidden] rounded-[18px] border border-black bg-[#fffaf1] p-5 flex flex-col" style={{ borderRadius: "255px 18px 225px 18px / 18px 225px 18px 255px" }}>
+              <div className="absolute inset-0 [backface-visibility:hidden] rounded-[18px] border border-black bg-[#f7e1bf] p-5 flex flex-col" style={{ borderRadius: "255px 18px 225px 18px / 18px 225px 18px 255px" }}>
                 <span className="font-['Work_Sans'] text-[10.5px] uppercase tracking-[0.16em] text-black/45">what clients ask for</span>
                 <div className="w-[70%] mx-auto mt-3 mb-2 shrink-0">
                   <c.imageRenderer />
