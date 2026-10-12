@@ -278,7 +278,12 @@ export function ComicStrip() {
 
   return (
     <div className="relative">
-      <div ref={viewRef} className="overflow-hidden -mx-5 md:mx-0 px-5 md:px-0" onPointerDown={() => measure()}>
+      <div
+        ref={viewRef}
+        className="relative overflow-hidden -mx-5 md:-mx-12 px-5 md:px-12 py-3"
+        onPointerDown={() => measure()}
+        style={{ maskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)" }}
+      >
         <motion.div
           ref={trackRef}
           drag="x"
