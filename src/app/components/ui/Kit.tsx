@@ -115,11 +115,11 @@ export function Chip({ children, tone = "line", color }: { children: React.React
 }
 
 /** "Next page" links: big marker words with a scribble underline, no boxes. */
-export function NextTiles({ items }: { items: { to: string; k: string; t: string }[] }) {
+export function NextTiles({ items, center = true }: { items: { to: string; k: string; t: string }[]; center?: boolean }) {
   return (
-    <section className="grid md:grid-cols-2 gap-8 md:gap-12 border-t border-black/20 pt-10">
+    <section className={`grid md:grid-cols-2 gap-8 md:gap-12 border-t border-black/20 pt-10 ${center ? "text-center" : ""}`}>
       {items.map((n, i) => (
-        <Link key={n.to} to={n.to} className="group flex flex-col gap-2">
+        <Link key={n.to} to={n.to} className={`group flex flex-col gap-2 ${center ? "items-center" : ""}`}>
           <span className="font-['Shantell_Sans',cursive] text-[14px] text-black/50">{n.k}</span>
           <span className="font-display lowercase text-[38px] md:text-[56px] leading-[1] text-black group-hover:text-[#ff614c] transition-colors flex items-center gap-4">
             {n.t}
