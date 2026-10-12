@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { StickerArt } from "./play/Stickers";
 
 /** A simple phone frame around a screenshot. */
 export function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
@@ -27,9 +28,10 @@ export function PhoneFan({ shots, color }: { shots: { src: string; alt: string }
   return (
     <div
       ref={ref}
-      className="relative w-full overflow-hidden rounded-[10px] border border-black/10 py-10 md:py-16"
-      style={{ background: `radial-gradient(120% 90% at 50% 100%, ${color}40, ${color}12 60%, transparent)` }}
+      className="relative w-full overflow-hidden rounded-[18px] border border-dashed border-black/30 bg-[#fffaf1]/60 py-10 md:py-16"
+      style={{ backgroundImage: "repeating-linear-gradient(transparent 0 31px, rgba(29,26,23,.08) 31px 32px)" }}
     >
+      <Pins color={color} />
       <div className="relative mx-auto flex items-end justify-center gap-0 w-full max-w-[860px] px-4">
         {a && (
           <motion.div style={{ rotate: rotL, x: xL }} className="w-[30%] max-w-[240px] origin-bottom-right translate-y-6">
@@ -82,12 +84,23 @@ export function PhoneRow({ shots }: { shots: { src: string; alt: string; caption
   );
 }
 
+/** A few doodles pinned in the corners of a showcase board. */
+function Pins({ color }: { color: string }) {
+  return (
+    <>
+      <span aria-hidden className="absolute left-4 top-4 rotate-[-12deg]"><StickerArt kind="star" size={30} /></span>
+      <span aria-hidden className="absolute right-5 top-6 rotate-[10deg]"><StickerArt kind="bolt" size={28} /></span>
+      <svg aria-hidden className="absolute right-6 bottom-5 w-[90px] h-[26px]" viewBox="0 0 90 26" fill="none"><path d="M3 18 C 25 4, 50 24, 86 8" stroke={color} strokeWidth="3" strokeLinecap="round" /></svg>
+    </>
+  );
+}
+
 /* ───────────── Desktop products ───────────── */
 
 /** A browser-window frame around a desktop screenshot. */
 export function Browser({ src, alt, className = "", url }: { src: string; alt: string; className?: string; url?: string }) {
   return (
-    <div className={`relative rounded-[10px] md:rounded-[14px] border border-[#1d1a17] bg-[#fffaf1] overflow-hidden shadow-[4px_4px_0_0_#1d1a17] ${className}`}>
+    <div className={`relative rounded-[10px] md:rounded-[14px] border border-[#1d1a17] bg-[#fffaf1] overflow-hidden ${className}`}>
       <div className="flex items-center gap-2 px-3 h-7 md:h-8 border-b-2 border-[#1d1a17] bg-[#fdecd0]">
         <span className="flex gap-1.5" aria-hidden>
           <i className="block w-2.5 h-2.5 rounded-full border-[1.5px] border-[#1d1a17] bg-[#ff614c]" />
@@ -118,8 +131,8 @@ export function BrowserShowcase({ shots, color, url }: { shots: { src: string; a
   const tabName = (s: { alt: string; tab?: string }, k: number) => s.tab ?? s.alt.split(":")[0].replace(/^[^ ]+ /, "").trim() ?? `screen ${k + 1}`;
   return (
     <div
-      className="relative w-full rounded-[10px] pt-8 md:pt-12 px-3 md:px-10 pb-0"
-      style={{ background: `radial-gradient(120% 90% at 50% 100%, ${color}40, ${color}12 60%, transparent)` }}
+      className="relative w-full rounded-[18px] border border-dashed border-black/30 border-b-0 bg-[#fffaf1]/60 pt-8 md:pt-12 px-3 md:px-10 pb-0 overflow-hidden"
+      style={{ backgroundImage: "repeating-linear-gradient(transparent 0 31px, rgba(29,26,23,.08) 31px 32px)" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

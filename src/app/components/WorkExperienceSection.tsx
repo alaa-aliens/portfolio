@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import squigglySvg from "../../imports/svg-zqq9sgn0jp";
 import { SectionTitle } from "./motion/Doodles";
 
-interface TimelineEntry {
+export interface TimelineEntry {
   year: string;
   tag: string;
   title: string;
@@ -12,13 +12,13 @@ interface TimelineEntry {
   link?: string;
 }
 
-interface TimelineData {
+export interface TimelineData {
   label: string;
   leftEntries: TimelineEntry[];
   rightEntries: TimelineEntry[];
 }
 
-type TabKey = "main" | "teaching" | "consulting" | "content";
+export type TabKey = "main" | "teaching" | "consulting" | "content";
 
 // Per-tab accent colors
 const tabAccentColors: Record<TabKey, string> = {
@@ -28,7 +28,7 @@ const tabAccentColors: Record<TabKey, string> = {
   content: "#FF4C79",
 };
 
-const professionalTimelines: Record<TabKey, TimelineData> = {
+export const professionalTimelines: Record<TabKey, TimelineData> = {
   main: {
     label: "Main Career",
     leftEntries: [
@@ -84,7 +84,7 @@ const professionalTimelines: Record<TabKey, TimelineData> = {
   },
 };
 
-const funTimelines: Record<TabKey, TimelineData> = {
+export const funTimelines: Record<TabKey, TimelineData> = {
   main: {
     label: "Main Career",
     leftEntries: [

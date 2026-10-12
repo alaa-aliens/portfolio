@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useMode } from "../components/ModeContext";
 import { DoodleTitle } from "../components/play/DoodleTitle";
-import { WorkExperienceSection } from "../components/WorkExperienceSection";
+import { ExperienceComic } from "../components/story/ExperienceComic";
 import { Doodle, Reveal } from "../components/motion/Doodles";
 import { Eyebrow, NextTiles, PaperCard, Prose, Scribble } from "../components/ui/Kit";
 import { StickerArt } from "../components/play/Stickers";
@@ -25,18 +25,18 @@ export function ExperiencePage() {
       <section className="relative w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-[110px] md:pt-[160px]">
         <Doodle kind="zigzag" className="right-6 md:right-32 top-[100px]" size={40} color="#FF9F1C" />
         <Reveal y={12}><Eyebrow className="mb-3">{isProfessional ? "Experience" : "The lore"}</Eyebrow></Reveal>
-        <DoodleTitle as="h1" text={isProfessional ? "Where I've {head} been" : "How I got {head} here"} className="text-[42px] md:text-[80px]" />
+        <DoodleTitle as="h1" text={isProfessional ? "where i've {star} been" : "how i got {star} here"} className="text-[42px] md:text-[80px]" />
         <Reveal delay={0.15}>
           <Prose lead className="mt-6 max-w-[700px]">
             {isProfessional
-              ? "Four timelines, because the work never stayed in one lane: the main career, the teaching, the consulting, and the drawing that turned into content."
-              : "Four timelines, because I can't stay in one lane. Tabs are below. Yes, the PlayStation years count."}
+              ? "Five characters, all me: the designer, the teacher, the consultant, the content creator and the father. Pick one and read their storyline."
+              : "Five versions of me. Pick one. The dad one has the harshest reviews."}
           </Prose>
         </Reveal>
       </section>
 
       <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-12 md:mt-16">
-        <WorkExperienceSection embedded />
+        <ExperienceComic />
 
         {/* Clients wall */}
         <section>

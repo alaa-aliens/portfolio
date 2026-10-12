@@ -295,7 +295,7 @@ export function ComicStrip() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ type: "spring", stiffness: 160, damping: 18, delay: Math.min(i, 3) * 0.08 }}
             >
-              <div className="relative aspect-[240/300] bg-[#fffaf1]">
+              <div className="relative aspect-[240/300] bg-[#fdecd0]">
                 <svg viewBox="0 0 240 300" className="absolute inset-0 w-full h-full overflow-visible" fill="none" aria-hidden>
                   {frames[i].map((q, k) => (
                     <motion.path key={k} d={q.d} stroke={q.stroke} strokeWidth={q.strokeWidth} fill="none" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }} />
@@ -372,7 +372,7 @@ export function ComicStrip() {
                   </div>
                   <div className="grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-10 mt-5 items-start">
                     {/* big panel with a speech bubble */}
-                    <div className="relative border-[3px] border-[#1d1a17] bg-[#fffaf1] p-4 md:p-6" style={{ borderRadius: "12px 180px 12px 200px / 200px 12px 180px 12px" }}>
+                    <div className="relative border-[3px] border-[#1d1a17] bg-[#fdecd0] p-4 md:p-6" style={{ borderRadius: "12px 180px 12px 200px / 200px 12px 180px 12px" }}>
                       <motion.img
                         src={p.img}
                         alt=""
