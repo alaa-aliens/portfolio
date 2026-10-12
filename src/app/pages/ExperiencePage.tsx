@@ -39,7 +39,7 @@ export function ExperiencePage() {
         <ExperienceComic />
 
         {/* Clients wall */}
-        <section>
+        <section className="text-center">
           <DoodleTitle text={isProfessional ? "people i've {heart} worked with" : "who's {heart} paid me so far"} className="text-[40px] md:text-[64px] mb-8 text-center" />
           <ul className="flex flex-wrap justify-center gap-2.5 md:gap-3">
             {CLIENTS.map((c, i) => (
@@ -61,9 +61,9 @@ export function ExperiencePage() {
         </section>
 
         {/* Talks + teaching */}
-        <section>
+        <section className="text-center">
           <DoodleTitle text={isProfessional ? "on stage {sparkle} and on air" : "talking {sparkle} at people"} className="text-[40px] md:text-[64px] mb-8 text-center" />
-          <ul className="grid md:grid-cols-2 gap-5">
+          <ul className="grid md:grid-cols-2 gap-5 text-left">
             {TALKS.map((t, i) => (
               <PaperCard key={t.t} tilt={i % 2 ? 1.5 : -1.5} className="p-5 flex items-start gap-4">
                 <span className="shrink-0"><StickerArt kind={i === 0 ? "crown" : i === 1 ? "star" : i === 2 ? "heart" : "sparkle"} size={40} /></span>
