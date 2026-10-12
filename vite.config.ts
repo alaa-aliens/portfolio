@@ -38,4 +38,6 @@ export default defineConfig(({ mode }) => ({
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
   ...(mode === 'preview' ? { build: { outDir: 'dist-preview', assetsInlineLimit: 100_000_000 } } : {}),
+  // `vite build --mode v2` = the hidden work-in-progress site served at alaa-ali.com/v2/
+  ...(mode === 'v2' ? { base: '/v2/', build: { outDir: 'dist-v2' } } : {}),
 }))

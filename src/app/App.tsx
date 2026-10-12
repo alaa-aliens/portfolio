@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { BrowserRouter, HashRouter, Route, Routes, useLocation } from "react-router";
 
 // The single-file preview build uses #/ URLs because it has no server to route paths.
-const Router = import.meta.env.MODE === "preview" ? HashRouter : BrowserRouter;
+const Router = import.meta.env.MODE === "preview" || import.meta.env.MODE === "v2" ? HashRouter : BrowserRouter;
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { WorkPage } from "./pages/WorkPage";
 import { CaseStudyPage } from "./pages/CaseStudyPage";

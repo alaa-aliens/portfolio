@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Builds the live site from `main` and the hidden v2 from the `v2` branch
+# (served at alaa-ali.com/v2/, noindex). A push to either branch redeploys both.
 on:
   push:
-    branches: [main]
+    branches: [main, v2]
   workflow_dispatch:
 
 permissions:
@@ -19,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -29,6 +33,24 @@ jobs:
         run: |
           cp dist/index.html dist/404.html
           echo "alaa-ali.com" > dist/CNAME
+      - name: Check out v2 (if it exists)
+        id: v2
+        run: |
+          if git ls-remote --exit-code --heads origin v2 >/dev/null; then echo "has=1" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.v2.outputs.has == '1'
+        with:
+          ref: v2
+          path: v2src
+      - name: Build v2 into /v2 (hidden)
+        if: steps.v2.outputs.has == '1'
+        run: |
+          cd v2src
+          npm ci
+          npx vite build --mode v2
+          sed -i 's#<head>#<head><meta name="robots" content="noindex, nofollow">#' dist-v2/index.html
+          rm -f dist-v2/sitemap.xml dist-v2/robots.txt dist-v2/CNAME
+          mkdir -p ../dist/v2 && cp -r dist-v2/. ../dist/v2/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
