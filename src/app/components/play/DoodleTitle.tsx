@@ -52,12 +52,16 @@ export function DoodleTitle({
 }) {
   const H = as;
   const parts = text.split(/(\{[a-z]+\})/g).filter(Boolean);
+  // margins and centering belong to the wrapper (so the underline follows the title)
+  const wrapCls = (className.match(/\b(mb-\S+|mt-\S+|my-\S+)\b/g) ?? []).join(" ");
+  const center = /text-center/.test(className);
+  const hCls = className.replace(/\b(mb-\S+|mt-\S+|my-\S+)\b/g, "").trim();
   return (
-    <div className="inline-flex flex-col gap-1">
+    <div className={`inline-flex flex-col gap-1 ${center ? "items-center" : ""} ${wrapCls}`}>
       <Reveal y={16}>
         <H
           aria-label={text.replace(/\{[a-z]+\}\s?/g, "")}
-          className={`font-display lowercase text-black leading-[1] [text-wrap:balance] ${className}`}
+          className={`font-display lowercase text-black leading-[1] [text-wrap:balance] ${hCls}`}
         >
           {parts.map((p, i) => {
             const m = p.match(/^\{([a-z]+)\}$/);

@@ -58,7 +58,7 @@ export function ExperienceComic() {
     <div className="flex flex-col gap-10 md:gap-14">
       {/* the cast */}
       <div>
-        <Scribble className="mb-3">{isProfessional ? "the cast (it's all me). pick one." : "the cast. all me. pick your fighter."}</Scribble>
+        <Scribble className="mb-3 text-center">{isProfessional ? "the cast (it's all me). pick one." : "the cast. all me. pick your fighter."}</Scribble>
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 md:gap-5" role="tablist">
           {CAST.map((m, i) => {
             const on = m.k === who;
@@ -98,7 +98,7 @@ export function ExperienceComic() {
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="grid md:grid-cols-[220px_1fr] gap-6 md:gap-10 items-center mb-12 md:mb-16">
+          <div className="flex flex-col items-center text-center gap-4 mb-12 md:mb-16">
             <motion.img
               src={c.img}
               alt=""
@@ -107,7 +107,7 @@ export function ExperienceComic() {
               animate={{ scale: 1, rotate: [-3, 3, -3] }}
               transition={{ scale: { type: "spring", stiffness: 200, damping: 14 }, rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
             />
-            <div>
+            <div className="flex flex-col items-center">
               <h2 className="font-display lowercase text-[44px] md:text-[72px] leading-[0.95]" style={{ color: c.color }}>{c.name[k]}</h2>
               <p className="font-['Work_Sans'] uppercase tracking-[0.16em] text-[12px] text-black/50 mt-2">{c.role[k]}</p>
               <motion.p
@@ -117,7 +117,7 @@ export function ExperienceComic() {
                 className="relative inline-block mt-5 max-w-[520px] rounded-[18px] border-2 border-[#1d1a17] bg-white px-5 py-3 font-['Shantell_Sans',cursive] text-[16px] md:text-[18px] leading-snug shadow-[3px_3px_0_0_#1d1a17]"
               >
                 {c.line[k]}
-                <span aria-hidden className="absolute -left-2.5 top-6 w-4 h-4 bg-white border-l-2 border-b-2 border-[#1d1a17] rotate-45" />
+                <span aria-hidden className="absolute left-1/2 -translate-x-1/2 -top-2.5 w-4 h-4 bg-white border-l-2 border-t-2 border-[#1d1a17] rotate-45" />
               </motion.p>
             </div>
           </div>

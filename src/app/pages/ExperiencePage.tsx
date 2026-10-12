@@ -22,12 +22,12 @@ export function ExperiencePage() {
 
   return (
     <article className="w-full overflow-x-clip">
-      <section className="relative w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-[110px] md:pt-[160px]">
+      <section className="relative w-full max-w-[1000px] mx-auto px-5 md:px-12 pt-[110px] md:pt-[160px] text-center flex flex-col items-center">
         <Doodle kind="zigzag" className="right-6 md:right-32 top-[100px]" size={40} color="#FF9F1C" />
         <Reveal y={12}><Eyebrow className="mb-3">{isProfessional ? "Experience" : "The lore"}</Eyebrow></Reveal>
         <DoodleTitle as="h1" text={isProfessional ? "where i've {star} been" : "how i got {star} here"} className="text-[42px] md:text-[80px]" />
         <Reveal delay={0.15}>
-          <Prose lead className="mt-6 max-w-[700px]">
+          <Prose lead className="mt-6 max-w-[700px] mx-auto">
             {isProfessional
               ? "Five characters, all me: the designer, the teacher, the consultant, the content creator and the father. Pick one and read their storyline."
               : "Five versions of me. Pick one. The dad one has the harshest reviews."}
@@ -35,13 +35,13 @@ export function ExperiencePage() {
         </Reveal>
       </section>
 
-      <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-12 md:mt-16">
+      <div className="w-full max-w-[1000px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-12 md:mt-16">
         <ExperienceComic />
 
         {/* Clients wall */}
         <section>
-          <DoodleTitle text={isProfessional ? "people i've {heart} worked with" : "who's {heart} paid me so far"} className="text-[40px] md:text-[64px] mb-8" />
-          <ul className="flex flex-wrap gap-2.5 md:gap-3">
+          <DoodleTitle text={isProfessional ? "people i've {heart} worked with" : "who's {heart} paid me so far"} className="text-[40px] md:text-[64px] mb-8 text-center" />
+          <ul className="flex flex-wrap justify-center gap-2.5 md:gap-3">
             {CLIENTS.map((c, i) => (
               <li key={c}>
                 <motion.span
@@ -57,12 +57,12 @@ export function ExperiencePage() {
               </li>
             ))}
           </ul>
-          <Scribble className="mt-4">{isProfessional ? "and a few I can't name yet" : "+ a few under NDA. very mysterious."}</Scribble>
+          <Scribble className="mt-4 text-center">{isProfessional ? "and a few I can't name yet" : "+ a few under NDA. very mysterious."}</Scribble>
         </section>
 
         {/* Talks + teaching */}
         <section>
-          <DoodleTitle text={isProfessional ? "on stage {sparkle} and on air" : "talking {sparkle} at people"} className="text-[40px] md:text-[64px] mb-8" />
+          <DoodleTitle text={isProfessional ? "on stage {sparkle} and on air" : "talking {sparkle} at people"} className="text-[40px] md:text-[64px] mb-8 text-center" />
           <ul className="grid md:grid-cols-2 gap-5">
             {TALKS.map((t, i) => (
               <PaperCard key={t.t} tilt={i % 2 ? 1.5 : -1.5} className="p-5 flex items-start gap-4">
