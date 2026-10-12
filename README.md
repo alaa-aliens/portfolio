@@ -67,3 +67,8 @@ Ala'a's own words, after one night of feedback:
 ## Contact
 
 No modal. Every "Get in Touch" goes to `/contact`, the postcard, which opens a `mailto:` with the stamped reason, the message and the signature.
+
+
+## Hosting
+
+Live at **alaa-ali.com** on GitHub Pages. Every push to `main` on `alaa-aliens/portfolio` runs `.github/workflows/deploy.yml` (build → `dist/` with `404.html` SPA fallback + `CNAME`) and publishes. GoDaddy DNS: four A records on `@` → 185.199.108/109/110/111.153 and `www` CNAME → `alaa-aliens.github.io`. The `siba` and `list` subdomains still point to Vercel.
