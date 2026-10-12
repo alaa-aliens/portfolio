@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const DEFAULT_TITLE = "Ala'a Ali — UX/UI Designer";
 const DEFAULT_DESC =
-  "UX/UI Designer • Illustrator • Facilitator — I design apps, platforms, and dashboards that people don't need a manual to use. That's the whole job, really.";
+  "Ala'a Ali is a UX/UI designer, illustrator and workshop facilitator in Amman, Jordan. 15+ years designing apps, dashboards and platforms across MENA.";
 
 function setMeta(attr: "name" | "property", key: string, value: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
@@ -23,7 +23,9 @@ export function usePageMeta({ title, description }: { title?: string; descriptio
     setMeta("name", "description", d);
     setMeta("property", "og:title", t);
     setMeta("property", "og:description", d);
-    setMeta("property", "og:url", window.location.href);
+    setMeta("property", "og:url", `https://alaa-ali.com${window.location.pathname}`);
+    setMeta("name", "twitter:title", t);
+    setMeta("name", "twitter:description", d);
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (canonical) canonical.href = `https://alaa-ali.com${window.location.pathname}`;
   }, [title, description]);

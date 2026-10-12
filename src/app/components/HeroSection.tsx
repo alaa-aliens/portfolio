@@ -180,6 +180,14 @@ export function HeroSection() {
               />
               <LensPupils boxRef={boxRef} surprised={surprised} />
             </motion.button>
+            {/* soft ground shadow under the feet; it breathes with the bob */}
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute left-[18%] right-[18%] bottom-[-6px] h-[26px] rounded-[50%] bg-[#1d1a17]/22 blur-[9px] -z-10"
+              animate={pokes ? { scaleX: [1, 0.7, 1.1, 0.95, 1], opacity: [0.9, 0.45, 1, 0.8, 0.9] } : { scaleX: [1, 0.9, 1], opacity: [0.9, 0.65, 0.9] }}
+              transition={pokes ? { duration: 0.6, ease: "easeOut" } : { duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+              key={`shadow-${pokes}`}
+            />
           </motion.div>
         </motion.div>
 
