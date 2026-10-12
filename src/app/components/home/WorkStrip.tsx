@@ -148,8 +148,15 @@ export function WorkStrip() {
           {items.map((p, i) => (
             <Frame key={p.slug} p={p} i={i} onOpen={open} />
           ))}
-          <Link to="/work" className="shrink-0 w-[60vw] sm:w-[300px] self-stretch flex items-center justify-center rounded-[16px] border border-dashed border-black/40 hover:border-black hover:bg-[#fffaf1]/60 transition-colors min-h-[280px]">
-            <span className="font-display text-[34px] lowercase text-[#ff614c]">+{projects.length - items.length} more →</span>
+          <Link to="/work" className="shrink-0 self-center ml-2 md:ml-6" draggable={false}>
+            <motion.span
+              whileHover={{ scale: 1.08, rotate: 6 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center justify-center w-[150px] h-[150px] md:w-[180px] md:h-[180px] rounded-full border-[1.5px] border-dashed border-black/50 hover:border-black bg-[#fffaf1]/70 hover:bg-[#fffaf1] transition-colors font-display lowercase leading-none text-center"
+            >
+              <span className="text-[34px] md:text-[42px] text-[#ff614c]">+{projects.length - items.length}</span>
+              <span className="text-[18px] md:text-[20px] text-black/70 mt-1">more →</span>
+            </motion.span>
           </Link>
         </motion.div>
       </div>
