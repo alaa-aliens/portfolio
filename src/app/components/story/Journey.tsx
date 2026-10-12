@@ -40,13 +40,13 @@ export function Journey({ stops, color }: { stops: Stop[]; color: string }) {
                 transition={{ duration: 0.5 }}
               />
               <motion.div
-                className={`row-start-1 col-start-2 ${left ? "md:col-start-1 md:pr-10 md:text-right md:items-end" : "md:col-start-3 md:pl-10"} flex flex-col gap-2`}
+                className={`row-start-1 col-start-2 ${left ? "md:col-start-1 md:pr-10 md:text-right md:items-end" : "md:col-start-3 md:pl-10 md:items-start"} flex flex-col gap-2`}
                 initial={{ opacity: 0, x: left ? -30 : 30, rotate: left ? -2 : 2 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ type: "spring", stiffness: 120, damping: 16 }}
               >
-                <span className="self-start md:self-auto inline-block font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.14em] px-2 py-1 rounded-[6px] text-white" style={{ background: "#1d1a17" }}>
+                <span className="self-start md:self-auto inline-block w-auto font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.14em] px-2 py-1 rounded-[2px] text-white" style={{ background: "#ff614c" }}>
                   {s.date}
                 </span>
                 <h4 className="font-['Playfair_Display'] font-bold text-[22px] md:text-[27px] leading-tight">{s.title}</h4>
