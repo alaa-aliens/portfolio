@@ -307,9 +307,10 @@ export function ComicStrip() {
               onKeyDown={(e) => e.key === "Enter" && setOpen(i)}
               whileHover={{ y: -6, rotate: 0 }}
               className="relative w-[240px] md:w-[260px] shrink-0 select-none cursor-pointer"
-              initial={{ opacity: 0, y: 24, rotate: i % 2 ? 2 : -2 }}
-              whileInView={{ opacity: 1, y: 0, rotate: i % 2 ? 0.8 : -0.8 }}
-              viewport={{ once: true, margin: "-40px" }}
+              variants={{ hidden: { opacity: 0, y: 24, rotate: i % 2 ? 2 : -2 }, shown: { opacity: 1, y: 0, rotate: i % 2 ? 0.8 : -0.8 } }}
+              initial="hidden"
+              whileInView="shown"
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ type: "spring", stiffness: 160, damping: 18, delay: Math.min(i, 3) * 0.08 }}
             >
               <div className="relative aspect-[240/300] bg-[#fdecd0]">
@@ -321,10 +322,7 @@ export function ComicStrip() {
                 <span className="absolute top-3 left-3 font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.14em] bg-black text-white px-2 py-0.5">{p.year}</span>
                 <motion.div
                   className="absolute left-[6%] right-[6%] top-[11%] h-[52%] flex items-center justify-center"
-                  initial={{ clipPath: "inset(0 100% 0 0)" }}
-                  whileInView={{ clipPath: "inset(0 0% 0 0)" }}
-                  viewport={{ once: true, margin: "0px -10% 0px -10%" }}
-                  transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  variants={{ hidden: { clipPath: "inset(0 100% 0 0)" }, shown: { clipPath: "inset(0 0% 0 0)", transition: { duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] } } }}
                 >
                   <img src={p.img} alt="" draggable={false} className="max-w-full max-h-full w-auto h-auto" />
                 </motion.div>
