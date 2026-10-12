@@ -18,7 +18,7 @@ import { Stickers } from "./components/play/Stickers";
 import { InkCursor } from "./components/play/InkCursor";
 import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
 import { AskAlaa } from "./components/play/AskAlaa";
-import { HomePage } from "./pages/HomePage";
+import { DayPage } from "./pages/DayPage";
 import { AboutPage } from "./pages/AboutPage";
 import { SkillsPage } from "./pages/SkillsPage";
 import { ExperiencePage } from "./pages/ExperiencePage";
@@ -43,7 +43,7 @@ function AppContent() {
   const location = useLocation();
 
   return (
-    <div className="relative min-h-screen bg-[#fdecd0] flex flex-col">
+    <div className={`relative min-h-screen flex flex-col ${location.pathname === "/" ? "" : "bg-[#fdecd0]"}`}>
       <ScrollProgress />
       <InkCursor />
       <ModeSwitchFX />
@@ -67,7 +67,7 @@ function AppContent() {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             <Routes location={location}>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<DayPage />} />
               <Route path="/work" element={<WorkPage />} />
               <Route path="/work/:slug" element={<CaseStudyPage />} />
               <Route path="/about" element={<AboutPage />} />
