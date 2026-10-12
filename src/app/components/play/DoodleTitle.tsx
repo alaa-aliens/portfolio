@@ -12,6 +12,7 @@ import imgBoard from "figma:asset/7d1c70ce8d978daa5db3cd98761c352b121d3ad8.png";
 import { StickerArt, type Kind } from "./Stickers";
 
 const ART: Record<string, React.ReactNode> = {
+  coffee: <StickerArt kind="mug" size={52} />,
   head: (
     <span className="relative inline-block w-[0.9em] h-[1.05em] overflow-hidden align-[-0.15em]">
       <img src={imgHeadCut} alt="" className="absolute inset-0 w-full h-full object-contain max-w-none" />
