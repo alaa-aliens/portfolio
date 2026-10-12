@@ -4,7 +4,7 @@ import { play } from "../play/sfx";
  * Everything is draggable; whatever you grab comes to the front.
  * "Shuffle" throws them around again.
  */
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import imgImage37 from "figma:asset/e1bc33a6eca046916183a4821600eb03ec70fd26.png";
 import imgImage36 from "figma:asset/06bd2d2586919b8105c2daf716cd136fdb5b5b11.png";
@@ -113,6 +113,15 @@ function rnd(seed: number) {
 export function Sketchbook() {
   const { isProfessional } = useMode();
   const board = useRef<HTMLDivElement>(null);
+  const [box, setBox] = useState({ w: 1200, h: 600 });
+  useEffect(() => {
+    const el = board.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setBox({ w: el.clientWidth, h: el.clientHeight }));
+    ro.observe(el);
+    setBox({ w: el.clientWidth, h: el.clientHeight });
+    return () => ro.disconnect();
+  }, []);
   const [seed, setSeed] = useState(7);
   const [story, setStory] = useState(0);
   const EXTRA: Kind[] = ["star", "heart", "sparkle", "bolt", "sun", "bubble", "plane", "note", "bulb", "headphones", "plant", "swirl", "crown", "wow"];
@@ -210,7 +219,13 @@ export function Sketchbook() {
             <motion.div
               key={`${story}-${i}-${seed}`}
               drag
-              dragConstraints={board}
+              dragConstraints={(() => {
+                const w = it.w * scale;
+                const h = it.kind === "note" ? 80 : w;
+                const lx = (l.x / 100) * box.w;
+                const ty = (l.y / 100) * box.h;
+                return { left: -lx + 4, top: -ty + 4, right: Math.max(4, box.w - lx - w - 4), bottom: Math.max(4, box.h - ty - h - 4) };
+              })()}
               dragElastic={0.12}
               dragMomentum={false}
               onDragStart={() => bring(i)}
