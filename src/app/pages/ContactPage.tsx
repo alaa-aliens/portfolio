@@ -20,6 +20,8 @@ import imgContact from "../../assets/covers/contact.webp";
 import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 
 const EMAIL = "alaa@alaa-ali.com";
+/** Formspree endpoint. Empty = fall back to the mail app. */
+const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT as string | undefined;
 
 const STAMPS: { k: string; pro: string; fun: string; kind: Kind; color: string }[] = [
   { k: "project", kind: "star", color: "#FFC53D", pro: "a product that needs design", fun: "my app is ugly, help" },
@@ -75,17 +77,38 @@ export function ContactPage() {
   const chosen = STAMPS.find((s) => s.k === stamp);
   const ready = msg.trim().length > 3;
 
-  const send = () => {
+  const [failed, setFailed] = useState(false);
+  const send = async () => {
     if (!ready || flying) return;
     setFlying(true);
     play("whoosh", 0.5);
     addScore(100, "you actually wrote. jackpot!", "contact:sent", true);
-    const subject = encodeURIComponent(chosen ? `About ${isProfessional ? chosen.pro : chosen.fun}` : "Hello from your website");
-    const body = encodeURIComponent(`${msg.trim()}\n\n— ${name.trim() || "someone from your website"}`);
-    window.setTimeout(() => {
+    const subject = chosen ? `About ${isProfessional ? chosen.pro : chosen.fun}` : "Hello from your website";
+    const fallback = () => {
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${msg.trim()}\n\n— ${name.trim() || "someone from your website"}`)}`;
+    };
+    const flight = new Promise((r) => window.setTimeout(r, 1400));
+    if (FORM_ENDPOINT) {
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ _subject: subject, about: chosen ? chosen.pro : "", name: name.trim() || "someone from your website", message: msg.trim() }),
+        });
+        await flight;
+        if (!res.ok) throw new Error(String(res.status));
+        setLanded(true);
+      } catch {
+        await flight;
+        setFailed(true);
+        setLanded(true);
+        fallback();
+      }
+    } else {
+      await flight;
       setLanded(true);
-      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-    }, 1400);
+      fallback();
+    }
   };
 
   const copy = async () => {
@@ -198,11 +221,15 @@ export function ContactPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="py-10">
               <DoodleTitle text={isProfessional ? "it {heart} landed" : "nice {heart} throw"} className="text-[40px] md:text-[64px]" />
               <Prose className="mt-4 max-w-[560px]">
-                {isProfessional
-                  ? "Your mail app should be open with the postcard in it. If it isn't, the address is right below. I reply within a day or two, Amman time."
-                  : "Your mail app should have the whole thing. If not, the address is below. I reply within a day or two, Amman time, coffee permitting."}
+                {FORM_ENDPOINT && !failed
+                  ? isProfessional
+                    ? "It's in my inbox. I reply within a day or two, Amman time."
+                    : "It's in my inbox. I reply within a day or two, Amman time, coffee permitting."
+                  : isProfessional
+                    ? "Your mail app should be open with the postcard in it. If it isn't, the address is right below. I reply within a day or two, Amman time."
+                    : "Your mail app should have the whole thing. If not, the address is below. I reply within a day or two, Amman time, coffee permitting."}
               </Prose>
-              <button onClick={() => { setLanded(false); setFlying(false); setMsg(""); }} className="mt-5 font-['Shantell_Sans',cursive] text-[15px] text-[#ff614c] underline underline-offset-4">
+              <button onClick={() => { setLanded(false); setFlying(false); setFailed(false); setMsg(""); }} className="mt-5 font-['Shantell_Sans',cursive] text-[15px] text-[#ff614c] underline underline-offset-4">
                 {isProfessional ? "write another" : "throw another one"}
               </button>
             </motion.div>
