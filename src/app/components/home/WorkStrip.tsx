@@ -120,8 +120,8 @@ export function WorkStrip() {
   };
 
   return (
-    <section className="w-full pt-20 md:pt-28 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-6 md:mb-8">
+    <section className="w-full pt-32 md:pt-48 overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-10 md:mb-14">
         <div>
           <DoodleTitle text={isProfessional ? "things i {pencil} made" : "stuff i {pencil} made"} className="text-[44px] md:text-[72px]" />
           <Scribble className="mt-1">{isProfessional ? "drag sideways, or scroll" : "drag it. go on. it likes it."}</Scribble>
@@ -143,7 +143,7 @@ export function WorkStrip() {
             if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
             x.set(Math.min(0, Math.max(-bound, x.get() - e.deltaX)));
           }}
-          className="flex items-start gap-6 md:gap-10 px-5 md:px-12 pb-6 w-max"
+          className="flex items-start gap-8 md:gap-14 px-5 md:px-12 pb-10 w-max"
         >
           {items.map((p, i) => (
             <Frame key={p.slug} p={p} i={i} onOpen={open} />

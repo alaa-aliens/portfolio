@@ -110,7 +110,7 @@ export function StatsSection() {
   const { isProfessional, mode } = useMode();
 
   return (
-    <section className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-8">
+    <section className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-14 md:py-20">
       <motion.div
         key={mode}
         initial={{ opacity: 0, y: 20 }}

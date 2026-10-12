@@ -57,7 +57,7 @@ export function HomePage() {
       <WorkStrip />
 
       {/* About: a short hello + the comic strip */}
-      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-24 md:pt-36">
+      <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-32 md:pt-48">
         <div className="grid md:grid-cols-[1fr_200px] gap-8 items-end">
           <div>
             <DoodleTitle text={isProfessional ? "a bit about {coffee} me" : "the {coffee} lore"} className="text-[44px] md:text-[72px]" />
@@ -96,7 +96,7 @@ export function HomePage() {
             <img src={stMug} alt="" className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[170px] h-auto max-w-none" />
           </motion.div>
         </div>
-        <div className="mt-10 md:mt-14">
+        <div className="mt-14 md:mt-20">
           <ComicStrip />
         </div>
         <div className="mt-8 flex flex-wrap gap-4 items-center">
@@ -109,7 +109,7 @@ export function HomePage() {
       <Sketchbook />
 
       {/* The road so far */}
-      <section className="w-full max-w-[1000px] mx-auto px-5 md:px-12 pt-24 md:pt-36">
+      <section className="w-full max-w-[1000px] mx-auto px-5 md:px-12 pt-32 md:pt-48">
         <div className="mb-10 md:mb-14">
           <DoodleTitle text={isProfessional ? "the road {star} so far" : "how i got {star} here"} className="text-[44px] md:text-[72px]" />
           <Scribble className="mt-1">{isProfessional ? "scroll and it draws itself" : "it's a road. it draws. you scroll."}</Scribble>
@@ -118,7 +118,7 @@ export function HomePage() {
         <ToBeContinued to="/experience" label={isProfessional ? "the road continues" : "next episode"} note={isProfessional ? "four timelines, all the detours" : "four timelines. the PlayStation years count."} />
       </section>
 
-      <div className="h-16 md:h-24" />
+      <div className="h-28 md:h-40" />
     </main>
   );
 }

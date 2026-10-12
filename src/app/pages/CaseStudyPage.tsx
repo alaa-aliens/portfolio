@@ -237,7 +237,7 @@ export function CaseStudyPage() {
         </div>
       )}
 
-      <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 flex flex-col gap-20 md:gap-28 mt-16 md:mt-24">
+      <div className="w-full max-w-[1000px] mx-auto px-6 md:px-12 flex flex-col gap-28 md:gap-40 mt-20 md:mt-32">
         {/* ── Problem ── */}
         {cs.problem && cs.problem.length > 0 && (
           <section>

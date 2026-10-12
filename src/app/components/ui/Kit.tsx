@@ -137,7 +137,7 @@ export function NextTiles({ items, center = true }: { items: { to: string; k: st
 /** Page shell: consistent top padding, gutters, max width. */
 export function Page({ children, wide = false, className = "" }: { children: React.ReactNode; wide?: boolean; className?: string }) {
   return (
-    <article className={`w-full ${wide ? "max-w-[1200px]" : "max-w-[1000px]"} mx-auto px-5 md:px-12 pt-[110px] md:pt-[160px] pb-8 flex flex-col gap-24 md:gap-32 ${className}`}>
+    <article className={`w-full ${wide ? "max-w-[1200px]" : "max-w-[1000px]"} mx-auto px-5 md:px-12 pt-[120px] md:pt-[180px] pb-16 flex flex-col gap-32 md:gap-44 ${className}`}>
       {children}
     </article>
   );

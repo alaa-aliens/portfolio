@@ -101,8 +101,8 @@ export function Sketchbook() {
   };
 
   return (
-    <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-24 md:pt-36">
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-6">
+    <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-32 md:pt-48">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-10">
         <div>
           <DoodleTitle text={isProfessional ? "the {pencil} sketchbook" : "my {pencil} mess"} className="text-[44px] md:text-[72px]" />
           <Scribble className="mt-1">{isProfessional ? "drag things around. nothing breaks." : "drag it. shuffle it. make it worse."}</Scribble>

@@ -42,7 +42,7 @@ export function SkillsPage() {
         </Reveal>
       </section>
 
-      <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-8 md:mt-10">
+      <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-32 md:gap-44 mt-8 md:mt-10">
         <SkillsTable embedded />
 
         {/* Tools */}

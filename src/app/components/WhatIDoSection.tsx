@@ -181,7 +181,7 @@ export function WhatIDoSection() {
   const { isProfessional, mode } = useMode();
 
   return (
-    <section id="services" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 py-12">
+    <section id="services" className="w-full max-w-[1200px] mx-auto px-6 md:px-12 pt-28 md:pt-40 pb-4">
       <motion.div
         key={mode}
         initial={{ opacity: 0 }}
@@ -189,7 +189,7 @@ export function WhatIDoSection() {
         transition={{ duration: 0.4 }}
       >
         <DoodleTitle text={isProfessional ? "what i {sparkle} do" : "what i {sparkle} actually do"} className="text-[44px] md:text-[72px] mb-2" />
-        <p className="font-['Shantell_Sans',cursive] text-[14px] text-black/55 rotate-[-1deg] mb-8">{isProfessional ? "what clients ask for, and what I actually do. flip them." : "front: what you ask for. back: what you get. flip them."}</p>
+        <p className="font-['Shantell_Sans',cursive] text-[14px] text-black/55 rotate-[-1deg] mb-12">{isProfessional ? "what clients ask for, and what I actually do. flip them." : "front: what you ask for. back: what you get. flip them."}</p>
         <FlipCards />
       </motion.div>
     </section>

@@ -55,7 +55,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-24 md:gap-32 mt-16 md:mt-24">
+      <div className="w-full max-w-[1200px] mx-auto px-5 md:px-12 flex flex-col gap-32 md:gap-44 mt-16 md:mt-24">
         {/* Comic strip */}
         <section>
           <DoodleTitle text={isProfessional ? "the story, in {star} six panels" : "the origin {star} story"} className="text-[40px] md:text-[64px] mb-10 md:mb-14" />
