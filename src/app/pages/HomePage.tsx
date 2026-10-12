@@ -18,7 +18,6 @@ import { Reveal } from "../components/motion/Doodles";
 import { ToBeContinued } from "../components/play/ToBeContinued";
 import { Button, Prose, Scribble } from "../components/ui/Kit";
 import { usePageMeta } from "../usePageMeta";
-import stMug from "../../assets/stickers/mug.webp";
 
 const ROAD = {
   pro: [
@@ -58,7 +57,7 @@ export function HomePage() {
 
       {/* About: a short hello + the comic strip */}
       <section className="w-full max-w-[1200px] mx-auto px-5 md:px-12 pt-32 md:pt-48">
-        <div className="grid md:grid-cols-[1fr_200px] gap-8 items-end">
+        <div>
           <div>
             <DoodleTitle text={isProfessional ? "a bit about {coffee} me" : "the {coffee} lore"} className="text-[44px] md:text-[72px]" />
             <Reveal delay={0.1}>
@@ -70,31 +69,6 @@ export function HomePage() {
             </Reveal>
             <Scribble className="mt-3">{isProfessional ? "six panels, then the rest on the about page" : "six panels. drag them. they like it."}</Scribble>
           </div>
-          <motion.div
-            initial={{ opacity: 0, y: 30, rotate: -6 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 140, damping: 14 }}
-            className="hidden md:block relative w-[200px] h-[220px] shrink-0"
-            aria-hidden
-          >
-            {/* steam */}
-            {[0, 1, 2].map((i) => (
-              <motion.svg
-                key={i}
-                viewBox="0 0 20 60"
-                className="absolute top-0 w-[22px] h-[70px]"
-                style={{ left: 60 + i * 30 }}
-                fill="none"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: [0, 0.6, 0], y: [10, -14, -36] }}
-                transition={{ duration: 2.6, delay: i * 0.7, repeat: Infinity, ease: "easeOut" }}
-              >
-                <path d="M10 58 C 2 46, 18 38, 10 26 S 2 10, 10 2" stroke="#1d1a17" strokeWidth="2" strokeLinecap="round" />
-              </motion.svg>
-            ))}
-            <img src={stMug} alt="" className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[170px] h-auto max-w-none" />
-          </motion.div>
         </div>
         <div className="mt-14 md:mt-20">
           <ComicStrip />
