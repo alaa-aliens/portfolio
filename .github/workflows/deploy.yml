@@ -1,10 +1,10 @@
 name: Deploy to GitHub Pages
 
 # Builds the live site from `main` and the hidden v2 from the `v2` branch
-# (served at alaa-ali.com/v2/, noindex). A push to either branch redeploys both.
+# (served at alaa-ali.com/v2/, noindex). Pushes to v2 trigger this via v2-trigger.yml.
 on:
   push:
-    branches: [main, v2]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
