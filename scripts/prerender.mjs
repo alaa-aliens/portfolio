@@ -36,7 +36,7 @@ for (const c of chunks) {
 /* blog posts (markdown with a small front matter block) */
 const posts = [];
 if (existsSync("content/blog")) {
-  for (const f of readdirSync("content/blog").filter((f) => f.endsWith(".md"))) {
+  for (const f of readdirSync("content/blog").filter((f) => f.endsWith(".md") && f !== "README.md")) {
     const raw = readFileSync(join("content/blog", f), "utf8");
     const fm = Object.fromEntries(
       [...(raw.match(/^---\n([\s\S]*?)\n---/) || ["", ""])[1].matchAll(/^(\w+):\s*(.*)$/gm)].map((m) => [m[1], m[2].replace(/^["']|["']$/g, "")]),

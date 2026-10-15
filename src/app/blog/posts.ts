@@ -47,6 +47,7 @@ function parse(path: string, raw: string): Post {
 const SHOW_DRAFTS = import.meta.env.MODE !== "production";
 
 export const posts: Post[] = Object.entries(files)
+  .filter(([p]) => !p.endsWith("/README.md"))
   .map(([p, raw]) => parse(p, raw))
   .filter((p) => SHOW_DRAFTS || !p.draft)
   .sort((a, b) => b.date.localeCompare(a.date));
