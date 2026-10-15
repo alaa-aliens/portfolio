@@ -19,6 +19,7 @@ import { InkCursor } from "./components/play/InkCursor";
 import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
 import { AskAlaa } from "./components/play/AskAlaa";
 import { HomePage } from "./pages/HomePage";
+import { BlogPage, PostPage } from "./pages/BlogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { SkillsPage } from "./pages/SkillsPage";
 import { ExperiencePage } from "./pages/ExperiencePage";
@@ -52,7 +53,7 @@ function AppContent() {
       {!isArabic && <AskAlaa />}
       <Navbar />
       <ScrollManager />
-      {isArabic ? (
+      {isArabic && !location.pathname.startsWith("/blog") ? (
         <main className="flex-1">
           <ArabicPlaceholderPage />
         </main>
@@ -74,6 +75,10 @@ function AppContent() {
               <Route path="/skills" element={<SkillsPage />} />
               <Route path="/experience" element={<ExperiencePage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/topic/:cat" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<PostPage />} />
+              <Route path="/blog/:slug/:lang" element={<PostPage />} />
               <Route path="*" element={<CaseStudyPage />} />
             </Routes>
           </motion.div>
