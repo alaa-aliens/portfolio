@@ -6,7 +6,7 @@ cover: books
 tags: رسم, تجربة المستخدم, مسيرة
 category: drawing
 order: 13
-draft: true
+draft: false
 ---
 
 قبل الداشبوردات وأنظمة التصميم، قضيت سنين أرسم كتب أطفال في Square Design. أكتر من ٣٠٠ قصة مرسومة. إيدي لسا متذكّرة كل وحدة.

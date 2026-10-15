@@ -6,7 +6,7 @@ cover: books
 tags: illustration, ux, career
 category: drawing
 order: 13
-draft: true
+draft: false
 ---
 
 Before dashboards and design systems, I spent years drawing children's books at Square Design. More than 300 illustrated stories. My hand still remembers every one.

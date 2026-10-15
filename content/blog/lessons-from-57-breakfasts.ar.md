@@ -6,7 +6,7 @@ order: 4
 category: podcast
 cover: podcast-breakfast
 tags: بودكاست, مسيرة, نصائح
-draft: true
+draft: false
 ---
 
 لما تحكي عن التصميم كل أسبوع لمدة أربع سنين، في أفكار بترجع كل مرة مهما كان موضوع الحلقة. هاي الأفكار اللي علقت معي من [فطور ديزاينر](/blog/ftoor-designer/ar).
