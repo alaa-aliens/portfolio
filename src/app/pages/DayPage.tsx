@@ -391,6 +391,9 @@ export function DayPage() {
             <Sketchbook />
           </div>
         </div>
+        <div className="flex justify-center mt-12">
+          <Button to="/blog">{isProfessional ? "read the notes i write at night" : "the 2am blog"} →</Button>
+        </div>
       </section>
 
       {/* 02:00 contact */}
