@@ -72,3 +72,4 @@ html.ink-cursor, html.ink-cursor * { cursor: none !important; }
 .post-ar { font-family: "Noto Naskh Arabic", serif; font-size: 20px; line-height: 1.95; }
 .post-ar h2, .post-ar h3 { font-family: "Noto Naskh Arabic", serif; font-weight: 700; text-transform: none; font-size: 30px; }
 .post-ar blockquote { font-family: "Noto Naskh Arabic", serif; }
+.post-body h2, .post-body h3 { scroll-margin-top: 120px; }

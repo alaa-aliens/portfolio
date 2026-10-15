@@ -1,10 +1,11 @@
 ---
 title: What 300 children's book illustrations taught me about UX
 description: Before I designed apps I drew picture books. Kids can't ask the illustrator what a page means, and neither can your users.
-date: 2026-09-28
-lang: en
+date: 2026-10-16
 cover: books
 tags: illustration, ux, career
+category: drawing
+order: 13
 draft: true
 ---
 

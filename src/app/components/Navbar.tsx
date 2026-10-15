@@ -1,4 +1,5 @@
 import imgHeadCut from "../../assets/head.webp";
+import { stories } from "../blog/posts";
 import imgImage4 from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { ScoreHUD } from "./play/Score";
 import { HeadBadge } from "./play/HeadBadge";
@@ -55,7 +56,11 @@ const ITEMS: Item[] = [
   { label: ["About", "Me"], to: "/about" },
   { label: ["Skills", "Table"], to: "/skills" },
   { label: ["Experience", "Lore"], to: "/experience" },
+<<<<<<< HEAD
   { label: ["Blog", "Notes"], to: "/blog" },
+=======
+  ...(stories.length ? [{ label: ["Blog", "Notes"], to: "/blog" }] : []),
+>>>>>>> main
   { label: ["Contact", "Say hi"], to: "/contact" },
 ];
 

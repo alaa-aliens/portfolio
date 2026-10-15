@@ -18,6 +18,7 @@ import { Reveal } from "../components/motion/Doodles";
 import { ToBeContinued } from "../components/play/ToBeContinued";
 import { Button, Prose, Scribble } from "../components/ui/Kit";
 import { usePageMeta } from "../usePageMeta";
+import { BlogTeaser } from "./BlogPage";
 
 const ROAD = {
   pro: [
@@ -81,6 +82,9 @@ export function HomePage() {
 
       {/* Sketchbook */}
       <Sketchbook />
+
+      {/* From the blog */}
+      <BlogTeaser />
 
       {/* The road so far */}
       <section className="w-full max-w-[1000px] mx-auto px-5 md:px-12 pt-32 md:pt-48">

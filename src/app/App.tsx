@@ -18,7 +18,11 @@ import { Stickers } from "./components/play/Stickers";
 import { InkCursor } from "./components/play/InkCursor";
 import { ModeSwitchFX } from "./components/play/ModeSwitchFX";
 import { AskAlaa } from "./components/play/AskAlaa";
+<<<<<<< HEAD
 import { DayPage } from "./pages/DayPage";
+=======
+import { HomePage } from "./pages/HomePage";
+>>>>>>> main
 import { BlogPage, PostPage } from "./pages/BlogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { SkillsPage } from "./pages/SkillsPage";
@@ -53,7 +57,7 @@ function AppContent() {
       {!isArabic && <AskAlaa />}
       <Navbar />
       <ScrollManager />
-      {isArabic ? (
+      {isArabic && !location.pathname.startsWith("/blog") ? (
         <main className="flex-1">
           <ArabicPlaceholderPage />
         </main>
@@ -76,7 +80,13 @@ function AppContent() {
               <Route path="/experience" element={<ExperiencePage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/blog" element={<BlogPage />} />
+<<<<<<< HEAD
               <Route path="/blog/:slug" element={<PostPage />} />
+=======
+              <Route path="/blog/topic/:cat" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<PostPage />} />
+              <Route path="/blog/:slug/:lang" element={<PostPage />} />
+>>>>>>> main
               <Route path="*" element={<CaseStudyPage />} />
             </Routes>
           </motion.div>

@@ -1,33 +1,34 @@
 ---
-title: إذا تطبيقك بحاجة دليل استخدام، المشكلة مش بالمستخدم
-description: خمس علامات إنو التصميم بيحكي لغة غير لغة الناس، وكيف تصلحها قبل ما تكتب أول سطر من الدليل.
-date: 2026-09-15
-lang: ar
+title: If your app needs a manual, the problem isn't the user
+description: Five signs your design speaks a different language than the people using it, and how to fix them before you write the first line of a help guide.
+date: 2026-10-16
 cover: teach
-tags: ux, عربي, تصميم
+tags: ux, copy, design
+category: design
+order: 8
 draft: true
 ---
 
-بكل ورشة بعطيها، حدا بيسألني: "طيب والمستخدم اللي ما فهم الشاشة؟". وجوابي دايماً نفس الشي: إذا الشاشة بحاجة شرح، فالشاشة هي اللي ما فهمت المستخدم.
+In every workshop I run, someone asks: "OK, but what about the user who didn't understand the screen?" My answer is always the same. If the screen needs explaining, the screen is the one that didn't understand the user.
 
-## ١. الأزرار بتحكي لغة الشركة
+## 1. The buttons speak the company's language
 
-"تفعيل الخدمة" و"إرسال الطلب" كلمات بتفهمها الإدارة. المستخدم بده يعرف شو رح يصير بعد ما يكبس. اكتب النتيجة مش الإجراء: "احجز موعدي" أحسن من "إرسال".
+"Activate service" and "Submit request" are words management understands. People want to know what happens after they tap. Write the result, not the action: "Book my appointment" beats "Submit".
 
-## ٢. كل شي مهم، يعني ولا شي مهم
+## 2. Everything is important, so nothing is
 
-إذا الشاشة فيها خمس أزرار بنفس الحجم واللون، المستخدم رح يوقف ويفكر. خلي في فعل واحد واضح، والباقي أهدى.
+If a screen has five buttons in the same size and colour, people stop and think. Give it one clear action and make everything else quieter.
 
-## ٣. الأخطاء بتلوم الناس
+## 3. The errors blame people
 
-"بيانات غير صحيحة" ما بتساعد حدا. احكي شو الغلط وكيف يتصلح: "رقم الهاتف لازم يبلش بـ 07".
+"Invalid data" helps no one. Say what's wrong and how to fix it: "Phone numbers here start with 07".
 
-## ٤. التصميم مقلوب مش معرّب
+## 4. The design was flipped, not written for its readers
 
-التصميم العربي مش بس إنك تقلب الشاشة من اليمين للشمال. الأيقونات، ترتيب المعلومات، وحتى النبرة لازم تنكتب من الأول للناس اللي رح تستخدمها.
+Designing in Arabic isn't mirroring a screen from left to right. Icons, the order of information, even the tone need to be written from scratch for the people who'll use it.
 
-## ٥. ما حدا جرّبه على إنسان حقيقي
+## 5. Nobody tried it on a real person
 
-خمس دقايق مع شخص واحد بيستخدم الشاشة قدامك بتكشف أكتر من أسبوع اجتماعات.
+Five minutes watching one person use the screen in front of you will show you more than a week of meetings.
 
-> الدليل هو آخر حل، مش أول حل.
+> The manual is the last fix, not the first.
