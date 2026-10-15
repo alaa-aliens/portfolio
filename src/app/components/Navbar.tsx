@@ -56,11 +56,7 @@ const ITEMS: Item[] = [
   { label: ["About", "Me"], to: "/about" },
   { label: ["Skills", "Table"], to: "/skills" },
   { label: ["Experience", "Lore"], to: "/experience" },
-<<<<<<< HEAD
-  { label: ["Blog", "Notes"], to: "/blog" },
-=======
   ...(stories.length ? [{ label: ["Blog", "Notes"], to: "/blog" }] : []),
->>>>>>> main
   { label: ["Contact", "Say hi"], to: "/contact" },
 ];
 
