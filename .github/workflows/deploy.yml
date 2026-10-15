@@ -29,10 +29,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: SPA fallback + custom domain
-        run: |
-          cp dist/index.html dist/404.html
-          echo "alaa-ali.com" > dist/CNAME
+      - name: Custom domain
+        run: echo "alaa-ali.com" > dist/CNAME
       - name: Check out v2 (if it exists)
         id: v2
         run: |
