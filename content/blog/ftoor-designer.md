@@ -6,7 +6,7 @@ order: 3
 category: podcast
 cover: teach-c
 tags: podcast, ftoor designer, community
-draft: true
+draft: false
 ---
 
 Ftoor Designer (فطور ديزاينر, "designer's breakfast") is the podcast I co-hosted with Osama Khalil. The pitch was simple: for designers only, your creative dose with your morning coffee. Two designers talking about the actual job, in Arabic, the way we'd talk about it over breakfast.

@@ -6,7 +6,7 @@ order: 12
 category: drawing
 cover: drawing-tools
 tags: رسم, أدوات, alaa_aliens
-draft: true
+draft: false
 ---
 
 رسمت على أشياء كتير. هاي النسخة المختصرة، بالترتيب اللي تعلّمته إيدي.

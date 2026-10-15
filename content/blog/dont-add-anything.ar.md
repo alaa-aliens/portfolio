@@ -6,7 +6,7 @@ order: 6
 category: design
 cover: trackhawk
 tags: داشبورد, بساطة, trackhawk
-draft: true
+draft: false
 ---
 
 معظم بريفات إعادة التصميم بتيجي مع قائمة أمنيات. بريف [Trackhawk](/work/trackhawk) إجا مع قاعدة: بسيط، وصول سهل، جمّع البيانات، ولا تضيف ولا ميزة.

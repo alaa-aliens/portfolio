@@ -6,7 +6,7 @@ order: 2
 category: about
 cover: teach-b
 tags: teaching, workshops, career
-draft: true
+draft: false
 ---
 
 I've been teaching design for a long time now, and in a lot of different rooms. Design-thinking sessions as a guest lecturer at HTU. UX/UI training for internal teams at Zain. Cohorts at Takween. A yearly product design program for kids with YES JO and Zain, where children learn Figma. Workshops for aspiring designers at 42 Amman. UX/UI courses across Jordan's government universities with Zain. And now with the IEEE community.

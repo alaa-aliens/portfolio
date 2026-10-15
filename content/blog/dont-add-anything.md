@@ -6,7 +6,7 @@ order: 6
 category: design
 cover: trackhawk
 tags: dashboards, restraint, trackhawk
-draft: true
+draft: false
 ---
 
 Most redesign briefs come with a wishlist. The [Trackhawk](/work/trackhawk) brief came with a rule: minimal, easy access, group the data, and don't add a single feature.

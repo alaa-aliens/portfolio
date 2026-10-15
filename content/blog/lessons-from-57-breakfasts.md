@@ -6,7 +6,7 @@ order: 4
 category: podcast
 cover: podcast-breakfast
 tags: podcast, career, advice
-draft: true
+draft: false
 ---
 
 When you talk about design every week for four years, a few ideas keep coming back no matter what the episode was supposed to be about. These are the ones that stuck with me from [Ftoor Designer](/blog/ftoor-designer).

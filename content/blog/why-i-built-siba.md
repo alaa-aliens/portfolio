@@ -6,7 +6,7 @@ order: 10
 category: girls
 cover: family
 tags: siba, kids, edtech
-draft: true
+draft: false
 ---
 
 At home, studying ran on a manual loop. The girls photographed their textbook pages. I turned the pages into a summary and a quiz, sent it over iMessage, then marked every answer by hand. Now repeat that for two kids, every subject, every week.

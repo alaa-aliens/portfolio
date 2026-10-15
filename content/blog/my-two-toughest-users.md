@@ -6,7 +6,7 @@ cover: siba-list
 tags: kids, product design, siba list
 category: girls
 order: 9
-draft: true
+draft: false
 ---
 
 Every product I've designed had stakeholders. None of them were as demanding as Alma and Eleen.

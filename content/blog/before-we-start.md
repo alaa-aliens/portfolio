@@ -6,7 +6,7 @@ order: 14
 category: clients
 cover: client-meeting
 tags: clients, consulting, process
-draft: true
+draft: false
 ---
 
 I've worked with a lot of clients: newsrooms like Al Jazeera and TRT, game companies like Riot Games, Jawaker and Tamatem, startups through Endeavor Jordan and Zain, companies like Carseer and BravoBravo, and government teams. The products were all different. The projects that went well had the same beginning.

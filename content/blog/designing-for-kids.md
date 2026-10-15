@@ -6,7 +6,7 @@ order: 11
 category: girls
 cover: family-b
 tags: kids, siba, accessibility
-draft: true
+draft: false
 ---
 
 Designing [Siba](/work/siba) for my daughters meant designing for two very different users at once: an older girl who reads everything, and a younger one who can't read every word yet. Eleen, the youngest tester, gets her own early-years mode. Here are the rules that came out of it.

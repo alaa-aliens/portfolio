@@ -7,7 +7,7 @@ category: about
 cover: couch-b
 tags: مسيرة, إربد, قصة
 featured: true
-draft: true
+draft: false
 ---
 
 سنة ٢٠٠٧ كنت بنجّد كنب في إربد. بالنهار إسفنج وقماش ودبّاسة. وبالليل بلايستيشن. لو حدا قلّي وقتها إني رح أقضي حياتي المهنية وأنا بتناقش عن الـ border radius، كنت رح أسأله: شو يعني border radius؟

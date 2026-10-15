@@ -6,7 +6,7 @@ cover: teach
 tags: ux, copy, design
 category: design
 order: 8
-draft: true
+draft: false
 ---
 
 In every workshop I run, someone asks: "OK, but what about the user who didn't understand the screen?" My answer is always the same. If the screen needs explaining, the screen is the one that didn't understand the user.

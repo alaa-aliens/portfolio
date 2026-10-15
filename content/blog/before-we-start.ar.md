@@ -6,7 +6,7 @@ order: 14
 category: clients
 cover: client-meeting
 tags: عملاء, استشارات, طريقة الشغل
-draft: true
+draft: false
 ---
 
 اشتغلت مع عملاء كتير: غرف أخبار متل الجزيرة وTRT، شركات ألعاب متل Riot Games وجواكر وتماطم، شركات ناشئة عن طريق Endeavor Jordan وزين، شركات متل Carseer وBravoBravo، وفرق حكومية. المنتجات كلها كانت مختلفة. والمشاريع اللي مشيت منيح كان إلها نفس البداية.

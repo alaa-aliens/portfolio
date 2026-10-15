@@ -6,7 +6,7 @@ order: 15
 category: clients
 cover: consultant
 tags: ux audit, consulting, feedback
-draft: true
+draft: false
 ---
 
 A lot of my consulting is reviewing products that already exist: product audits and UX reviews for Endeavor Jordan's portfolio companies, UX strategy and product evaluation for startups at Zain, experience evaluation for digital media at TRT World.

@@ -6,7 +6,7 @@ cover: siba-list
 tags: أطفال, تصميم منتجات, siba list
 category: girls
 order: 9
-draft: true
+draft: false
 ---
 
 كل منتج صممته كان إله أصحاب قرار. ولا واحد فيهم كان متطلّب قد ألما وإيلين.

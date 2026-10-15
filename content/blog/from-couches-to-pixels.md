@@ -7,7 +7,7 @@ category: about
 cover: couch-b
 tags: career, irbid, story
 featured: true
-draft: true
+draft: false
 ---
 
 In 2007 I was stitching couches in Irbid. By day, foam, fabric and a staple gun. By night, PlayStation. If you'd told me then that I'd spend my working life arguing about border radius, I would have asked what a border radius was.

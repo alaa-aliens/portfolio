@@ -6,7 +6,7 @@ order: 5
 category: design
 cover: site-c
 tags: process, wireframes, trackhawk
-draft: true
+draft: false
 ---
 
 There's a meeting every designer has sat through. You show a screen you've spent a week structuring, and the first comment is about the shade of blue. The structure, the thing that actually decides whether people can use it, never gets discussed.
