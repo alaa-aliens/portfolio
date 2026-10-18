@@ -261,7 +261,7 @@ export const projects: Project[] = [
         { date: "Round 1", title: "Twelve pages, prompted", body: "The first website came out of Figma Make prompts, page by page: Tools, Business, APIs, Pricing. Fast, rough, and enough to argue about." },
         { date: "Round 2", title: "The report gets its own brief", body: "The website was the easy part. The report was the product. We pulled it out as its own redesign with its own rules: verdict first, evidence second." },
         { date: "Tokens", title: "Orange, dark, warm white, Inter", body: "A small set of brand tokens so every page stopped inventing its own greys. Orange kept one job." },
-        { date: "V3", title: "The \"V3 · Website\" page", body: "Every page rebuilt in Figma at 1512 and 393. A state doc written so each new session picked up where the last one stopped. [tell me what the client said here]" },
+        { date: "V3", title: "The \"V3 · Website\" page", body: "Every page rebuilt in Figma at 1512 and 393. A state doc written so each new session picked up where the last one stopped." },
         { date: "Details", title: "The carousel argument", body: "Arrows on each side of the cards, vertically centred, not bunched next to the title. Small, but it's the kind of thing that makes a site feel designed." },
       ],
       results: [
@@ -685,7 +685,7 @@ export const projects: Project[] = [
         { date: "Week 1", title: "Grey boxes, on purpose", body: "Five core screens in lo-fi with notes, on one Figma page, for approval before any colour. Live Tracking first, because it's the page everyone opens." },
         { date: "Benchmarks", title: "Hapn and Samsara, borrow / adapt / skip", body: "Two boards next to the wireframes. Hapn for its clarity, Samsara because it's \"much like us\". Every borrowed pattern had a verdict written next to it.", img: thWireMap },
         { date: "The menu", title: "Twelve items become four groups", body: "Operations, Management, Insights, Settings. The one addition we allowed: per-unit alert settings, because users kept asking." },
-        { date: "UI v1", title: "Uber-inspired, Trackhawk tokens", body: "Thirteen hi-fi screens including dark and sign-in. Archivo, Inter, a mono face. Orange means live. [add the meeting reaction here]", img: thLiveFleet },
+        { date: "UI v1", title: "Uber-inspired, Trackhawk tokens", body: "Thirteen hi-fi screens including dark and sign-in. Archivo, Inter, a mono face. Orange means live.", img: thLiveFleet },
         { date: "Focus", title: "Live tracking, every scenario", body: "The scope narrowed to the one page that matters, designed for 12, 40 and 100 units, desktop only. A tracking product, not a delivery app.", img: thLiveUnit },
       ],
       results: [
