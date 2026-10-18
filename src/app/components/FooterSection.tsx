@@ -101,10 +101,11 @@ export function FooterSection() {
         backgroundSize: '30px 30px',
       }} />
 
-      {/* Marquee */}
+      {/* Marquee (fun mode only) */}
+      {!isProfessional && (
       <div aria-hidden className="relative border-b border-white/10 py-4 md:py-6 overflow-hidden">
         <motion.div
-          className="flex w-max gap-10 whitespace-nowrap font-['Playfair_Display'] italic font-bold text-[28px] md:text-[44px]"
+          className="flex w-max gap-10 whitespace-nowrap font-['IBM_Plex_Serif'] italic font-bold text-[28px] md:text-[44px]"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
         >
@@ -123,6 +124,7 @@ export function FooterSection() {
           ))}
         </motion.div>
       </div>
+      )}
 
       <motion.div
         key={mode}

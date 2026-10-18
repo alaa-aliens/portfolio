@@ -110,9 +110,11 @@ export function HeroSection() {
   return (
     <section id="hero" className="relative w-full pt-[100px] md:pt-[130px] pb-[150px] md:pb-[170px] overflow-hidden">
       {/* The users — wander around behind everything */}
-      <div className="absolute inset-0 top-[70px] md:top-[90px]">
-        <UsersCrowd />
-      </div>
+      {!isProfessional && (
+        <div className="absolute inset-0 top-[70px] md:top-[90px]">
+          <UsersCrowd />
+        </div>
+      )}
 
       <div className="relative w-full max-w-[1200px] mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-6 md:gap-14 pointer-events-none">
         {/* Illustration */}
@@ -153,7 +155,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.3, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: -6 }}
             transition={{ type: "spring", stiffness: 260, damping: 12, delay: pokes ? 0 : 1.1 }}
-            className="absolute z-20 top-0 left-[46%] origin-bottom-left bg-white border border-black rounded-[18px] px-3 py-1.5 font-['DM_Serif_Display'] text-[14px] md:text-[18px] text-black shadow-[3px_3px_0px_0px_black] whitespace-nowrap"
+            className="absolute z-20 top-0 left-[46%] origin-bottom-left bg-white border border-black rounded-[18px] px-3 py-1.5 font-['IBM_Plex_Serif'] text-[14px] md:text-[18px] text-black shadow-[3px_3px_0px_0px_black] whitespace-nowrap"
           >
             {lines[pokes % lines.length]}
             <span aria-hidden className="absolute -bottom-[9px] left-4 w-4 h-4 bg-white border-b-2 border-r-2 border-black rotate-45" />
@@ -231,6 +233,7 @@ export function HeroSection() {
       </div>
 
       {/* Handwritten hint pointing at the crowd */}
+      {!isProfessional && (
       <motion.p
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -242,6 +245,7 @@ export function HeroSection() {
         </svg>
         {isProfessional ? "these are my users. click one for its persona" : "my users. they have notes. poke one."}
       </motion.p>
+      )}
     </section>
   );
 }

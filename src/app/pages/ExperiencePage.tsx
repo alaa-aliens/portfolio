@@ -68,7 +68,7 @@ export function ExperiencePage() {
               <PaperCard key={t.t} tilt={i % 2 ? 1.5 : -1.5} className="p-5 flex items-start gap-4">
                 <span className="shrink-0"><StickerArt kind={i === 0 ? "crown" : i === 1 ? "star" : i === 2 ? "heart" : "sparkle"} size={40} /></span>
                 <div>
-                  <h3 className="font-['Playfair_Display'] font-bold text-[19px] md:text-[21px] leading-tight">{t.t}</h3>
+                  <h3 className="font-['IBM_Plex_Serif'] font-bold text-[19px] md:text-[21px] leading-tight">{t.t}</h3>
                   <p className="font-['Work_Sans'] text-[13.5px] text-black/65 mt-1">{t.w}</p>
                 </div>
               </PaperCard>

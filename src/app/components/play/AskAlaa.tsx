@@ -173,7 +173,7 @@ export function AskAlaa() {
                 className="mb-2 w-[min(92vw,340px)] bg-[#fffaf1] border border-black rounded-[20px] shadow-[5px_6px_0_0_#1d1a17] flex flex-col overflow-hidden"
               >
                 <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-black bg-[#FFE9C7]">
-                  <span className="font-['Playfair_Display'] font-bold text-[16px]">{isProfessional ? "Ask Ala'a" : "Ask the doodle"}</span>
+                  <span className="font-['IBM_Plex_Serif'] font-bold text-[16px]">{isProfessional ? "Ask Ala'a" : "Ask the doodle"}</span>
                   <button onClick={() => setOpen(false)} aria-label="Close" className="w-7 h-7 rounded-full hover:bg-black/10 text-[14px]">✕</button>
                 </div>
                 <div ref={listRef} className="max-h-[42vh] md:max-h-[300px] overflow-y-auto px-3 py-3 flex flex-col gap-2">

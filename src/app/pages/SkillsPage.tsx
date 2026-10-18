@@ -53,7 +53,7 @@ export function SkillsPage() {
               <PaperCard key={t.name} tilt={i % 2 ? 2 : -2} className="p-5 flex gap-4">
                 <span className="shrink-0"><StickerArt kind={t.kind} size={44} /></span>
                 <div className="min-w-0">
-                  <h3 className="font-['Playfair_Display'] font-bold text-[20px] leading-tight">{t.name}</h3>
+                  <h3 className="font-['IBM_Plex_Serif'] font-bold text-[20px] leading-tight">{t.name}</h3>
                   <p className="font-['Work_Sans'] text-[14px] text-black/70 mt-1 leading-snug">{t.note[isProfessional ? 0 : 1]}</p>
                   <div className="flex gap-1 mt-3" aria-label={`${t.level} of 5`}>
                     {[1, 2, 3, 4, 5].map((k) => (
@@ -83,7 +83,7 @@ export function SkillsPage() {
               <PaperCard key={h.t} tilt={i % 2 ? -1.5 : 1.5} className="p-6 md:p-7 flex gap-5">
                 <span className="font-display text-[#ff614c] text-[44px] leading-none shrink-0">{i + 1}</span>
                 <div>
-                  <h3 className="font-['Playfair_Display'] font-bold text-[22px] md:text-[24px] leading-tight">{h.t}</h3>
+                  <h3 className="font-['IBM_Plex_Serif'] font-bold text-[22px] md:text-[24px] leading-tight">{h.t}</h3>
                   <Prose className="mt-2 !text-[15.5px] md:!text-[17px]">{isProfessional ? h.pro : h.fun}</Prose>
                 </div>
               </PaperCard>

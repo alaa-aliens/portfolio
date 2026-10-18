@@ -37,6 +37,8 @@ function save(s: State) {
 const HEART_AT = [30, 80, 150];
 let last: { text: string; delta: number; kind: "point" | "life" | "bonus" | "heart" } | null = null;
 const toastEvt = "game:toast";
+/** Professional mode is the calm one: points still count, but silently. */
+const calm = () => typeof document !== "undefined" && document.documentElement.dataset.calm === "1";
 function toast(t: typeof last) {
   last = t;
   window.dispatchEvent(new CustomEvent(toastEvt, { detail: t }));
@@ -55,16 +57,16 @@ export function addScore(points: number, text: string, key?: string, bonus = fal
     s.lives = Math.min(3, s.lives + earned);
     save(s);
     toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
-    play(bonus ? "party" : "coin", 0.35);
+    if (!calm()) play(bonus ? "party" : "coin", 0.35);
     window.setTimeout(() => {
       toast({ text: s.lives === 3 ? "all hearts full. show-off." : "heart earned", delta: 0, kind: "heart" });
-      play("heart", 0.5);
+      if (!calm()) play("heart", 0.5);
     }, 1500);
     return true;
   }
   save(s);
   toast({ text, delta: points, kind: bonus ? "bonus" : "point" });
-  play(bonus ? "party" : "coin", bonus ? 0.5 : 0.35);
+  if (!calm()) play(bonus ? "party" : "coin", bonus ? 0.5 : 0.35);
   return true;
 }
 
@@ -76,7 +78,7 @@ export function loseLife(text: string) {
     s.lives = 1;
     s.points = Math.max(0, s.points - 20);
   } else toast({ text, delta: -1, kind: "life" });
-  play("lose", 0.45);
+  if (!calm()) play("lose", 0.45);
   save(s);
 }
 

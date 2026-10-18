@@ -118,7 +118,7 @@ export function SectionTitle({
   return (
     <div className={`inline-flex flex-col gap-1 ${className}`}>
       <Reveal y={16}>
-        <H className="font-['Playfair_Display'] font-bold text-black text-[30px] md:text-[42px] leading-tight">
+        <H className="font-['IBM_Plex_Serif'] font-bold text-black text-[30px] md:text-[42px] leading-tight">
           {children}
         </H>
       </Reveal>

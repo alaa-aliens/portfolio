@@ -63,7 +63,7 @@ export function ProjectList({ items, onSoon, start = 1 }: { items: Project[]; on
                     style={{ background: cat.color }}
                     animate={{ scale: active?.slug === p.slug ? 1.8 : 1 }}
                   />
-                  <span className="font-['Playfair_Display'] font-bold text-[19px] md:text-[24px] text-black leading-tight transition-transform duration-300 group-hover:translate-x-1.5 truncate">
+                  <span className="font-['IBM_Plex_Serif'] font-bold text-[19px] md:text-[24px] text-black leading-tight transition-transform duration-300 group-hover:translate-x-1.5 truncate">
                     {p.name}
                   </span>
                 </span>
@@ -76,7 +76,7 @@ export function ProjectList({ items, onSoon, start = 1 }: { items: Project[]; on
                       {isProfessional ? "Case study" : "Read me"}
                     </span>
                   )}
-                  <span className="font-['DM_Serif_Display'] text-[18px] text-black/30 group-hover:text-[#ff614c] transition-all group-hover:translate-x-1">
+                  <span className="font-['IBM_Plex_Serif'] text-[18px] text-black/30 group-hover:text-[#ff614c] transition-all group-hover:translate-x-1">
                     {ready ? "→" : "↗"}
                   </span>
                 </span>

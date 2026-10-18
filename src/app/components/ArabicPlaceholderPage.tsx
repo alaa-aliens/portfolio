@@ -139,7 +139,7 @@ export function ArabicPlaceholderPage() {
                 setLang("en");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="relative bg-white text-black px-5 py-2.5 font-['DM_Serif_Display'] text-[17px] md:text-[19px] border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_black] transition-all cursor-pointer"
+              className="relative bg-white text-black px-5 py-2.5 font-['IBM_Plex_Serif'] text-[17px] md:text-[19px] border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_black] transition-all cursor-pointer"
             >
               Back to English
             </button>

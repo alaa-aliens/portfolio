@@ -60,7 +60,7 @@ export function ProjectCard({
 
       <div className="flex flex-col gap-2 px-1.5 md:px-2 pt-4 pb-1.5">
         <div className="flex items-start justify-between gap-3 flex-wrap">
-          <h3 className={`font-['Playfair_Display'] font-bold text-black leading-tight ${big ? "text-[26px] md:text-[34px]" : "text-[21px] md:text-[24px]"}`}>
+          <h3 className={`font-['IBM_Plex_Serif'] font-bold text-black leading-tight ${big ? "text-[26px] md:text-[34px]" : "text-[21px] md:text-[24px]"}`}>
             {project.name}
           </h3>
           {tags.length > 0 && (
@@ -98,7 +98,7 @@ export function ProjectCard({
                 ? isProfessional ? "Product design · build" : "warning: contains feelings"
                 : isProfessional ? "Write-up coming soon" : "stuck in my drafts"}
             </span>
-            <span className="font-['DM_Serif_Display'] text-[16px] text-[#ff614c] whitespace-nowrap">
+            <span className="font-['IBM_Plex_Serif'] text-[16px] text-[#ff614c] whitespace-nowrap">
               {ready ? (isProfessional ? "View case study →" : "Open it →") : isProfessional ? "Ask me about it →" : "Bug me →"}
             </span>
           </motion.div>
