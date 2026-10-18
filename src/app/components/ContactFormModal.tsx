@@ -101,7 +101,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
             </button>
 
             {/* Title */}
-            <h2 className="font-['Playfair_Display'] font-bold text-[24px] md:text-[28px] text-black mb-1">
+            <h2 className="font-['IBM_Plex_Serif'] font-bold text-[24px] md:text-[28px] text-black mb-1">
               {isProfessional ? "Let's Talk" : "Yooo, Say Hi!"}
             </h2>
             <p className="font-['Work_Sans'] font-light text-[14px] md:text-[15px] text-black/60 mb-6">
@@ -121,7 +121,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <h3 className="font-['Playfair_Display'] font-bold text-[20px] text-black">
+                <h3 className="font-['IBM_Plex_Serif'] font-bold text-[20px] text-black">
                   {isProfessional ? "Message Sent!" : "Woohoo, Got It!"}
                 </h3>
                 <p className="font-['Work_Sans'] font-light text-[14px] text-black/60 text-center">
@@ -131,7 +131,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
                 </p>
                 <button
                   onClick={resetAndClose}
-                  className="mt-2 bg-white px-6 py-3 font-['DM_Serif_Display'] text-[17px] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all"
+                  className="mt-2 bg-white px-6 py-3 font-['IBM_Plex_Serif'] text-[17px] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all"
                 >
                   Close
                 </button>
@@ -140,7 +140,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
               <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5">
                 {/* Name */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-['DM_Serif_Display'] text-[15px] text-black">
+                  <label className="font-['IBM_Plex_Serif'] text-[15px] text-black">
                     {isProfessional ? "Your Name" : "What Should I Call You?"}
                   </label>
                   <input
@@ -156,7 +156,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
 
                 {/* Email */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-['DM_Serif_Display'] text-[15px] text-black">
+                  <label className="font-['IBM_Plex_Serif'] text-[15px] text-black">
                     {isProfessional ? "Your Email" : "Email (I Won't Spam, Promise)"}
                   </label>
                   <input
@@ -172,7 +172,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
 
                 {/* Message */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-['DM_Serif_Display'] text-[15px] text-black">
+                  <label className="font-['IBM_Plex_Serif'] text-[15px] text-black">
                     {isProfessional ? "Message" : "Speak Your Mind"}
                   </label>
                   <textarea
@@ -199,7 +199,7 @@ export function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="self-start bg-[#ff614c] text-white px-8 py-3 font-['DM_Serif_Display'] text-[17px] border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="self-start bg-[#ff614c] text-white px-8 py-3 font-['IBM_Plex_Serif'] text-[17px] border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status === "sending"
                     ? "Sending..."

@@ -19,6 +19,7 @@ import { ToBeContinued } from "../components/play/ToBeContinued";
 import { Button, Prose, Scribble } from "../components/ui/Kit";
 import { usePageMeta } from "../usePageMeta";
 import { BlogTeaser } from "./BlogPage";
+import { SelectedWork } from "../components/home/SelectedWork";
 
 const ROAD = {
   pro: [
@@ -41,9 +42,52 @@ const ROAD = {
   ],
 };
 
+/* Calm (professional) home: five quiet sections, lots of air. */
+function CalmHome() {
+  return (
+    <main className="flex flex-col">
+      <HeroSection />
+      <SelectedWork />
+
+      {/* About: who I am in one paragraph, the numbers in one line, then the comic */}
+      <section className="w-full max-w-[1100px] mx-auto px-5 md:px-12 pt-28 md:pt-40">
+        <DoodleTitle text="a bit about {coffee} me" className="text-[44px] md:text-[64px]" />
+        <Prose lead className="mt-5 max-w-[700px]">
+          I'm Ala'a, a UX/UI designer, illustrator and workshop facilitator in Amman. I started out stitching couches. Now I stitch pixels. Both jobs are about making
+          something people can sit with comfortably.
+        </Prose>
+        <dl className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-[860px]">
+          {[
+            ["15+", "years in design"],
+            ["100+", "products shipped"],
+            ["50+", "clients across MENA"],
+            ["70+", "workshop attendees"],
+          ].map(([n, l]) => (
+            <div key={l} className="border-t border-black/20 pt-3">
+              <dt className="font-display text-[40px] md:text-[48px] leading-none text-[#ff614c]">{n}</dt>
+              <dd className="font-['Work_Sans'] text-[14px] text-black/65 mt-1">{l}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="mt-14 md:mt-16">
+          <ComicStrip />
+        </div>
+        <div className="mt-8 flex flex-wrap gap-4 items-center">
+          <Button to="/about">the whole story →</Button>
+          <Link to="/experience" className="font-['Shantell_Sans',cursive] text-[15px] text-black/60 hover:text-[#ff614c]">or the full timeline →</Link>
+        </div>
+      </section>
+
+      <BlogTeaser />
+      <div className="h-28 md:h-40" />
+    </main>
+  );
+}
+
 export function HomePage() {
   const { isProfessional } = useMode();
   usePageMeta();
+  if (isProfessional) return <CalmHome />;
 
   return (
     <main className="flex flex-col">

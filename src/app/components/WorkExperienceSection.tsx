@@ -198,7 +198,7 @@ function TimelineItem({ entry, isLast, accentColor, index = 0 }: { entry: Timeli
         >
           {entry.tag}
         </span>
-        <h4 className="font-['Playfair_Display'] font-bold text-black text-[24px] leading-tight">
+        <h4 className="font-['IBM_Plex_Serif'] font-bold text-black text-[24px] leading-tight">
           {entry.title}
         </h4>
         <p className="font-['IBM_Plex_Serif'] text-black text-[16px] leading-[24px]">
@@ -244,7 +244,7 @@ export function WorkExperienceSection({ embedded = false }: { embedded?: boolean
                 className="flex flex-col items-center gap-[4px] shrink-0 h-[50px] cursor-pointer"
               >
                 <span
-                  className="font-['Playfair_Display'] font-black text-[16px] md:text-[20px] transition-colors text-center whitespace-nowrap"
+                  className="font-['IBM_Plex_Serif'] font-black text-[16px] md:text-[20px] transition-colors text-center whitespace-nowrap"
                   style={{ color: activeTab === tab ? tabColor : "#c1b6a5" }}
                 >
                   {timelines[tab].label}

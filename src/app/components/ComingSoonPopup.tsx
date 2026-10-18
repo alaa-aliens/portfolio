@@ -53,7 +53,7 @@ export function ComingSoonPopup({ isOpen, onClose }: { isOpen: boolean; onClose:
             <div className="flex flex-col gap-8 md:gap-[57px] px-6 md:px-[110px]">
               {/* Title & description */}
               <div className="flex flex-col gap-[16px]">
-                <h3 className="font-['Playfair_Display'] font-bold text-[#ff614c] text-[28px] md:text-[52px] lg:text-[62px] leading-[1.05]">
+                <h3 className="font-['IBM_Plex_Serif'] font-bold text-[#ff614c] text-[28px] md:text-[52px] lg:text-[62px] leading-[1.05]">
                   {isProfessional ? "WELL, THIS IS AWKWARD" : "BAZZINGAAAAA"}
                 </h3>
                 <p className="font-['Work_Sans'] text-black text-[15px] md:text-[24px] lg:text-[28px] leading-[1.4]">
@@ -72,7 +72,7 @@ export function ComingSoonPopup({ isOpen, onClose }: { isOpen: boolean; onClose:
                 </p>
                 <button
                   onClick={() => { onClose(); openContact(); }}
-                  className="bg-white relative px-[10px] py-[10px] font-['DM_Serif_Display'] text-[19px] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all"
+                  className="bg-white relative px-[10px] py-[10px] font-['IBM_Plex_Serif'] text-[19px] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_black] transition-all"
                 >
                   Get in Touch
                 </button>

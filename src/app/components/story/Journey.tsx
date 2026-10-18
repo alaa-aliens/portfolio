@@ -49,7 +49,7 @@ export function Journey({ stops, color }: { stops: Stop[]; color: string }) {
                 <span className="self-start md:self-auto inline-block w-auto font-['Work_Sans'] font-semibold text-[11px] uppercase tracking-[0.14em] px-2 py-1 rounded-[2px] text-white" style={{ background: "#ff614c" }}>
                   {s.date}
                 </span>
-                <h4 className="font-['Playfair_Display'] font-bold text-[22px] md:text-[27px] leading-tight">{s.title}</h4>
+                <h4 className="font-['IBM_Plex_Serif'] font-bold text-[22px] md:text-[27px] leading-tight">{s.title}</h4>
                 <p className="font-['IBM_Plex_Serif'] text-[15px] md:text-[17px] leading-[1.6] text-black/80 max-w-[460px]">{s.body}</p>
                 {s.img && (
                   <motion.img

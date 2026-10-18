@@ -40,17 +40,18 @@ function ScrollManager() {
 }
 
 function AppContent() {
-  const { isArabic } = useMode();
+  const { isArabic, isProfessional } = useMode();
+  const toys = !isProfessional && !isArabic;
   const location = useLocation();
 
   return (
     <div className="relative min-h-screen bg-[#fdecd0] flex flex-col">
       <ScrollProgress />
-      <InkCursor />
+      {toys && <InkCursor />}
       <ModeSwitchFX />
-      {!isArabic && <Stickers />}
+      {toys && <Stickers />}
       <ScoreTracker />
-      {!isArabic && <AskAlaa />}
+      {toys && <AskAlaa />}
       <Navbar />
       <ScrollManager />
       {isArabic && !location.pathname.startsWith("/blog") ? (

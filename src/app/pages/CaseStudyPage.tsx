@@ -22,6 +22,8 @@ import { Button, NextTiles, Scribble } from "../components/ui/Kit";
 import { Tsuzuku } from "../components/play/ToBeContinued";
 import imgHead from "figma:asset/91302547bc91ac7f0baa4ec137febfe13f1115ff.png";
 import { usePageMeta } from "../usePageMeta";
+import { CalmCaseStudy } from "../components/casestudy/CalmCaseStudy";
+import { CASE_UX } from "../data/caseStudyUX";
 
 function BackLink() {
   const { isProfessional } = useMode();
@@ -49,7 +51,7 @@ function NotReady({ project }: { project?: Project }) {
     <section className="w-full max-w-[900px] mx-auto px-6 md:px-12 pt-[130px] md:pt-[180px] pb-24 relative">
       <Doodle kind="sparkle" className="right-6 top-[120px]" />
       <BackLink />
-      <h1 className="font-['Playfair_Display'] font-bold text-[#ff614c] text-[40px] md:text-[64px] leading-[1.05] mt-6">
+      <h1 className="font-['IBM_Plex_Serif'] font-bold text-[#ff614c] text-[40px] md:text-[64px] leading-[1.05] mt-6">
         {project ? (isProfessional ? "WELL, THIS IS AWKWARD" : "BAZZINGAAAAA") : "404 — lost the file"}
       </h1>
       <p className="font-['Work_Sans'] text-black text-[18px] md:text-[24px] leading-[1.4] mt-4 max-w-[700px]">
@@ -159,6 +161,8 @@ export function CaseStudyPage() {
   }, [slug]);
 
   if (!project || project.status !== "ready" || !project.caseStudy) return <NotReady project={project} />;
+
+  if (isProfessional) return <CalmCaseStudy project={project} ux={CASE_UX[project.slug]} />;
 
   const cs = project.caseStudy;
   const cat = categories[project.category];

@@ -153,7 +153,7 @@ export function FindTheButton() {
                     ? "Five screens, each full of UX crimes. Find the one real button before the user runs out of patience."
                     : "Five cursed screens. One real button each. The user is losing patience. So am I."}
                 </p>
-                <button onClick={() => start(0)} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-7 py-3 font-['DM_Serif_Display'] text-[19px] shadow-[3px_3px_0_0_#ff614c] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#ff614c] transition-all">
+                <button onClick={() => start(0)} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-7 py-3 font-['IBM_Plex_Serif'] text-[19px] shadow-[3px_3px_0_0_#ff614c] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#ff614c] transition-all">
                   Start →
                 </button>
               </motion.div>
@@ -192,11 +192,11 @@ export function FindTheButton() {
                     <p className="font-['IBM_Plex_Serif'] text-[14px] md:text-[15px] mt-1.5 leading-snug">{L.lesson}</p>
                     <div className="flex gap-2 mt-3">
                       {state === "won" ? (
-                        <button onClick={next} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">
+                        <button onClick={next} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['IBM_Plex_Serif'] text-[15px]">
                           {level + 1 < LEVELS.length ? "Next level →" : "See score →"}
                         </button>
                       ) : (
-                        <button onClick={() => start(level)} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['DM_Serif_Display'] text-[15px]">Try again ↻</button>
+                        <button onClick={() => start(level)} className="bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-4 py-2 font-['IBM_Plex_Serif'] text-[15px]">Try again ↻</button>
                       )}
                     </div>
                   </motion.div>
@@ -211,7 +211,7 @@ export function FindTheButton() {
                 <p className="font-['IBM_Plex_Serif'] text-[15px] md:text-[17px] max-w-[360px]">
                   {score > 45 ? (isProfessional ? "You'd pass my UX audit. Want a job?" : "Ok you're hired. Unpaid, but hired.") : score > 25 ? (isProfessional ? "Solid. Most real products do worse." : "Not bad. Most real apps do worse. Much worse.") : isProfessional ? "The screens were cursed. Try again." : "It's ok. The screens were evil. That's the point."}
                 </p>
-                <button onClick={() => { setScore(0); start(0); }} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-6 py-2.5 font-['DM_Serif_Display'] text-[17px]">Play again ↻</button>
+                <button onClick={() => { setScore(0); start(0); }} className="mt-2 bg-[#1d1a17] text-[#fffaf1] border border-black rounded-full px-6 py-2.5 font-['IBM_Plex_Serif'] text-[17px]">Play again ↻</button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -224,7 +224,7 @@ export function FindTheButton() {
           <div className="flex items-center gap-4">
             <UserFace mood={face} />
             <div className="min-w-0">
-              <p className="font-['Playfair_Display'] font-bold text-[18px] leading-tight">{isProfessional ? "The user" : "Tariq, 53"}</p>
+              <p className="font-['IBM_Plex_Serif'] font-bold text-[18px] leading-tight">{isProfessional ? "The user" : "Tariq, 53"}</p>
               <p className="font-['Shantell_Sans',cursive] text-[13.5px] text-black/60 leading-snug">
                 {state === "play" ? (patience < 2.5 ? (isProfessional ? "Losing patience…" : "about to throw the phone") : isProfessional ? "Looking for the button." : "where. is. it.") : state === "won" ? (isProfessional ? "Relieved." : "ok that was fine actually") : state === "lost" ? (isProfessional ? "Gone. Left a 1-star review." : "left. wrote a 1★ review. in caps.") : isProfessional ? "Ready when you are." : "just wants to pay for a thing"}
               </p>

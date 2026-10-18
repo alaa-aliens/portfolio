@@ -108,7 +108,7 @@ export function WorkPage() {
       {rest.length > 0 && (
         <div>
           <div className="flex items-end justify-between mb-3">
-            <h2 className="font-['Playfair_Display'] font-bold text-[26px] md:text-[36px]">
+            <h2 className="font-['IBM_Plex_Serif'] font-bold text-[26px] md:text-[36px]">
               {isProfessional ? "And the rest" : "The B-sides"}
             </h2>
             <span className="font-['Shantell_Sans',cursive] text-[13px] text-black/50 hidden md:block">

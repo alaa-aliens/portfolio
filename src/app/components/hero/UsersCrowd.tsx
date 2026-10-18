@@ -494,7 +494,7 @@ export function UsersCrowd({ className = "" }: { className?: string }) {
               ✕
             </button>
             <div className="flex items-baseline justify-between mb-2">
-              <span className="font-['Playfair_Display'] font-bold text-[18px]">
+              <span className="font-['IBM_Plex_Serif'] font-bold text-[18px]">
                 {card.p.name}, {card.p.age}
               </span>
               <span className="text-[10px] uppercase tracking-[0.14em] text-black/45">user persona</span>

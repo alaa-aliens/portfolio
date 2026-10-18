@@ -30,6 +30,9 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
       return "professional";
     }
   });
+  React.useEffect(() => {
+    document.documentElement.dataset.calm = mode === "professional" ? "1" : "0";
+  }, [mode]);
   const setMode = (m: Mode) => {
     setModeState(m);
     try {

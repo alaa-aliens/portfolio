@@ -169,7 +169,7 @@ export function Navbar() {
 
         {/* Score + language + menu button */}
         <div className="relative flex items-center gap-3 md:gap-5 font-['IBM_Plex_Serif'] font-bold text-[16px] md:text-[18px]">
-          <ScoreHUD compact={compact} />
+          {!isProfessional && <ScoreHUD compact={compact} />}
           <div className="hidden sm:flex items-center gap-1.5">
             <button
               onClick={() => {
